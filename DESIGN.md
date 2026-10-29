@@ -130,10 +130,11 @@ One loud moment, everything else quiet.
 
 **The signature: the route line (homepage hero only).**
 - The cocoa line enters from the right edge of the apricot field, sweeps across, and turns into the underline under the
-  wordmark. The car rides its tip and parks at the end. The wordmark letters fade in as the line arrives.
-- Total about **1.8s**, starting about 200ms after first paint. Easing: cubic in-out for the line, ease-out for the letters.
-- Built as one inline SVG: `stroke-dashoffset` in CSS for the line, CSS `offset-path` for the car. A tiny inline script
-  with `getPointAtLength` is the fallback for browsers without `offset-path`. No animation library.
+  wordmark. The car rides its tip and parks at the end. The wordmark itself is visible from the first paint, so it
+  never delays the page's largest paint.
+- Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
+- Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
+  car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
 - The h1, supporting line and button are **visible from the first paint**. They never wait for the animation.
 - It plays once per visit, never loops, and never replays on scroll.
 
@@ -141,7 +142,8 @@ One loud moment, everything else quiet.
 - Section entrance: heading, then text, then picture, each rising 16px with a fade, staggered about 70ms, once,
   triggered by `IntersectionObserver`. If JavaScript fails, content is visible (it is hidden only when the script has added a class).
 - Hover, press and focus feedback on every button, link and card: about 150ms, transform and colour only.
-- "Who it's for" list: pointing at a row swaps the phone preview beside it (240ms crossfade). On touch screens each row shows its preview inline.
+- "Who it's for" list: pointing at or focusing a row swaps the phone preview beside it (240ms crossfade, pure CSS
+  with `:has()`). On phones the rows show without previews.
 - No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished logo lockup (line, underline, car, wordmark) with no
