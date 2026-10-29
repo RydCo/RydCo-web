@@ -185,19 +185,20 @@ export function StopsScreen() {
 
 // Schematic of the pilot: homes on the edge, workplaces in the middle, covered routes drawn as route lines.
 export function CoverageScreen() {
-  const places: Record<string, [number, number]> = {
-    "Mall Road": [116, 24],
-    "Liberty Market": [168, 60],
-    "Gulberg Blvd": [150, 84],
-    "Arfa Tower": [110, 104],
-    "Gulberg III": [196, 92],
-    "DHA Phase 5": [228, 132],
-    "Model Town": [160, 142],
-    "Garden Town": [92, 132],
-    "Faisal Town": [124, 160],
-    "Johar Town": [56, 168],
-    Township: [100, 200],
-    "Bahria Town": [32, 214],
+  // [x, y, label side]: each label has its own clear spot so none overlap at phone size.
+  const places: Record<string, [number, number, "left" | "right" | "below"]> = {
+    "Mall Road": [120, 24, "right"],
+    "Liberty Market": [206, 50, "left"],
+    "Gulberg Blvd": [160, 82, "right"],
+    "Arfa Tower": [96, 108, "left"],
+    "Gulberg III": [234, 118, "left"],
+    "DHA Phase 5": [226, 170, "left"],
+    "Model Town": [170, 142, "right"],
+    "Garden Town": [52, 140, "below"],
+    "Faisal Town": [122, 194, "right"],
+    "Johar Town": [40, 194, "right"],
+    Township: [166, 218, "right"],
+    "Bahria Town": [24, 222, "right"],
   };
   const covered: [string, string][] = [
     ["Johar Town", "Arfa Tower"],
@@ -231,12 +232,26 @@ export function CoverageScreen() {
             {covered.map(([a, b]) => (
               <path key={a + b} d={curve(a, b)} className="fill-none stroke-apricot" strokeWidth="4.5" strokeLinecap="round" />
             ))}
-            {Object.entries(places).map(([name, [x, y]]) => {
+            {Object.entries(places).map(([name, [x, y, side]]) => {
               const isSoon = name === "Township" || name === "Bahria Town";
+              const label =
+                side === "left"
+                  ? { x: x - 9, y: y + 3.5, anchor: "end" as const }
+                  : side === "right"
+                    ? { x: x + 9, y: y + 3.5, anchor: "start" as const }
+                    : { x, y: y + 17, anchor: "middle" as const };
               return (
                 <g key={name}>
                   <circle cx={x} cy={y} r="5" className={isSoon ? "fill-white stroke-cocoa-soft" : "fill-white stroke-cocoa"} strokeWidth="2.5" />
-                  <text x={x + (x > 200 ? -8 : 8)} y={y - 7} textAnchor={x > 200 ? "end" : "start"} className="fill-cocoa text-[10px] font-semibold">
+                  <text
+                    x={label.x}
+                    y={label.y}
+                    textAnchor={label.anchor}
+                    className="fill-cocoa stroke-white text-[10px] font-semibold"
+                    strokeWidth="3.5"
+                    strokeLinejoin="round"
+                    style={{ paintOrder: "stroke" }}
+                  >
                     {name}
                   </text>
                 </g>

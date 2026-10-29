@@ -41,6 +41,19 @@ export function riderCta(route?: { from: string; to: string }): Cta {
   };
 }
 
+export const pilotEnquiry = mailto(
+  "RydCo commute pilot for our team",
+  "Assalam o alaikum RydCo,\n\nWe'd like to talk about a commute pilot for our team.\n\nCompany:\nOffice location:\nRoughly how many people:\nContact person:\nPhone:\n",
+);
+
+export const partnerEnquiry = mailto(
+  "Partnering with RydCo",
+  "Assalam o alaikum RydCo,\n\nWe'd like to talk about partnering with you.\n\nName:\nOrganization:\nHow we'd like to help:\n",
+);
+
+// Roles are left out on purpose for now. [FILL] Add photos and roles when ready.
+export const team = ["Tehreem Tahir", "Manal Bukhari", "Ezza Abdullah", "Ahmad Butt"];
+
 export const nav = [
   { label: "How it works", href: "/how-it-works" },
   { label: "Safety", href: "/safety" },

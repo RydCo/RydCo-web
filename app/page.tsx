@@ -45,7 +45,7 @@ export default function Home() {
               <Button href={cta.href} external={cta.external} variant="onApricot">
                 {cta.label}
               </Button>
-              <Button href="/drivers" variant="secondary" className="bg-cream">
+              <Button href="/drivers" variant="cream">
                 Offer a ride
               </Button>
             </div>
@@ -169,12 +169,12 @@ export default function Home() {
           </div>
           <div className="order-1 lg:order-2 lg:col-span-7">
             <h2 id="app-title" className="t-h2" {...reveal(0)}>
-              Is your commute covered?
+              Get the RydCo app.
             </h2>
             <p className="mt-5 max-w-[46ch]" {...reveal(1)}>
               {live
-                ? "The pilot runs on these routes in Lahore. Check yours, then get the app."
-                : "The pilot runs on these routes in Lahore. Check yours, then join the waitlist and we’ll message you when RydCo opens."}
+                ? "It runs on the Lahore pilot routes. Check that yours is covered, then download it and request your first seat."
+                : "It opens first on the Lahore pilot routes. Check that yours is covered, then join the waitlist and we’ll message you when it’s ready to download."}
             </p>
             <div className="mt-8" {...reveal(2)}>
               <CoverageCheck />

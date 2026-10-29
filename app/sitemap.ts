@@ -4,7 +4,10 @@ import { site } from "@/lib/site";
 export const dynamic = "force-static";
 
 // Add each page here as it is built.
-const routes = [{ path: "/", priority: 1 }];
+const routes = [
+  { path: "/", priority: 1 },
+  { path: "/organizations", priority: 0.8 },
+];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((r) => ({

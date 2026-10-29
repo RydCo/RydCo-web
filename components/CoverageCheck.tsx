@@ -19,6 +19,7 @@ export function CoverageCheck() {
 
   return (
     <div>
+      <p className="mb-4 font-display text-[22px] font-bold">Is your commute covered?</p>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field id={`${id}-from`} label="I start in" value={from} onChange={setFrom} options={pilot.starts.map((p) => p.name)} />
         <Field id={`${id}-to`} label="I'm headed to" value={to} onChange={setTo} options={pilot.destinations.map((p) => p.name)} />
