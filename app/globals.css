@@ -56,7 +56,7 @@
 @utility t-display {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: clamp(38px, 10vw, 112px);
+  font-size: var(--display-size, clamp(38px, 10vw, 112px));
   line-height: 0.95;
   letter-spacing: -0.035em;
   text-wrap: balance;

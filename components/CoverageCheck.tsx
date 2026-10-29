@@ -29,14 +29,16 @@ export function CoverageCheck() {
         {picked &&
           (covered ? (
             <p className="flex flex-wrap items-center gap-3 text-[18px]">
-              <Badge className="text-[16px]">Covered</Badge>
+              <span className="text-[20px]">
+                <Badge>Covered</Badge>
+              </span>
               <span>RydCo runs on this route in the pilot.</span>
             </p>
           ) : (
             <p className="flex flex-wrap items-center gap-3 text-[18px]">
-              <Badge tone="neutral" className="bg-cream text-[16px]">
-                Not covered yet
-              </Badge>
+              <span className="text-[20px]">
+                <Badge tone="cream">Not covered yet</Badge>
+              </span>
               <span>Join the waitlist and we&rsquo;ll tell you when it opens.</span>
             </p>
           ))}
@@ -46,7 +48,7 @@ export function CoverageCheck() {
         <Button href={cta.href} external={cta.external}>
           {cta.label}
         </Button>
-        <Button href="/drivers" variant="ghost">
+        <Button href="/drivers/" variant="ghost">
           Offer a ride instead
         </Button>
       </div>

@@ -20,10 +20,10 @@ export const metadata: Metadata = {
 };
 
 const audiences = [
-  { title: "Riders", line: "Get to work without driving yourself.", href: "/how-it-works" },
-  { title: "Drivers", line: "Earn back your fuel cost on the drive you already make.", href: "/drivers" },
-  { title: "Organizations", line: "Help your team get to work together.", href: "/organizations" },
-  { title: "Sponsors and partners", line: "Back a better daily commute in Pakistan.", href: "/organizations#partners" },
+  { title: "Riders", line: "Get to work without driving yourself.", href: "/how-it-works/" },
+  { title: "Drivers", line: "Earn back your fuel cost on the drive you already make.", href: "/drivers/" },
+  { title: "Organizations", line: "Help your team get to work together.", href: "/organizations/" },
+  { title: "Sponsors and partners", line: "Back a better daily commute in Pakistan.", href: "/organizations/#partners" },
 ];
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
               <Button href={cta.href} external={cta.external} variant="onApricot">
                 {cta.label}
               </Button>
-              <Button href="/drivers" variant="cream">
+              <Button href="/drivers/" variant="cream">
                 Offer a ride
               </Button>
             </div>
@@ -118,7 +118,7 @@ export default function Home() {
           ))}
         </ol>
         <div className="mt-10" {...reveal(6)}>
-          <Button href="/how-it-works" variant="ghost">
+          <Button href="/how-it-works/" variant="ghost">
             See every step in the app
           </Button>
         </div>

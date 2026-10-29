@@ -41,7 +41,7 @@ export function SafetyBoard() {
         </h2>
         <div>
           <p>Checks before anyone drives, and tools on every ride.</p>
-          <Link href="/safety" className="mt-3 inline-flex items-center gap-2 py-2 font-semibold text-apricot underline decoration-2 underline-offset-[6px]">
+          <Link href="/safety/" className="mt-3 inline-flex items-center gap-2 py-2 font-semibold text-apricot underline decoration-2 underline-offset-[6px]">
             How we keep trips safe <Arrow />
           </Link>
         </div>

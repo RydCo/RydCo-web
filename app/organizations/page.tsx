@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "For organizations and partners",
   description:
     "Give your team a cheaper, safer way to get to work with RydCo carpooling, or partner with us to grow the Lahore pilot. Built for daily commuters in Pakistan.",
-  alternates: { canonical: "/organizations" },
+  alternates: { canonical: "/organizations/" },
 };
 
 // What a company deals with, and what RydCo does about each. Only features shown in the app.
