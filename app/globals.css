@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+  --color-apricot: #EA6A2A;
+  --color-apricot-deep: #C24E15;
+  --color-apricot-tint: #FCE3D3;
+  --color-cocoa: #2C1E18;
+  --color-cream: #FFF8F3;
+  --color-trust: #1F7A5A;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
