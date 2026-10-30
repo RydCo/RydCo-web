@@ -2,21 +2,23 @@
 
 import Link from "next/link";
 import { useId, useState } from "react";
+import { setCommute, useCommute } from "@/lib/commute";
 import { normalizePhone, sendForm } from "@/lib/forms";
-import { pilot, riderCta, site } from "@/lib/site";
-import { Badge } from "./Badge";
+import { coverage, otherArea, pilot, riderCta, site } from "@/lib/site";
 import { Button } from "./Button";
 import { Choice, FormError, Honeypot, MailNote, SelectField, Sent, SubmitButton, TextField } from "./FormFields";
+import { CoverageAnswer } from "./RouteCheck";
 
-const OTHER = "Another area";
 const labels = { name: "Name", phone: "Phone", role: "I want to", from: "I start in", to: "I'm headed to" };
 const roles = { ride: "Ride", drive: "Drive", both: "Ride and drive" } as const;
 
-// The site's one live thing (the app's "Check your commute?" step), joined to the waitlist sign-up.
+// The app's "Check your commute?" step joined to the waitlist sign-up. The route is shared with the hero's
+// route check, so a route picked up there is already filled in here.
 export function WaitlistForm() {
   const id = useId();
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const { from, to } = useCommute();
+  const setFrom = (v: string) => setCommute({ from: v, by: id });
+  const setTo = (v: string) => setCommute({ to: v, by: id });
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState<keyof typeof roles>("ride");
@@ -24,10 +26,7 @@ export function WaitlistForm() {
   const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
   const [state, setState] = useState<"idle" | "sending" | "sent" | "mailed" | "error">("idle");
 
-  const start = pilot.starts.find((p) => p.name === from);
-  const dest = pilot.destinations.find((p) => p.name === to);
-  const picked = Boolean(from && to);
-  const covered = Boolean(start?.covered && dest?.covered);
+  const { picked, covered } = coverage(from, to);
   const live = Boolean(site.playStoreUrl);
 
   async function submit(e: { preventDefault(): void }) {
@@ -73,7 +72,7 @@ export function WaitlistForm() {
           value={from}
           onChange={setFrom}
           placeholder="Choose an area"
-          options={[...pilot.starts.map((p) => ({ value: p.name, label: p.name })), { value: OTHER, label: OTHER }]}
+          options={[...pilot.starts.map((p) => ({ value: p.name, label: p.name })), { value: otherArea, label: otherArea }]}
         />
         <SelectField
           id={`${id}-to`}
@@ -82,28 +81,11 @@ export function WaitlistForm() {
           value={to}
           onChange={setTo}
           placeholder="Choose an area"
-          options={[...pilot.destinations.map((p) => ({ value: p.name, label: p.name })), { value: OTHER, label: OTHER }]}
+          options={[...pilot.destinations.map((p) => ({ value: p.name, label: p.name })), { value: otherArea, label: otherArea }]}
         />
       </div>
 
-      <div aria-live="polite" className="mt-4 min-h-[40px]">
-        {picked &&
-          (covered ? (
-            <p className="flex flex-wrap items-center gap-3">
-              <span className="text-[20px]">
-                <Badge>Covered</Badge>
-              </span>
-              <span>RydCo runs on this route in the pilot.</span>
-            </p>
-          ) : (
-            <p className="flex flex-wrap items-center gap-3">
-              <span className="text-[20px]">
-                <Badge tone="cream">Not covered yet</Badge>
-              </span>
-              <span>Join anyway and we&rsquo;ll tell you when it opens.</span>
-            </p>
-          ))}
-      </div>
+      <CoverageAnswer me={id} className="mt-4 min-h-[40px]" />
 
       {live ? (
         <div className="mt-6">
