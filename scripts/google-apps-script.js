@@ -5,7 +5,7 @@
  *   1. In the rydcoapp@gmail.com Google Drive, create a Google Sheet called "RydCo sign-ups".
  *   2. In the sheet: Extensions → Apps Script. Replace the code there with this whole file. Save.
  *   3. Deploy → New deployment → type "Web app". Execute as: Me. Who has access: Anyone. Deploy, and allow access.
- *   4. Copy the Web app URL (ends in /exec) and set it as NEXT_PUBLIC_FORM_ENDPOINT on Vercel, then redeploy.
+ *   4. Copy the Web app URL (ends in /exec), put it in formEndpoint in lib/site.ts, then redeploy.
  *
  * Each form gets its own tab (waitlist, driver, contact), created on the first submission.
  * After editing this file later, use Deploy → Manage deployments → Edit → New version, so the URL stays the same.

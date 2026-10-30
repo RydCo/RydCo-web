@@ -26,9 +26,8 @@ The finished site is written to the `out/` folder.
 
 1. Go to https://vercel.com/new and import the **RydCo/RydCo-web** repository. Vercel detects Next.js; the build
    command comes from `vercel.json`.
-2. Under **Environment Variables**, add:
-   - `NEXT_PUBLIC_SITE_URL`: the site's address, e.g. `https://rydco.vercel.app`
-   - `NEXT_PUBLIC_FORM_ENDPOINT`: the Google Apps Script URL from "Connect the forms" below
+2. Under **Environment Variables**, add `NEXT_PUBLIC_SITE_URL`: the site's address, e.g. `https://rydco.vercel.app`.
+   The forms are already connected (see "Connect the forms" below), so they need no variable.
 3. Deploy. After changing a variable, redeploy so the site picks it up.
 
 If Vercel won't import the private organization repository on the Hobby plan, deploy from this folder instead:
@@ -45,8 +44,9 @@ Vercel's terms, or use Vercel Pro, Netlify or Cloudflare Pages (their free plans
 ## Connect the forms
 
 The waitlist, driver sign-up and contact forms save each submission as a row in a Google Sheet and email
-rydcoapp@gmail.com. Until this is set up, the forms still work: they open the visitor's email app with their
-details filled in.
+rydcoapp@gmail.com. This is already set up: the script's URL is `formEndpoint` in [lib/site.ts](lib/site.ts).
+The steps below are for setting it up again, for example in a different Google account. If `formEndpoint` is
+`null`, the forms open the visitor's email app with their details filled in instead.
 
 1. Signed in as rydcoapp@gmail.com, create a Google Sheet named **RydCo sign-ups**.
 2. In the sheet, open **Extensions → Apps Script**. Delete the sample code, paste in all of
@@ -54,7 +54,8 @@ details filled in.
 3. Click **Deploy → New deployment**. Choose the type **Web app**. Set **Execute as: Me** and
    **Who has access: Anyone**. Click **Deploy** and allow the permissions Google asks for.
 4. Copy the **Web app URL** (it ends in `/exec`).
-5. In Vercel, set `NEXT_PUBLIC_FORM_ENDPOINT` to that URL and redeploy.
+5. Put that URL in `formEndpoint` in [lib/site.ts](lib/site.ts), or set it as `NEXT_PUBLIC_FORM_ENDPOINT` in
+   Vercel, and redeploy.
 6. Submit each form once on the live site. You should see a row in the `waitlist`, `driver` and `contact` tabs and
    an email for each.
 

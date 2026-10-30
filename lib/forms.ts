@@ -2,7 +2,7 @@ import { mailto, site } from "./site";
 
 // The site's forms (waitlist, driver sign-up, contact) post to a Google Apps Script web app that adds a row
 // to RydCo's Google Sheet and emails rydcoapp@gmail.com. See scripts/google-apps-script.js and the README.
-// Until NEXT_PUBLIC_FORM_ENDPOINT is set, submitting opens an email with the same details instead.
+// If site.formEndpoint is null, submitting opens an email with the same details instead.
 
 export type FormKind = "waitlist" | "driver" | "contact";
 
