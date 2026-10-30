@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# design references and tooling output (not part of the site)
+/design-reference/
+/.taste-skill/

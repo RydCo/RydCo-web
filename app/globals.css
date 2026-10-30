@@ -1,35 +1,162 @@
 @import "tailwindcss";
 
+/* The palette is closed: Tailwind's default colours are removed so only brand colours exist. */
 @theme {
+  --color-*: initial;
   --color-apricot: #EA6A2A;
   --color-apricot-deep: #C24E15;
   --color-apricot-tint: #FCE3D3;
   --color-cocoa: #2C1E18;
+  --color-cocoa-soft: #6B5A52;
   --color-cream: #FFF8F3;
   --color-trust: #1F7A5A;
-}
+  --color-white: #FFFFFF;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius-surface: 28px;
+  --ease-out-soft: cubic-bezier(0.22, 0.8, 0.26, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-urbanist), "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-figtree), "Avenir Next", "Segoe UI", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    background: var(--color-cream);
+    color: var(--color-cocoa);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 96px;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (max-width: 399px) {
+    body {
+      font-size: 17px;
+    }
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-cocoa);
+    outline-offset: 3px;
+  }
+  .on-cocoa :focus-visible {
+    outline-color: var(--color-cream);
+  }
+  ::selection {
+    background: var(--color-cocoa);
+    color: var(--color-cream);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* The five type steps from DESIGN.md. */
+@utility t-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--display-size, clamp(38px, 10vw, 112px));
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+@utility t-h2 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(32px, 4.2vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+@utility t-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 1.6vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+@utility t-small {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 1264px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 48rem) {
+    padding-inline: 32px;
+  }
+}
+
+/* "Who it's for": the row being pointed at or focused shows its preview and its route mark.
+   With nothing hovered, the first row is the active one. */
+.who-preview {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out-soft);
+}
+.who [data-preview="0"] {
+  opacity: 1;
+}
+.who:has([data-row]:is(:hover, :focus-within)) [data-preview="0"] {
+  opacity: 0;
+}
+.who:has([data-row="0"]:is(:hover, :focus-within)) [data-preview="0"],
+.who:has([data-row="1"]:is(:hover, :focus-within)) [data-preview="1"],
+.who:has([data-row="2"]:is(:hover, :focus-within)) [data-preview="2"],
+.who:has([data-row="3"]:is(:hover, :focus-within)) [data-preview="3"] {
+  opacity: 1;
+}
+@media (width >= 64rem) {
+  .who-dot,
+  .who-line {
+    transition: scale 200ms var(--ease-out-soft);
+  }
+  .who-dot {
+    scale: 0.5;
+  }
+  .who-line {
+    scale: 0 1;
+    transform-origin: left;
+  }
+  .who:not(:has([data-row]:is(:hover, :focus-within))) [data-row="0"] :is(.who-dot, .who-line),
+  .who [data-row]:is(:hover, :focus-within) :is(.who-dot, .who-line) {
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .who-preview,
+  .who-dot,
+  .who-line {
+    transition: none;
+  }
+}
+
+/* Section entrances. Content is only hidden once the head script has marked the page as scripted,
+   and the fallback reveals everything if the observer never starts. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(16px);
+    transition:
+      opacity 0.6s var(--ease-out-soft),
+      transform 0.6s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  .js:not(.reveal-ready) [data-reveal] {
+    animation: reveal-fallback 0s 2.5s forwards;
+  }
+}
+@keyframes reveal-fallback {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
