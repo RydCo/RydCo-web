@@ -2,10 +2,11 @@ import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
 import { Badge } from "@/components/ui/Badge";
 import { Tick } from "@/components/ui/icons";
-import { Card, Days, Ends, Heading, Label, MapBackdrop, MapLabel, Pin, Primary, RouteCard, Secondary, Segments, SkySheet } from "./SkySheet";
+import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, MapBackdrop, MapLabel, Pin, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Windows } from "./SkySheet";
 
-// Booking and taking a ride, in the app's order. Text and example details are the app's own (app-mocks/index (1).html),
-// leaving out its sample ratings and trip counts, which could be read as real figures.
+// One ride as a rider, in the app's order: Ayesha finds a seat with Hamza, rides, and pays him. Text and example
+// details are the app's own (app-mocks/index (1).html), leaving out its sample ratings and trip counts, which could be
+// read as real figures.
 
 export function FindRideScreen() {
   return (
@@ -16,13 +17,7 @@ export function FindRideScreen() {
         <Segments options={["One date", "Weekdays"]} chosen="Weekdays" />
         <Days />
         <Label>Pickup window</Label>
-        <div className="grid grid-cols-4 gap-1 text-center text-[10px] font-semibold tabular-nums">
-          {["7:15–7:35", "7:30–7:50", "7:45–8:05", "8:00–8:20"].map((w) => (
-            <span key={w} className={`rounded-full py-1.5 ${w === "7:30–7:50" ? "bg-accent-strong text-on-accent" : "bg-panel text-ink-soft"}`}>
-              {w}
-            </span>
-          ))}
-        </div>
+        <Windows />
       </Card>
       <Card className="flex items-center justify-between gap-2 p-2.5 text-[12.5px] font-semibold">
         Women-only rides
@@ -34,13 +29,11 @@ export function FindRideScreen() {
   );
 }
 
-function RideOption({ initials, name, share, meet, meetAt, walk, drop, dropAt, seats, tone }: { initials: string; name: string; share: string; meet: string; meetAt: string; walk: string; drop: string; dropAt: string; seats: string; tone: string }) {
+function RideOption({ initials, name, share, meet, meetAt, walk, drop, dropAt, seats }: { initials: string; name: string; share: string; meet: string; meetAt: string; walk: string; drop: string; dropAt: string; seats: string }) {
   return (
     <Card className="grid gap-2 p-2.5">
       <div className="flex items-center gap-2">
-        <span aria-hidden="true" className={`grid h-8 w-8 flex-none place-items-center rounded-full font-display text-[12px] font-extrabold ${tone}`}>
-          {initials}
-        </span>
+        <Avatar>{initials}</Avatar>
         <span className="min-w-0 flex-1 leading-tight">
           <b className="block font-display text-[13.5px]">{name}</b>
           <span className="text-[11px] text-ink-soft">{seats}</span>
@@ -80,8 +73,8 @@ export function RideResultsScreen() {
         <b className="font-display text-[15px]">3 rides</b>
         <span className="text-[11.5px] text-ink-soft">Sorted by pickup</span>
       </p>
-      <RideOption tone="bg-brand" initials="HR" name="Hamza" seats="2 seats left" share="Rs 245" meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
-      <RideOption tone="bg-panel" initials="SI" name="Sana" seats="1 seat left" share="Rs 264" meetAt="07:44" meet="Model Town Link Rd" walk="6 min walk" dropAt="08:12" drop="Arfa Tower gate" />
+      <RideOption initials="HR" name="Hamza" seats="2 seats left" share="Rs 245" meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
+      <RideOption initials="SI" name="Sana" seats="1 seat left" share="Rs 264" meetAt="07:44" meet="Model Town Link Rd" walk="6 min walk" dropAt="08:12" drop="Arfa Tower gate" />
     </SkySheet>
   );
 }
@@ -98,9 +91,7 @@ export function RideDetailScreen() {
     <SkySheet step="Trips · Ride" foot={<Primary>Request seat · Rs 245</Primary>}>
       <RouteCard height={92} from="Meet" to="Drop" />
       <div className="flex items-center gap-2">
-        <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-brand font-display text-[12px] font-extrabold">
-          HR
-        </span>
+        <Avatar>HR</Avatar>
         <span className="min-w-0 flex-1 text-[11px] leading-tight">
           <b className="block font-display text-[14px]">Hamza R.</b>
           <Badge>Verified driver</Badge>
@@ -194,10 +185,7 @@ function Plate() {
 
 export function OnTheWayScreen() {
   return (
-    <SkySheet
-      step="Today · Start"
-      foot={<Primary>Open live trip</Primary>}
-    >
+    <SkySheet step="Today · Start" foot={<Primary>Open live trip</Primary>}>
       <RouteCard height={112} from="Your meet point" car={<Car tone={toneOn.brand} transform="translate(96 70) scale(0.85)" />} />
       <Heading
         lead={
@@ -232,10 +220,7 @@ export function OnTheWayScreen() {
 export function LiveTripScreen() {
   return (
     <SkySheet step="Live trip" foot={<Secondary>Trip finished</Secondary>}>
-      <div className="relative flex-none">
-        <RouteCard height={140} from="" car={<Car tone={toneOn.brand} transform="translate(150 66) scale(0.85)" />} />
-        <span className="absolute top-2 left-2 rounded-full bg-panel px-2.5 py-1 text-[11px] font-semibold tabular-nums">ETA 08:06</span>
-      </div>
+      <LiveMap height={140} carX={150} carY={66} eta="ETA 08:06" />
       <Card className="p-2.5 text-[12px] leading-tight">
         <div className="flex items-start justify-between gap-2">
           <span>
@@ -249,11 +234,7 @@ export function LiveTripScreen() {
       <p className="flex items-center gap-1.5 text-[12px]">
         <Tick className="text-trust" /> Picked up · sharing with your trusted contact
       </p>
-      <div className="grid grid-cols-3 gap-1.5">
-        <Secondary>Share</Secondary>
-        <Secondary>Chat</Secondary>
-        <span className="grid h-9 place-items-center rounded-full bg-sos font-display text-[13px] font-extrabold text-on-sos">SOS</span>
-      </div>
+      <SafetyActions />
     </SkySheet>
   );
 }

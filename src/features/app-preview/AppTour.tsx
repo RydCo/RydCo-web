@@ -1,31 +1,28 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Chevron } from "@/components/ui/icons";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { PhoneFrame } from "./PhoneFrame";
 
 // One phone that steps through the app's real screens on its own. A marker fills while its screen shows and the tour
 // moves on when it's full (CSS in styles/motion/app-tour.css). It pauses while the phone is pointed at, while it's off
 // screen, and with the pause button. With reduced motion it starts paused and screens swap without sliding.
-// `long` is for tours with too many screens for dots: back and next buttons, the marker kept out of sight as the
-// timer, and only the screens next to the current one in the page.
+// `bare` is for a phone that speaks for itself: only the pause button under it, a quick change between screens, the
+// marker kept out of sight as the timer, and only the screens next to the current one in the page.
 
 type Slide = { title: string; screen: ReactNode };
-
-const iconButton = "grid h-11 w-11 flex-none place-items-center rounded-full transition-colors duration-150 hover:bg-ink hover:text-surface";
 
 export function AppTour({
   slides,
   seconds = 3.6,
-  long = false,
-  note,
+  bare = false,
+  label = "A tour of the RydCo app",
   phoneClassName = "",
 }: {
   slides: Slide[];
   seconds?: number;
-  long?: boolean;
-  note?: string;
+  bare?: boolean;
+  label?: string;
   phoneClassName?: string;
 }) {
   const [index, setIndex] = useState(0);
@@ -37,8 +34,7 @@ export function AppTour({
   const ref = useRef<HTMLDivElement>(null);
 
   const count = slides.length;
-  const step = (by: number) => setIndex((index + by + count) % count);
-  const inPage = (i: number) => !long || i === index || i === (index + 1) % count || i === (index - 1 + count) % count;
+  const inPage = (i: number) => !bare || i === index || i === (index + 1) % count || i === (index - 1 + count) % count;
 
   useEffect(() => {
     const el = ref.current;
@@ -53,7 +49,7 @@ export function AppTour({
       key={index}
       className="tour-fill absolute inset-0 rounded-full bg-ink"
       style={{ animationDuration: `${seconds}s` }}
-      onAnimationEnd={() => step(1)}
+      onAnimationEnd={() => setIndex((index + 1) % count)}
     />
   );
 
@@ -62,7 +58,7 @@ export function AppTour({
       type="button"
       onClick={() => setChosen(!playing)}
       aria-label={playing ? "Pause the tour" : "Play the tour"}
-      className={`${iconButton} ${long ? "" : "bg-panel"}`}
+      className={`grid h-11 w-11 place-items-center rounded-full transition-colors duration-150 hover:bg-ink hover:text-surface ${bare ? "" : "bg-panel"}`}
     >
       <svg viewBox="0 0 20 20" aria-hidden="true" className="h-4 w-4 fill-current">
         {playing ? (
@@ -80,7 +76,7 @@ export function AppTour({
   return (
     <div ref={ref} className="tour" data-running={playing && onScreen}>
       <div className={`tour-phone ${phoneClassName}`}>
-        <PhoneFrame label="A tour of the RydCo app">
+        <PhoneFrame label={label}>
           <div className="relative min-h-0 flex-1">
             {slides.map(
               (s, i) =>
@@ -89,7 +85,7 @@ export function AppTour({
                     key={s.title}
                     aria-hidden={i !== index}
                     inert={i !== index}
-                    className={`absolute inset-0 flex flex-col transition-[opacity,translate] ease-out motion-reduce:transition-none ${long ? "duration-300" : "duration-500"} ${
+                    className={`absolute inset-0 flex flex-col transition-[opacity,translate] ease-out motion-reduce:transition-none ${bare ? "duration-150" : "duration-500"} ${
                       i === index ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"
                     }`}
                   >
@@ -101,26 +97,12 @@ export function AppTour({
         </PhoneFrame>
       </div>
 
-      {long ? (
-        <div className="mx-auto mt-6 max-w-[380px]">
-          <span aria-hidden="true" className="relative block h-0 overflow-hidden">
+      {bare ? (
+        <div className="mt-3 flex justify-center">
+          <span aria-hidden="true" className="relative block h-0 w-0 overflow-hidden">
             {fill}
           </span>
-          <div className="flex items-center">
-            <button type="button" onClick={() => step(-1)} aria-label="Previous screen" className={iconButton}>
-              <Chevron className="h-5 w-5 rotate-90" />
-            </button>
-            <p data-tour-title className="min-w-0 flex-1 text-center leading-tight">
-              <b className="block font-display text-[16px]">{slides[index].title}</b>
-              <span className="text-[12.5px] text-ink-soft tabular-nums">
-                {index + 1} of {count}
-              </span>
-            </p>
-            <button type="button" onClick={() => step(1)} aria-label="Next screen" className={iconButton}>
-              <Chevron className="h-5 w-5 -rotate-90" />
-            </button>
-            {pause}
-          </div>
+          {pause}
         </div>
       ) : (
         <>
@@ -151,7 +133,6 @@ export function AppTour({
           </div>
         </>
       )}
-      {note && <p className="text-center t-small text-ink-soft">{note}</p>}
     </div>
   );
 }

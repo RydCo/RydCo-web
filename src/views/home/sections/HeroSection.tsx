@@ -2,7 +2,7 @@ import { HeroRoute } from "@/components/brand/HeroRoute";
 import { Button } from "@/components/ui/Button";
 import { site } from "@/config/site";
 import { AppTour } from "@/features/app-preview/AppTour";
-import { journey } from "@/features/app-preview/screens/journey/journey";
+import { twoRides } from "@/features/app-preview/screens/journey/journey";
 import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
 
 export function HeroSection() {
@@ -26,11 +26,11 @@ export function HeroSection() {
             </div>
           </div>
           <div className="relative z-10">
-            <AppTour slides={journey} seconds={2.2} long note="Names and prices are examples" phoneClassName="hero-phone" />
+            <AppTour slides={twoRides} seconds={2} bare label="One ride in the RydCo app as a rider and then as its driver, with example names and prices" phoneClassName="hero-phone" />
           </div>
         </div>
-        {/* The line runs up behind the phone, above the tour's controls. */}
-        <div className="mt-10 lg:-mt-[128px] xl:-mt-[168px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[98px]">
+        {/* The line runs up behind the phone, above its pause button. */}
+        <div className="mt-10 lg:-mt-[100px] xl:-mt-[140px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[70px]">
           <HeroRoute label={`Starting with a pilot in ${site.city}`} />
         </div>
       </div>

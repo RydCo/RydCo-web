@@ -7,7 +7,7 @@
     transform: perspective(1500px) rotateY(-17deg) rotateX(6deg) rotateZ(4deg);
   }
 }
-/* On short laptop screens, a smaller phone keeps the tour's controls above the fold. HeroSection moves the route to match. */
+/* On short laptop screens, a smaller phone keeps the pause button above the fold. HeroSection moves the route to match. */
 @media (width >= 80rem) and (height <= 860px) {
   .hero-phone {
     zoom: 0.88;
@@ -20,8 +20,8 @@
     46px 44px 60px -26px color-mix(in srgb, var(--color-ink-deep) 55%, transparent);
 }
 
-/* The phone arrives once on load. The journey's screens (features/app-preview/screens/journey) act out their one
-   moment each time they come up, within their short time on screen. Without motion, all of it is simply there. */
+/* The phone arrives once on load. The screens (features/app-preview/screens/journey) act out their one moment each
+   time they come up, within their short time on screen. Without motion, all of it is simply there. */
 .journey-draw {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 0;
@@ -30,31 +30,20 @@
   .hero-phone {
     animation: hero-phone-in 0.9s var(--ease-out-soft) both;
   }
-  [aria-hidden="false"] .journey-sun {
-    animation: journey-sun-rise 1s var(--ease-out-soft) both;
-  }
   [aria-hidden="false"] .journey-draw {
-    animation: draw-line 0.8s var(--ease-out-soft) 0.2s both;
+    animation: draw-line 0.7s var(--ease-out-soft) 0.1s both;
   }
   [aria-hidden="false"] .journey-fade {
-    animation: journey-fade-in 0.25s linear 0.8s both;
+    animation: journey-fade-in 0.2s linear 0.6s both;
   }
   [aria-hidden="false"] .journey-note {
-    animation: journey-note-in 0.4s var(--ease-out-soft) 0.95s both;
-  }
-  [aria-hidden="false"] .journey-digit {
-    animation: journey-digit-in 0.16s var(--ease-out-soft) both;
+    animation: journey-note-in 0.3s var(--ease-out-soft) 0.7s both;
   }
 }
 @keyframes hero-phone-in {
   from {
     opacity: 0;
     translate: 0 28px;
-  }
-}
-@keyframes journey-sun-rise {
-  from {
-    translate: 0 130px;
   }
 }
 @keyframes journey-fade-in {
@@ -66,11 +55,5 @@
   from {
     opacity: 0;
     translate: 0 -14px;
-  }
-}
-@keyframes journey-digit-in {
-  from {
-    opacity: 0;
-    scale: 0.6;
   }
 }

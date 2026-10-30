@@ -166,11 +166,11 @@ One loud moment, everything else quiet.
 - The line enters from the right edge of the brand field, passes behind the phone, loops round the pilot label and
   underlines it, as the logo's line underlines the wordmark. The car rides its tip and parks at the end. The label is
   visible from the first paint.
-- Hero phone: leans back in space and rises in once (0.9s), then steps through a rider's whole journey as an app tour
-  (see below), 2.2s a screen: from the splash and sign-up to paying the driver, 15 screens rebuilt from the app mock in
-  its order and used nowhere else on the site (`src/features/app-preview/screens/journey`). Each acts out its one
-  moment when it comes up: the splash's sun rises, a route draws, the code's digits fill in, the "accepted"
-  notification drops in. The tour has back, next and pause buttons, since 15 dots wouldn't fit.
+- Hero phone: leans back in space and rises in once (0.9s), then loops two rides as an app tour, 2s a screen with a
+  150ms change between them: one ride as a rider (Find a ride to Settle trip), then the same trip as its driver (Offer a
+  ride to Confirm payments). 13 screens rebuilt from the app mock in its order and used nowhere else on the site
+  (`src/features/app-preview/screens/journey`). A route draws and the "accepted" notification drops in as their screens
+  come up. No captions or arrows, only a pause button under the phone (WCAG 2.2.2).
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
@@ -240,9 +240,8 @@ Crossfades become cuts.
 ### Home (riders first)
 1. **Hero:** brand field, full width, in two columns. Left: h1 "Your commute, in good company.", one line saying what
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
-   to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone touring
-   a rider's journey from sign-up to settling up (`AppTour` with the `journey` screens, in the app's Sky Sheet layout),
-   with "Names and prices are examples" under it. Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
+   to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
+   one ride as a rider and then as its driver (`AppTour` with the `journey` screens, in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
    the columns stack, with the phone after the check.
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a

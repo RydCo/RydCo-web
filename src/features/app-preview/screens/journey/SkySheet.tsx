@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { Car } from "@/components/brand/Car";
+import { toneOn } from "@/components/brand/tones";
 
 // The app's Sky Sheet layout (app-mocks/index (1).html), scaled to fit PhoneFrame: the Lahore map fills the phone and
 // each screen is a rounded sheet risen over it, with its back button and step label floating above.
@@ -80,23 +82,39 @@ export function Primary({ children }: { children: ReactNode }) {
 }
 
 export function Secondary({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <span className={`grid h-9 flex-none place-items-center rounded-full bg-screen text-[12.5px] font-semibold ${className}`}>{children}</span>;
-}
-
-export function TextAction({ children }: { children: ReactNode }) {
-  return <span className="py-0.5 text-center text-[12px] font-semibold text-accent-deep">{children}</span>;
+  return <span className={`grid h-10 flex-none place-items-center rounded-full bg-screen text-[12.5px] font-semibold ${className}`}>{children}</span>;
 }
 
 export function Label({ children }: { children: ReactNode }) {
   return <p className="text-[11px] leading-tight font-semibold text-ink-soft">{children}</p>;
 }
 
-// A form field as it looks filled in.
-export function Field({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
+export function Avatar({ children }: { children: ReactNode }) {
   return (
-    <div className="grid gap-1">
-      <Label>{label}</Label>
-      <span className={`flex h-8 items-center truncate rounded-[11px] bg-screen px-2.5 text-[12.5px] font-medium ${mono ? "tabular-nums" : ""}`}>{value}</span>
+    <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-brand font-display text-[12px] font-extrabold">
+      {children}
+    </span>
+  );
+}
+
+export function SafetyActions() {
+  return (
+    <div className="grid grid-cols-3 gap-1.5">
+      <Secondary>Share</Secondary>
+      <Secondary>Chat</Secondary>
+      <span className="grid h-10 place-items-center rounded-full bg-sos font-display text-[13px] font-extrabold text-on-sos">SOS</span>
+    </div>
+  );
+}
+
+export function Windows() {
+  return (
+    <div className="grid grid-cols-4 gap-1 text-center text-[10px] font-semibold tabular-nums">
+      {["7:15–7:35", "7:30–7:50", "7:45–8:05", "8:00–8:20"].map((w) => (
+        <span key={w} className={`rounded-full py-1.5 ${w === "7:30–7:50" ? "bg-accent-strong text-on-accent" : "bg-panel text-ink-soft"}`}>
+          {w}
+        </span>
+      ))}
     </div>
   );
 }
@@ -160,6 +178,16 @@ export function MapLabel({ x, y, end = false, children }: { x: number; y: number
     <text x={x} y={y} textAnchor={end ? "end" : "start"} className="fill-ink stroke-screen text-[10px] font-semibold" strokeWidth="3" strokeLinejoin="round" style={{ paintOrder: "stroke" }}>
       {children}
     </text>
+  );
+}
+
+// The commute with the car on it and the arrival time over the map, during a trip.
+export function LiveMap({ height, carX, carY, eta }: { height: number; carX: number; carY: number; eta: string }) {
+  return (
+    <div className="relative flex-none">
+      <RouteCard height={height} from="" car={<Car tone={toneOn.brand} transform={`translate(${carX} ${carY}) scale(0.85)`} />} />
+      <span className="absolute top-2 left-2 rounded-full bg-panel px-2.5 py-1 text-[11px] font-semibold tabular-nums">{eta}</span>
+    </div>
   );
 }
 
