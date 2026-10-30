@@ -16,12 +16,14 @@ export function PageHero({
   lead,
   actions,
   aside,
+  asideClassName = "",
 }: {
   ground?: Ground;
   title: ReactNode;
   lead?: ReactNode;
   actions?: ReactNode;
   aside?: ReactNode;
+  asideClassName?: string;
 }) {
   return (
     <section aria-labelledby="page-title" className={`overflow-x-clip ${grounds[ground]}`}>
@@ -34,7 +36,7 @@ export function PageHero({
             {lead && <p className="mt-7 max-w-[42ch] text-[19px] md:text-[21px]">{lead}</p>}
             {actions && <div className="mt-9 flex flex-wrap gap-3">{actions}</div>}
           </div>
-          {aside && <div className="lg:col-span-5">{aside}</div>}
+          {aside && <div className={`lg:col-span-5 ${asideClassName}`}>{aside}</div>}
         </div>
       </div>
     </section>

@@ -9,6 +9,7 @@ import {
   TripLiveScreen,
   WelcomeScreen,
 } from "@/components/AppScreens";
+import { AppTour } from "@/components/AppTour";
 import { Button } from "@/components/Button";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { PageHero } from "@/components/PageHero";
@@ -69,6 +70,14 @@ const steps: { title: string; text: string; screen: ReactNode; label: string }[]
   },
 ];
 
+// The hero's tour: the heart of the flow on one phone, before the step-by-step below.
+const tour = [
+  { title: "Find a ride", screen: <ResultsScreen /> },
+  { title: "Request a seat", screen: <RequestScreen /> },
+  { title: "Ride together", screen: <TripLiveScreen /> },
+  { title: "Settle up", screen: <SettleScreen /> },
+];
+
 const questions = [
   {
     q: "Is RydCo a taxi?",
@@ -127,6 +136,9 @@ export default function HowItWorks() {
             </Button>
           </>
         }
+        // On phones each step below already has its screen, so the tour is for wider screens only.
+        aside={<AppTour slides={tour} />}
+        asideClassName="hidden lg:block"
       />
 
       <section aria-label="The steps" className="bg-cream pb-24 lg:pb-40">
