@@ -16,7 +16,7 @@ export function PhoneFrame({ children, label, className = "" }: { children: Reac
   );
 }
 
-function StatusBar() {
+export function StatusBar() {
   return (
     <div aria-hidden="true" className="relative z-10 flex flex-none items-center justify-between px-6 pt-4 pb-2 text-[12.5px] font-semibold tabular-nums">
       <span>9:41</span>

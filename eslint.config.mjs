@@ -37,6 +37,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The motion graphics scene build (npm run motion).
+    ".motion-build/**",
     // Installed design skill and its tooling output, not site code.
     ".agents/**",
     ".taste-skill/**",
