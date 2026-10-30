@@ -52,7 +52,7 @@ Six colours. Nothing else, except one derived text tone (marked below).
 
 | Token | Hex | Job |
 | --- | --- | --- |
-| `apricot` | #EA6A2A | Brand colour. Hero field, big colour blocks, highlights. Used boldly, in whole sections. |
+| `apricot` | #FF7518 | Brand colour ("Pumpkin"). Hero field, big colour blocks, highlights. Used boldly, in whole sections. |
 | `apricot-deep` | #C24E15 | Main buttons (white text) on light grounds. Links on cream. |
 | `cocoa` | #2C1E18 | All text, the logo, dark sections, buttons on an apricot field. |
 | `cream` | #FFF8F3 | Page background. |
@@ -67,7 +67,8 @@ Six colours. Nothing else, except one derived text tone (marked below).
 | Pair | Ratio | Use |
 | --- | --- | --- |
 | cocoa on cream | 15:1 | All body text |
-| cocoa on apricot | 5.0:1 | Text on the hero and on apricot blocks (AA, any size) |
+| cocoa on apricot | 6.0:1 | Text on the hero and on apricot blocks (AA, any size) |
+| apricot on cocoa | 6.0:1 | Footer headings and links on dark sections |
 | white on apricot-deep | 4.8:1 | Button labels (AA) |
 | apricot-deep on cream | 4.5:1 | Text links (AA, just) |
 | trust on cream / white on trust | 5.0 / 5.3:1 | Verified badges |
