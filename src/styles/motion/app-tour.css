@@ -1,0 +1,16 @@
+/* App tour (features/app-preview/AppTour.tsx): the active dot fills while its screen shows; when it's full the tour moves on.
+   Held while the tour is paused or off screen, and while the phone is pointed at. */
+.tour-fill {
+  scale: 0 1;
+  transform-origin: left;
+  animation: tour-fill linear forwards;
+}
+.tour[data-running="false"] .tour-fill,
+.tour:has(.tour-phone:hover) .tour-fill {
+  animation-play-state: paused;
+}
+@keyframes tour-fill {
+  to {
+    scale: 1 1;
+  }
+}

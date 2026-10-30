@@ -1,0 +1,34 @@
+@layer base {
+  html {
+    background: var(--color-cream);
+    color: var(--color-cocoa);
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 96px;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (max-width: 399px) {
+    body {
+      font-size: 17px;
+    }
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-cocoa);
+    outline-offset: 3px;
+  }
+  .on-cocoa :focus-visible {
+    outline-color: var(--color-cream);
+  }
+  /* A light panel inside a cocoa section goes back to the cocoa outline. */
+  .on-cocoa .on-light :focus-visible {
+    outline-color: var(--color-cocoa);
+  }
+  ::selection {
+    background: var(--color-cocoa);
+    color: var(--color-cream);
+  }
+}

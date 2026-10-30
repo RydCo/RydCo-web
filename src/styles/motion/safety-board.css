@@ -1,0 +1,88 @@
+/* Safety board (views/home/components/SafetyBoard.tsx): each tile marked to play acts its feature out once, when half of it is
+   on screen. Checks go from pending (cocoa-soft) to trust green with their tick, the women-only switch slides on,
+   the stars pop in one by one, and "Sharing live" sends out one ring. Same .reveal-ready rule as Many into one. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-play] .sb-check {
+    background-color: var(--color-cocoa-soft);
+    color: var(--color-cream);
+  }
+  .reveal-ready [data-play] .sb-check > svg,
+  .reveal-ready [data-play] .sb-star {
+    scale: 0;
+  }
+  .reveal-ready [data-play] .sb-track {
+    background-color: var(--color-cocoa-soft);
+  }
+  .reveal-ready [data-play] .sb-knob {
+    translate: -1.1em 0;
+  }
+  .reveal-ready [data-play].is-playing .sb-check {
+    animation: sb-verify 380ms var(--ease-out-soft) var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .sb-check > svg {
+    animation: sb-pop 360ms var(--ease-out-soft) calc(var(--d) + 120ms) both;
+  }
+  .reveal-ready [data-play].is-playing .sb-track {
+    animation: sb-track 420ms ease var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .sb-knob {
+    animation: sb-switch 420ms cubic-bezier(0.3, 0.7, 0.4, 1) var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .sb-star {
+    animation: sb-pop 420ms cubic-bezier(0.3, 1.6, 0.5, 1) var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .sb-pulse::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 3px solid var(--color-trust);
+    opacity: 0;
+    pointer-events: none;
+    animation: sb-ring 1100ms var(--ease-out-soft) var(--d) forwards;
+  }
+}
+@keyframes sb-verify {
+  from {
+    background-color: var(--color-cocoa-soft);
+    color: var(--color-cream);
+  }
+  to {
+    background-color: var(--color-trust);
+    color: var(--color-white);
+  }
+}
+@keyframes sb-pop {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+@keyframes sb-track {
+  from {
+    background-color: var(--color-cocoa-soft);
+  }
+  to {
+    background-color: var(--color-cocoa);
+  }
+}
+@keyframes sb-switch {
+  from {
+    translate: -1.1em 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes sb-ring {
+  from {
+    scale: 1;
+    opacity: 0.9;
+  }
+  to {
+    scale: 1.45;
+    opacity: 0;
+  }
+}

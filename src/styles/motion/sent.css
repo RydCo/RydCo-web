@@ -1,0 +1,40 @@
+/* Sent (components/forms/Sent.tsx): plays once when a form's thank-you appears. The car rides the tip of the line
+   from the dot to its spot, then the message rises in. */
+@media (prefers-reduced-motion: no-preference) {
+  .sent-line {
+    stroke-dasharray: 1 1;
+    animation: sent-draw 700ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  .sent-car {
+    animation: sent-drive 700ms cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+  .sent-text {
+    animation: sent-in 450ms var(--ease-out-soft) 600ms both;
+  }
+}
+@keyframes sent-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sent-drive {
+  from {
+    translate: -184px 0;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+@keyframes sent-in {
+  from {
+    opacity: 0;
+    translate: 0 10px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}

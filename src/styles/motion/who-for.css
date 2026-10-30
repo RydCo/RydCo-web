@@ -1,0 +1,42 @@
+/* "Who it's for": the row being pointed at or focused shows its preview and its route mark.
+   With nothing hovered, the first row is the active one. */
+.who-preview {
+  opacity: 0;
+  transition: opacity 240ms var(--ease-out-soft);
+}
+.who [data-preview="0"] {
+  opacity: 1;
+}
+.who:has([data-row]:is(:hover, :focus-within)) [data-preview="0"] {
+  opacity: 0;
+}
+.who:has([data-row="0"]:is(:hover, :focus-within)) [data-preview="0"],
+.who:has([data-row="1"]:is(:hover, :focus-within)) [data-preview="1"],
+.who:has([data-row="2"]:is(:hover, :focus-within)) [data-preview="2"],
+.who:has([data-row="3"]:is(:hover, :focus-within)) [data-preview="3"] {
+  opacity: 1;
+}
+@media (width >= 64rem) {
+  .who-dot,
+  .who-line {
+    transition: scale 200ms var(--ease-out-soft);
+  }
+  .who-dot {
+    scale: 0.5;
+  }
+  .who-line {
+    scale: 0 1;
+    transform-origin: left;
+  }
+  .who:not(:has([data-row]:is(:hover, :focus-within))) [data-row="0"] :is(.who-dot, .who-line),
+  .who [data-row]:is(:hover, :focus-within) :is(.who-dot, .who-line) {
+    scale: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .who-preview,
+  .who-dot,
+  .who-line {
+    transition: none;
+  }
+}
