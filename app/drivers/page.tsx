@@ -5,7 +5,8 @@ import { Button } from "@/components/Button";
 import { PageHero } from "@/components/PageHero";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Section, reveal } from "@/components/Section";
-import { driverCta } from "@/lib/site";
+import { DriverForm } from "@/components/DriverForm";
+import { driverCta, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Drive with RydCo",
@@ -188,23 +189,29 @@ export default function Drivers() {
         </div>
       </Section>
 
-      <Section ground="cocoa" labelledBy="drive-cta-title">
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-8">
+      <Section ground="cocoa" id="driver-signup" labelledBy="drive-cta-title">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-5">
             <h2 id="drive-cta-title" className="t-h2" {...reveal(0)}>
               Ready to offer a seat?
             </h2>
-            <p className="mt-5 max-w-[48ch]" {...reveal(1)}>
+            <p className="mt-5 max-w-[40ch]" {...reveal(1)}>
               Tell us your route and when you leave. We&rsquo;ll get you set up as one of the first drivers on the Lahore pilot.
             </p>
             <div className="mt-6 flex flex-wrap gap-2" {...reveal(2)}>
               <Badge tone="neutral">Review target: 24 hours</Badge>
             </div>
           </div>
-          <div className="lg:col-span-4 lg:justify-self-end" {...reveal(2)}>
-            <Button href={cta.href} external={cta.external} variant="apricot">
-              {cta.label}
-            </Button>
+          <div className="lg:col-span-7" {...reveal(2)}>
+            {site.playStoreUrl ? (
+              <Button href={cta.href} external={cta.external} variant="apricot">
+                {cta.label}
+              </Button>
+            ) : (
+              <div className="on-light rounded-[28px] bg-apricot-tint p-6 text-cocoa md:p-8">
+                <DriverForm />
+              </div>
+            )}
           </div>
         </div>
       </Section>

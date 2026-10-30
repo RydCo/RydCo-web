@@ -115,6 +115,22 @@ export default function Privacy() {
           ),
         },
         {
+          id: "website",
+          title: "This website's forms",
+          body: (
+            <>
+              <p>
+                When you join the waitlist, sign up to drive or send a message here, we receive what you type: your name, mobile number or email, the areas you
+                choose, and your message.
+              </p>
+              <p>
+                It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to us. We use it only to reply to you and to tell you when RydCo opens
+                on your route. Ask us at any time to delete it. [FILL: how long waitlist entries are kept]
+              </p>
+            </>
+          ),
+        },
+        {
           id: "changes",
           title: "Changes to this policy",
           body: <p>When this policy changes, the app shows you what changed and asks you to accept the new version before you book new rides.</p>,

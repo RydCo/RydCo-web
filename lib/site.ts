@@ -13,9 +13,11 @@ export const site = {
   instagram: "https://www.instagram.com/rydco.app/",
   instagramHandle: "@rydco.app",
   city: "Lahore",
-  // [FILL] App status. While these are null, the main buttons open an email to join the waitlist.
+  // [FILL] App status. While this is null, the main buttons take people to the waitlist form on the home page.
   playStoreUrl: null as string | null,
-  waitlistUrl: null as string | null,
+  // [FILL] The Google Apps Script web app URL that stores form submissions (README → "Connect the forms").
+  // Set NEXT_PUBLIC_FORM_ENDPOINT on your host. Until then, forms open a pre-filled email instead.
+  formEndpoint: process.env.NEXT_PUBLIC_FORM_ENDPOINT || null,
 };
 
 export function mailto(subject: string, body?: string) {
@@ -27,47 +29,36 @@ export function mailto(subject: string, body?: string) {
 
 export type Cta = { label: string; href: string; external: boolean };
 
-export function riderCta(route?: { from: string; to: string }): Cta {
+export function riderCta(): Cta {
   if (site.playStoreUrl) {
     return { label: "Get the app", href: site.playStoreUrl, external: true };
   }
-  if (site.waitlistUrl) {
-    return { label: "Join the waitlist", href: site.waitlistUrl, external: true };
-  }
-  const routeLine = route ? `I start in ${route.from} and I'm headed to ${route.to}.\n` : "Where I start:\nWhere I'm headed:\n";
-  return {
-    label: "Join the waitlist",
-    href: mailto("Join the RydCo waitlist", `Assalam o alaikum RydCo,\n\nPlease add me to the waitlist.\n\nName:\nPhone:\n${routeLine}`),
-    external: true,
-  };
+  return { label: "Join the waitlist", href: "/#waitlist", external: false };
 }
 
 export function driverCta(): Cta {
   if (site.playStoreUrl) {
     return { label: "Get the app and drive", href: site.playStoreUrl, external: true };
   }
-  return {
-    label: "Sign up to drive",
-    href: mailto(
-      "I want to drive with RydCo",
-      "Assalam o alaikum RydCo,\n\nI'd like to offer seats on my commute.\n\nName:\nPhone:\nCar (make, model, year):\nWhere I start:\nWhere I'm headed:\nUsual departure time:\n",
-    ),
-    external: true,
-  };
+  return { label: "Sign up to drive", href: "/drivers/#driver-signup", external: false };
 }
 
-export const safetyEnquiry = mailto("A question about safety on RydCo");
-export const helloEnquiry = mailto("Hello RydCo");
+// Topics for the contact form. Links can open it with one chosen: /contact/?topic=company#message
+export const contactTopics = [
+  { id: "riding", label: "Riding with RydCo" },
+  { id: "driving", label: "Driving with RydCo" },
+  { id: "company", label: "A commute pilot for our company" },
+  { id: "partner", label: "Partnering or sponsoring" },
+  { id: "safety", label: "Safety, checks or my data" },
+  { id: "other", label: "Something else" },
+] as const;
 
-export const pilotEnquiry = mailto(
-  "RydCo commute pilot for our team",
-  "Assalam o alaikum RydCo,\n\nWe'd like to talk about a commute pilot for our team.\n\nCompany:\nOffice location:\nRoughly how many people:\nContact person:\nPhone:\n",
-);
+export type ContactTopic = (typeof contactTopics)[number]["id"];
 
-export const partnerEnquiry = mailto(
-  "Partnering with RydCo",
-  "Assalam o alaikum RydCo,\n\nWe'd like to talk about partnering with you.\n\nName:\nOrganization:\nHow we'd like to help:\n",
-);
+export const contactLink = (topic: ContactTopic) => `/contact/?topic=${topic}#message`;
+export const pilotEnquiry = contactLink("company");
+export const partnerEnquiry = contactLink("partner");
+export const safetyEnquiry = contactLink("safety");
 
 // Roles are left out on purpose for now. [FILL] Add photos and roles when ready.
 export const team = ["Tehreem Tahir", "Manal Bukhari", "Ezza Abdullah", "Ahmad Butt"];

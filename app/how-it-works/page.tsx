@@ -10,11 +10,11 @@ import {
   WelcomeScreen,
 } from "@/components/AppScreens";
 import { Button } from "@/components/Button";
-import { CoverageCheck } from "@/components/CoverageCheck";
+import { WaitlistForm } from "@/components/WaitlistForm";
 import { PageHero } from "@/components/PageHero";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Section, reveal } from "@/components/Section";
-import { riderCta } from "@/lib/site";
+import { riderCta, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "How it works",
@@ -105,7 +105,8 @@ const questions = [
 ];
 
 export default function HowItWorks() {
-  const cta = riderCta();
+  // The waitlist form is at the bottom of this page, so the hero button scrolls to it rather than leaving.
+  const cta = site.playStoreUrl ? riderCta() : { label: "Join the waitlist", href: "#check", external: false };
   return (
     <>
       <PageHero
@@ -187,7 +188,7 @@ export default function HowItWorks() {
             </p>
           </div>
           <div className="rounded-[28px] bg-apricot-tint p-6 md:p-8 lg:col-span-7" {...reveal(2)}>
-            <CoverageCheck />
+            <WaitlistForm />
           </div>
         </div>
       </Section>

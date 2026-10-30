@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { CoverageScreen, ResultsScreen, SharesScreen, StopsScreen, WelcomeScreen } from "@/components/AppScreens";
 import { Tick } from "@/components/Badge";
 import { Button } from "@/components/Button";
-import { CoverageCheck } from "@/components/CoverageCheck";
+import { WaitlistForm } from "@/components/WaitlistForm";
 import { ManyIntoOne } from "@/components/ManyIntoOne";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { HeroRoute, RouteBand } from "@/components/RouteLine";
@@ -160,7 +160,7 @@ export default function Home() {
         </div>
       </Section>
 
-      <Section ground="tint" id="get-the-app" labelledBy="app-title">
+      <Section ground="tint" id="waitlist" labelledBy="app-title">
         <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
           <div className="order-2 lg:order-1 lg:col-span-5" {...reveal(2)}>
             <PhoneFrame label="The first screen of the RydCo app: Assalam o alaikum. I'm RydCo. How would you like to travel?">
@@ -177,7 +177,7 @@ export default function Home() {
                 : "It opens first on the Lahore pilot routes. Check that yours is covered, then join the waitlist and we’ll message you when it’s ready to download."}
             </p>
             <div className="mt-8" {...reveal(2)}>
-              <CoverageCheck />
+              <WaitlistForm />
             </div>
             <details className="group mt-8">
               <summary className="inline-flex cursor-pointer list-none items-center gap-2 py-2 font-semibold underline decoration-2 underline-offset-[6px]">

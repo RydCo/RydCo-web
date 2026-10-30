@@ -46,6 +46,10 @@
   .on-cocoa :focus-visible {
     outline-color: var(--color-cream);
   }
+  /* A light panel inside a cocoa section goes back to the cocoa outline. */
+  .on-cocoa .on-light :focus-visible {
+    outline-color: var(--color-cocoa);
+  }
   ::selection {
     background: var(--color-cocoa);
     color: var(--color-cream);
