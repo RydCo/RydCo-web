@@ -23,7 +23,7 @@
       left: 9px;
       width: 4px;
       border-radius: 9999px;
-      background-color: var(--color-ink);
+      background-color: var(--color-accent-strong);
       transform-origin: top;
       animation: rail-fill linear both;
       animation-timeline: --rail;
@@ -47,6 +47,6 @@
     background-color: var(--color-panel);
   }
   to {
-    background-color: var(--color-ink);
+    background-color: var(--color-accent-strong);
   }
 }

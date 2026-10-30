@@ -5,7 +5,9 @@
 @import "./tokens.css";
 @import "./base.css";
 @import "./utilities.css";
+@import "./gradients.css";
 @import "./motion/keyframes.css";
+@import "./motion/hero-sun.css";
 @import "./motion/who-for.css";
 @import "./motion/hero-route.css";
 @import "./motion/reveal.css";

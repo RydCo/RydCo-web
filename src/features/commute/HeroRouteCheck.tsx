@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
+import { buttonClasses } from "@/components/ui/button-styles";
 import { Chevron } from "@/components/ui/icons";
 import { riderCta } from "@/config/cta";
 import { startAreas, destinationAreas } from "@/config/pilot";
@@ -18,7 +19,7 @@ const HERO = "hero";
 function CarMark() {
   return (
     <svg viewBox="-16 -17 32 20" aria-hidden="true" className="block h-[16px] w-[26px]">
-      <Car tone={toneOn.surface} />
+      <Car tone={toneOn.screen} />
     </svg>
   );
 }
@@ -66,16 +67,15 @@ export function HeroRouteCheck({ aside }: { aside?: ReactNode }) {
   const { from, to } = useCommute();
   const cta = riderCta();
 
-  const button =
-    "inline-flex min-h-[56px] flex-none items-center justify-center rounded-full bg-accent px-7 text-[17px] font-semibold text-on-accent transition-[transform,background-color] duration-150 hover:bg-ink active:scale-[0.97] motion-reduce:transition-none md:ml-1";
+  const button = `${buttonClasses("primary")} min-h-[56px] flex-none md:ml-1`;
 
   return (
     <div>
-      <form action="/#waitlist" onSubmit={goToWaitlist} className="relative flex flex-col gap-1.5 rounded-surface bg-surface p-2 md:flex-row md:items-center md:gap-0 md:rounded-full">
+      <form action="/#waitlist" onSubmit={goToWaitlist} className="relative flex flex-col gap-1.5 rounded-surface bg-screen p-2 md:flex-row md:items-center md:gap-0 md:rounded-full">
         {/* On phones the route runs down the left, from the start dot to the car. */}
-        <span aria-hidden="true" className="absolute top-[40px] left-[35px] z-[1] h-[70px] w-[4px] rounded-full bg-ink md:hidden" />
+        <span aria-hidden="true" className="absolute top-[40px] left-[35px] z-[1] h-[70px] w-[4px] rounded-full bg-accent-strong md:hidden" />
         <Area name="from" label="I start in" value={from} areas={startAreas} marker={<span className="block h-3.5 w-3.5 rounded-full bg-ink" />} />
-        <span aria-hidden="true" className="hidden h-[4px] w-7 flex-none rounded-full bg-ink md:block" />
+        <span aria-hidden="true" className="hidden h-[4px] w-7 flex-none rounded-full bg-accent-strong md:block" />
         <Area name="to" label="I’m headed to" value={to} areas={destinationAreas} marker={<CarMark />} />
         {cta.external ? (
           <a href={cta.href} target="_blank" rel="noopener" className={button}>

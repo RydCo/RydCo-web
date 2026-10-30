@@ -9,7 +9,7 @@ export function Sent({ title, children }: { title: string; children: ReactNode }
     <div role="status" className="rounded-surface bg-surface p-7 md:p-9">
       <svg viewBox="0 0 220 40" aria-hidden="true" className="block h-auto w-[176px]">
         <circle cx="8" cy="30" r="7" className="fill-ink" />
-        <path d="M8 30 H184" pathLength={1} className="sent-line fill-none stroke-ink" strokeWidth="6" strokeLinecap="round" />
+        <path d="M8 30 H184" pathLength={1} className="sent-line fill-none stroke-accent-strong" strokeWidth="6" strokeLinecap="round" />
         <g className="sent-car">
           <Car tone={toneOn.surface} transform="translate(192 30) scale(1.7)" />
         </g>

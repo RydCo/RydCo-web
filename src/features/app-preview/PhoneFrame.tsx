@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 export function PhoneFrame({ children, label, className = "" }: { children: ReactNode; label: string; className?: string }) {
   return (
     <figure className={`mx-auto w-[300px] max-w-full ${className}`}>
-      <div className="rounded-[44px] bg-ink p-[10px]">
+      <div className="rounded-[44px] bg-ink-deep p-[10px]">
         <div data-ui className="relative flex aspect-[9/19] flex-col overflow-hidden rounded-[34px] bg-surface text-[13px] leading-snug text-ink">
           <StatusBar />
           {children}

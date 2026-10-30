@@ -51,9 +51,9 @@ function Diagram({ g, className }: { g: Geo; className: string }) {
       {dots.map((d, i) => (
         <circle key={i} cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={g.r} className="mio-home fill-ink-soft" style={playAt(i * 22)} />
       ))}
-      <path d={`M${g.merge} ${mid} L${g.end} ${mid}`} pathLength={1} className="mio-shared stroke-ink" strokeWidth={g.line} strokeLinecap="round" />
+      <path d={`M${g.merge} ${mid} L${g.end} ${mid}`} pathLength={1} className="mio-shared stroke-accent-strong" strokeWidth={g.line} strokeLinecap="round" />
       {riders.map((x, i) => (
-        <circle key={x} cx={x} cy={mid} r={g.line * 0.95} className="mio-move fill-accent stroke-surface" style={playAt(1100 + i * 80, x - g.merge)} strokeWidth="4" />
+        <circle key={x} cx={x} cy={mid} r={g.line * 0.95} className="mio-move fill-accent-strong stroke-surface" style={playAt(1100 + i * 80, x - g.merge)} strokeWidth="4" />
       ))}
       <g className="mio-move" style={playAt(1000, g.car - g.merge)}>
         <Car tone={toneOn.surface} transform={`translate(${g.car} ${mid - g.line / 2}) scale(${g.scale})`} />

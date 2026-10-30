@@ -11,7 +11,7 @@ export function LegalPage({ title, lead, sections }: { title: string; lead: stri
       <div className="bg-surface pb-24 lg:pb-40">
         <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
           <aside className="lg:col-span-4">
-            <div className="on-ink rounded-surface bg-ink p-7 text-surface lg:sticky lg:top-32">
+            <div className="on-ink rounded-surface field-ink p-7 text-surface lg:sticky lg:top-32">
               <p className="font-display text-[22px] leading-tight font-bold">Draft, to be reviewed by a lawyer</p>
               <p className="mt-3 text-[16px]">
                 This page shows the structure we plan to use. It is not final and is not legal advice. Items marked [FILL] still need a decision.

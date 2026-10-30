@@ -17,7 +17,7 @@ export function SharesScreen() {
         <Bot strong>How should riders pay you?</Bot>
         <div className="flex flex-wrap gap-1.5">
           {["Cash", "JazzCash", "NayaPay", "Bank / Raast"].map((m, i) => (
-            <span key={m} className={`rounded-full px-3 py-1.5 text-[12px] font-semibold ${i < 2 ? "bg-ink text-surface" : "bg-screen"}`}>
+            <span key={m} className={`rounded-full px-3 py-1.5 text-[12px] font-semibold ${i < 2 ? "bg-accent-strong text-on-accent" : "bg-screen"}`}>
               {m}
             </span>
           ))}

@@ -7,11 +7,11 @@ export function RequestScreen() {
       <Body>
         <div className="grid grid-cols-2 rounded-full bg-screen p-1 text-center text-[12.5px] font-semibold">
           <span className="rounded-full py-2">This date</span>
-          <span className="rounded-full bg-accent py-2 text-on-accent">Repeating</span>
+          <span className="rounded-full action py-2">Repeating</span>
         </div>
         <div className="flex gap-1.5">
           {["Mon", "Tue", "Wed", "Thu", "Fri"].map((d) => (
-            <span key={d} className="grid h-9 flex-1 place-items-center rounded-full bg-ink text-[12px] font-semibold text-surface">
+            <span key={d} className="grid h-9 flex-1 place-items-center rounded-full bg-accent-strong text-[12px] font-semibold text-on-accent">
               {d}
             </span>
           ))}

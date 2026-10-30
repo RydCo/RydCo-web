@@ -59,14 +59,14 @@ export function StepsSection() {
   return (
     <section aria-label="The steps" className="bg-surface pb-24 lg:pb-40">
       <div className="wrap">
-        <ol className="rail relative before:absolute before:top-3 before:bottom-3 before:left-[9px] before:w-[4px] before:rounded-full before:bg-ink">
+        <ol className="rail relative before:absolute before:top-3 before:bottom-3 before:left-[9px] before:w-[4px] before:rounded-full before:bg-accent-strong">
           {steps.map((s, i) => (
             <li key={s.title} className="relative grid gap-10 pb-20 pl-12 last:pb-0 md:pl-16 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pb-28">
               <div className="relative lg:col-span-6" {...reveal(0)}>
                 {/* The stop sits level with the step's heading, on the rail at the li's left edge. */}
                 <span
                   aria-hidden="true"
-                  className={`rail-stop absolute top-1 -left-12 h-[22px] w-[22px] rounded-full md:-left-16 md:top-2 lg:top-4 ${i === steps.length - 1 ? "border-[5px] border-ink bg-surface" : "bg-ink"}`}
+                  className={`rail-stop absolute top-1 -left-12 h-[22px] w-[22px] rounded-full md:-left-16 md:top-2 lg:top-4 ${i === steps.length - 1 ? "border-[5px] border-accent-strong bg-surface" : "bg-accent-strong"}`}
                 />
                 <h2 className="t-h2">{s.title}</h2>
                 <p className="mt-5 max-w-[46ch]">{s.text}</p>

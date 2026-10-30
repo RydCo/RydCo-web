@@ -48,23 +48,49 @@ from the app's own "Check your commute?" screen. Without JavaScript it falls bac
 
 ## 3. Colour
 
-All colours live in one file, `src/config/theme.mjs`, and are named for their job, not their look, so `bg-brand`
-stays true in any theme. To change the theme, edit that file or point `activeTheme` at another theme. The site's colours,
-the browser bar, the favicon and the link-preview image all follow (`scripts/build-theme.mjs` generates them), and the
-build stops if a theme's text wouldn't be readable.
+The site uses the app's palette, taken from its Sky Sheet mockup, so the two read as one product. All colours live in one
+file, `src/config/theme.mjs`, and are named for their job, not their look. To change the theme, edit that file or point
+`activeTheme` at another theme. The site's colours and gradients, the favicon and the link-preview image all follow
+(`scripts/build-theme.mjs` generates them), and the build stops if a theme's text wouldn't be readable.
 
-| Role | Current value | Job |
-| --- | --- | --- |
-| `brand` | #FFE8D7 | Hero field and big colour blocks, in whole sections. Highlights on ink. |
-| `panel` | #FFD7BD | One step deeper than brand: soft section backgrounds, panels and cards, chips, input surrounds. |
-| `accent` | #C24E15 | Main buttons on light grounds. Links on surface. Small marks on light grounds: route lines, bullet dots, stars, progress. |
-| `on-accent` | #FFFFFF | Text on an accent button. |
-| `ink` | #2C1E18 | All text, the logo, dark sections, buttons on a brand field. |
-| `ink-soft` | #6B5A52 | Secondary text only (captions, footnotes). The same tone the app uses. |
-| `surface` | #FFF8F3 | Page background, light cards, light text on ink. |
-| `screen` | #FFFFFF | Only the inside of a phone mockup. |
-| `trust` | #1F7A5A | Only for "verified" or "confirmed" signals: badges, ticks. Never decoration or buttons. |
-| `on-trust` | #FFFFFF | Text on a trust badge. |
+| Role | Value | App token | Job |
+| --- | --- | --- | --- |
+| `surface` | #FFF6EE | `--ground` | Page background, light cards, light text on ink. |
+| `brand` | #FFE3CF | `--cyan` | Hero and big colour blocks, where the gradient ends up. |
+| `panel` | #FBE3D4 | `--accent-wash` | Soft sections, cards, chips. |
+| `screen` | #FFFFFF | `--surface` | Form fields, secondary buttons, the inside of phone mockups. |
+| `line` | #E3C6AF | `--line-2` | The edge of a secondary button. |
+| `accent` | #DB6A33 | `--accent` | The app's orange: the top of the button gradient, the sun, bullets, stars, map routes. |
+| `accent-strong` | #C2551F | none | Where button labels start sitting. Route lines on brand or panel, selected states. |
+| `accent-deep` | #A8430F | none | The foot of the button gradient, text links, ticks. |
+| `on-accent` | #FFFFFF | `--on-accent` | Text on the button gradient. |
+| `ink` | #3A2A22 | `--ink` | All text, the wordmark and car, dark sections. |
+| `ink-deep` | #2A201A | `--device` | Where dark sections deepen to, and the phone mockup's body. |
+| `ink-soft` | #7A6151 | `--ink-2` | Secondary text only. |
+| `trust` | #1F7A4A | `--ok` | Only for "verified" or "confirmed" signals. Never decoration or buttons. |
+| `sos` | #C8362E | `--sos` | Only for SOS. |
+
+**Why two extra oranges.** The app's button is white text on #DB6A33, which is 3.43:1, and readable text needs 4.5:1. So the
+site's button keeps that exact orange along its top edge and deepens to `accent-strong` and `accent-deep`, and the label sits
+on those. The same fix would help the app.
+
+### Gradients
+
+Defined once in `src/styles/gradients.css`, with every stop a theme colour.
+
+- `action`: every primary button and selected state.
+- `field-brand`: hero and big colour blocks, from surface into brand, with a soft glow of the orange.
+- `field-panel`: soft sections.
+- `field-ink`: dark sections and the footer.
+- `text-sun`: orange headline words, display size only.
+
+### Buttons
+
+One set, in `src/components/ui/button-styles.ts`, used on every ground. Don't add a variant for a new background.
+
+- `primary`: the `action` gradient with white text. One per group.
+- `secondary`: white with a thin `line` edge and ink text, beside a primary.
+- `ghost`: an underlined text link.
 
 ### Contrast (the current theme)
 
@@ -72,25 +98,22 @@ The build checks these for whichever theme is active.
 
 | Pair | Ratio | Use |
 | --- | --- | --- |
-| ink on surface | 15:1 | All body text |
-| ink on brand | 13.6:1 | Text on the hero and on brand blocks |
-| ink on panel | 12.0:1 | Text in panels and chips |
-| brand on ink | 13.6:1 | Footer headings, links and highlights on dark sections |
-| on-accent on accent | 4.8:1 | Button labels (AA) |
-| accent on surface | 4.5:1 | Text links (AA, just) |
-| accent on panel / on screen | 3.6 / 4.8:1 | Marks only (3:1 for graphics). Never text. |
-| on-trust on trust | 5.3:1 | Verified badges |
-| ink-soft on surface / panel | 6.2 / 4.9:1 | Secondary text |
+| ink on surface / brand / panel | 12.8 / 11.2 / 11.1:1 | All body text |
+| surface or brand on ink | 12.8 / 11.2:1 | Text and highlights on dark sections |
+| on-accent on accent-strong / accent-deep | 4.55 / 6.04:1 | Button labels (measured at 4.64:1 or better on the real gradient) |
+| accent-deep on surface | 5.66:1 | Text links |
+| accent on surface / ink | 3.21 / 3.99:1 | Marks only (3:1 for graphics). Never small text. |
+| accent-strong on brand | 3.72:1 | Route lines, and `text-sun` headlines at display size |
+| ink-soft on surface / panel | 5.38 / 4.66:1 | Secondary text |
+| on-trust on trust / on-sos on sos | 5.33 / 5.22:1 | Badges and SOS |
 
 ### Rules
 - Proportions on a typical page: surface about 50%, brand 25% (in big blocks), ink 15% (dark sections, footer), panel 10%.
-- **No opacity tints of the theme colours.** A 20% accent over brand is a new colour. Use the theme's colours flat.
-- **On a brand field,** the primary button is ink with surface text, so the hero's main action is the strongest thing on
-  it. Everywhere else the primary button is accent with on-accent text.
-- **Brand is too pale to mark anything on a light ground** in the current theme. Route lines, dots, stars and progress bars
-  on surface, screen, brand or panel use accent. On ink they use brand.
+- **No opacity tints of the theme colours as flat fills.** Use the theme's colours, or a gradient from `gradients.css`.
+- **Only one primary look.** A brand field gets the same orange button as everywhere else.
+- **`accent` is too light for small text** and for marks on brand or panel. Use `accent-deep` for text and `accent-strong` for marks.
 - Only the theme's colours exist: Tailwind's default palette is removed. No black and no pure white page grounds.
-- Surfaces are separated by a step in tone (surface → brand → panel → ink), never by lines or shadows.
+- Surfaces are separated by a step in tone (surface → brand → panel → ink), never by lines.
 
 ---
 
@@ -127,9 +150,10 @@ Five sizes, no more:
 - **Phone frame:** ink body, 44px outer radius, the screen inside at 34px. No notch drawing, no reflections.
 - **Grid:** 12 columns, max width 1200px, outer margins 16px on phones and 32px on desktop. The two margins always match.
 - **Section gap:** 96px on phones, 160px on desktop. The gap inside a section is always smaller than the gap between sections.
-- **Depth:** flat. No shadows on anything at rest. Only things that truly float (mobile menu, dropdown) get one soft
-  shadow: `0 24px 60px -24px rgba(44,30,24,.38)`.
-- No gradients, glass or blur. No hairline dividers or 1px outlined boxes (form fields excepted).
+- **Depth:** mostly flat. Primary buttons carry one soft shadow in their own colour. Things that truly float (mobile
+  menu, dropdown) get one soft shadow. Nothing else.
+- Gradients only from `gradients.css`. No glass or blur. No hairline dividers or 1px outlined boxes (secondary buttons and
+  form fields excepted).
 
 ---
 
@@ -193,7 +217,7 @@ Crossfades become cuts.
 | --- | --- |
 | `Navbar` | Surface bar, sticky with a solid background (no blur). Ink wordmark left; links: How it works · Safety · Drivers · Organizations; one pill action: "Join the waitlist" or "Get the app". On phones a menu button opens a full-width sheet. |
 | `Footer` | Ink field. The full logo lockup (route line + car + wordmark) set large in brand and surface, then link columns, contact line, "Lahore pilot", copyright, legal links. |
-| `Button` | Pill. Variants: `primary` (accent / white), `onBrand` (ink / surface), `secondary` (tint / ink), `ghost` (ink text, underline on hover). Renders as `<a>` or `<button>`. |
+| `Button` | Pill. Variants: `primary` (the `action` gradient), `secondary` (white with a thin edge), `ghost` (underlined text). The same three on every ground. |
 | `Section` | Sets the ground (`surface`, `tint`, `brand`, `ink`), section padding, max width, and the entrance motion for its children. |
 | `PhoneFrame` | Ink device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
 | `RouteLine` | The SVG motif. Modes: `hero` (animated signature), `lockup` (static logo for the footer and OG image), `band` (full-width crossing), `mark` (small pickup-to-drop-off dot-and-line). |
@@ -325,11 +349,12 @@ Crossfades become cuts.
 
 ### design-taste-frontend skill (direction "One motif", seed 1864242604)
 - **Took:** the one-motif idea (the route line), "Many into one" for How it works, the board of enlarged app elements for Safety,
-  "index with preview" for Who it's for, a 50/50 split for the app section, no gradients, no shadows at rest, no eyebrows,
+  "index with preview" for Who it's for, a 50/50 split for the app section, no eyebrows,
   no 01/02/03 numbering, no icon-card rows, two-line headlines, equal margins.
 - **Overridden by the brand brief:**
   - The dealt "tabbed folder" hero is replaced by the route-line hero you asked for.
   - The skill bans "surface + orange" palettes as an AI tell; RydCo's real brand is surface + brand, so the brand wins.
+  - The skill bans gradients; the team asked for them to match the app, so they're allowed, from `gradients.css` only.
   - The skill dislikes device frames; you asked for `PhoneFrame`, so we use it.
   - The skill wants a busier motion layer; motion stays at your level 4.
   - The skill's "sentence with a blank" email form needs a backend; it becomes a link to the waitlist or a mailto.

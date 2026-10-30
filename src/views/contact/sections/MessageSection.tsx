@@ -34,7 +34,7 @@ export function MessageSection() {
               {site.instagramHandle}
             </a>
           </div>
-          <div className="on-ink rounded-surface bg-ink p-7 text-surface">
+          <div className="on-ink rounded-surface field-ink p-7 text-surface">
             <h3 className="t-title">On a trip right now?</h3>
             <p className="mt-2">Use SOS or Report in the app. They reach help faster than a message here.</p>
           </div>

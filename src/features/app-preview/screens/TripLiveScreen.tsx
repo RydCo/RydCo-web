@@ -30,7 +30,7 @@ export function TripLiveScreen() {
               {a}
             </span>
           ))}
-          <span className="grid h-14 place-items-center rounded-[16px] bg-ink font-display text-[15px] font-extrabold text-surface">SOS</span>
+          <span className="grid h-14 place-items-center rounded-[16px] bg-sos font-display text-[15px] font-extrabold text-on-sos">SOS</span>
         </div>
         <p className="flex items-center gap-1.5 text-[12px]">
           <Tick className="text-trust" /> Sharing live with Ammi

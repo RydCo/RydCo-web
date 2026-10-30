@@ -16,10 +16,10 @@ export default function NotFound() {
         lead="This page isn't on our route. Let's get you back on the road."
         actions={
           <>
-            <Button href="/" variant="onBrand">
+            <Button href="/">
               Go to the home page
             </Button>
-            <Button href="/how-it-works/" variant="surface">
+            <Button href="/how-it-works/" variant="secondary">
               How RydCo works
             </Button>
           </>

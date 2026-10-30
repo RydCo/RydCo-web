@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { activeTheme, shape, theme } from "../src/config/theme.mjs";
+import { activeTheme, shape, theme, themes } from "../src/config/theme.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cssFile = join(root, "src/styles/theme.generated.css");
@@ -24,13 +24,20 @@ const pairs = [
   ["inkSoft", "panel", TEXT],
   ["inkSoft", "screen", TEXT],
   ["surface", "ink", TEXT],
+  ["surface", "inkDeep", TEXT],
   ["surface", "inkSoft", TEXT],
   ["brand", "ink", TEXT],
-  ["accent", "surface", TEXT],
-  ["onAccent", "accent", TEXT],
+  ["accentDeep", "surface", TEXT],
+  ["onAccent", "accentStrong", TEXT], // Button labels sit on accent-strong and below, never on accent itself.
+  ["onAccent", "accentDeep", TEXT],
   ["onTrust", "trust", TEXT],
-  ["accent", "panel", GRAPHIC],
+  ["onSos", "sos", TEXT],
+  ["accent", "surface", GRAPHIC],
   ["accent", "screen", GRAPHIC],
+  ["accent", "ink", GRAPHIC],
+  ["accentStrong", "brand", GRAPHIC],
+  ["accentStrong", "panel", GRAPHIC],
+  ["accentDeep", "panel", GRAPHIC],
 ];
 
 function luminance(hex) {
@@ -43,11 +50,14 @@ function contrast(a, b) {
   return (hi + 0.05) / (lo + 0.05);
 }
 
-const failures = pairs.filter(([fg, bg, min]) => contrast(theme[fg], theme[bg]) < min);
-if (failures.length) {
-  console.error(`Theme "${activeTheme}" isn't readable:`);
-  for (const [fg, bg, min] of failures) console.error(`  ${fg} on ${bg} is ${contrast(theme[fg], theme[bg]).toFixed(2)}:1, needs ${min}:1`);
-  process.exit(1);
+const failuresOf = (t) => pairs.filter(([fg, bg, min]) => contrast(t[fg], t[bg]) < min);
+for (const [name, t] of Object.entries(themes)) {
+  const failed = failuresOf(t);
+  if (!failed.length) continue;
+  const active = name === activeTheme;
+  console[active ? "error" : "warn"](`Theme "${name}" isn't readable:`);
+  for (const [fg, bg, min] of failed) console[active ? "error" : "warn"](`  ${fg} on ${bg} is ${contrast(t[fg], t[bg]).toFixed(2)}:1, needs ${min}:1`);
+  if (active) process.exit(1);
 }
 
 // ---------- CSS tokens ----------
@@ -65,21 +75,21 @@ ${Object.entries(theme)
   --radius-surface: ${shape.surfaceRadius};
 }
 `;
-writeFileSync(cssFile, css);
 
 // ---------- Favicon ----------
 
 const carShapes = `<rect x="-15" y="-10" width="30" height="8" rx="3"/>
     <path d="M-9 -10 L-5 -16 H6 L10 -10Z"/>
-    <rect x="-4" y="-14.5" width="8" height="3.5" rx="1" fill="${theme.brand}"/>
+    <rect x="-4" y="-14.5" width="8" height="3.5" rx="1" fill="${theme.accentStrong}"/>
     <circle cx="-8.5" cy="-1.5" r="3.2"/>
     <circle cx="8.5" cy="-1.5" r="3.2"/>`;
 writeFileSync(
   iconFile,
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="${theme.brand}"/>
-  <path d="M10 24 C10 40 14 46 22 46 L50 46" fill="none" stroke="${theme.ink}" stroke-width="6" stroke-linecap="round"/>
-  <g transform="translate(40 46) scale(1.25)" fill="${theme.ink}">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${theme.accent}"/><stop offset="1" stop-color="${theme.accentStrong}"/></linearGradient></defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <path d="M10 24 C10 40 14 46 22 46 L50 46" fill="none" stroke="${theme.screen}" stroke-width="6" stroke-linecap="round"/>
+  <g transform="translate(40 46) scale(1.25)" fill="${theme.screen}">
     ${carShapes}
   </g>
 </svg>
@@ -87,8 +97,10 @@ writeFileSync(
 );
 
 // ---------- Link-preview image: only when the theme changed, since it's the one slow step. ----------
+// The tokens are written last: they hold the theme's stamp, so a failed image gets redrawn next time, not skipped.
 
 if (existsSync(ogFile) && previous.includes(stamp)) {
+  writeFileSync(cssFile, css);
   console.log(`Theme "${activeTheme}" ready.`);
   process.exit(0);
 }
@@ -104,7 +116,7 @@ const logo = el(
   { position: "relative", display: "flex", width: 620, height: 248 },
   svg(
     { width: 620, height: 248, viewBox: "0 0 580 232", style: { position: "absolute", left: 0, top: 0 } },
-    shapeEl("path", { d: "M8 118 C8 190 30 216 60 216 L520 216", fill: "none", stroke: theme.ink, strokeWidth: 13, strokeLinecap: "round", strokeLinejoin: "round" }),
+    shapeEl("path", { d: "M8 118 C8 190 30 216 60 216 L520 216", fill: "none", stroke: theme.accentStrong, strokeWidth: 13, strokeLinecap: "round", strokeLinejoin: "round" }),
     shapeEl("g", {
       transform: "translate(520 216) scale(2.6)",
       fill: theme.ink,
@@ -122,7 +134,8 @@ const logo = el(
 
 const image = el(
   "div",
-  { display: "flex", flexDirection: "column", justifyContent: "space-between", width: 1200, height: 630, padding: "76px 88px", background: theme.brand, color: theme.ink, fontFamily: "Urbanist" },
+  { display: "flex", flexDirection: "column", justifyContent: "space-between", width: 1200, height: 630, padding: "76px 88px", backgroundImage: `linear-gradient(180deg, ${theme.surface}, ${theme.brand})`, color: theme.ink, fontFamily: "Urbanist", position: "relative" },
+  el("div", { display: "flex", position: "absolute", top: 60, right: 90, width: 210, height: 210, borderRadius: 105, backgroundImage: `linear-gradient(160deg, ${theme.accent}, ${theme.accentStrong})` }),
   logo,
   el(
     "div",
@@ -141,4 +154,5 @@ const png = new ImageResponse(image, {
   ],
 });
 writeFileSync(ogFile, Buffer.from(await png.arrayBuffer()));
+writeFileSync(cssFile, css);
 console.log(`Theme "${activeTheme}" ready, preview image redrawn.`);

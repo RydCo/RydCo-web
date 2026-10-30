@@ -17,7 +17,7 @@ export function PartnerSection() {
           </p>
         </div>
         <div className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-end" {...reveal(2)}>
-          <Button href={partnerEnquiry} variant="onBrand">
+          <Button href={partnerEnquiry}>
             Partner with us
           </Button>
           <a href={`mailto:${site.email}`} className="py-1 t-link">
