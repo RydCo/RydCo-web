@@ -156,9 +156,10 @@ export default function HowItWorks() {
                   <p className="mt-5 max-w-[46ch]">{s.text}</p>
                 </div>
                 <div className="lg:col-span-5 lg:col-start-8" {...reveal(1)}>
-                  <PhoneFrame label={s.label} className="max-w-[280px] lg:mx-0 lg:max-w-[300px]">
-                    {s.screen}
-                  </PhoneFrame>
+                  {/* The cap sits on a wrapper: PhoneFrame's own max-w-full would win over a max-w passed to it. */}
+                  <div className="mx-auto max-w-[280px] lg:mx-0 lg:max-w-[300px]">
+                    <PhoneFrame label={s.label}>{s.screen}</PhoneFrame>
+                  </div>
                 </div>
               </li>
             ))}

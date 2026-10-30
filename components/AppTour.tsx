@@ -44,7 +44,7 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
   return (
     <div ref={ref} className="tour" data-running={playing && onScreen}>
       <div className="tour-phone">
-        <PhoneFrame label="A tour of the RydCo app" className="max-w-[300px]">
+        <PhoneFrame label="A tour of the RydCo app">
           <div className="relative min-h-0 flex-1">
             {slides.map((s, i) => (
               <div
