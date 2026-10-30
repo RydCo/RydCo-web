@@ -14,8 +14,8 @@
     46px 44px 60px -26px color-mix(in srgb, var(--color-ink-deep) 55%, transparent);
 }
 
-/* Once on load, after the phone arrives: the route draws on the map, then the notification drops in.
-   Without motion, all of it is simply there. */
+/* The phone arrives once on load. On the accepted-ride screen, each time it comes up, the route draws on the map and
+   then the notification drops in. Without motion, all of it is simply there. */
 .hero-map-route {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 0;
@@ -24,14 +24,14 @@
   .hero-phone {
     animation: hero-phone-in 0.9s var(--ease-out-soft) both;
   }
-  .hero-map-route {
-    animation: draw-line 1.3s var(--ease-out-soft) 0.5s both;
+  [aria-hidden="false"] .hero-map-route {
+    animation: draw-line 1s var(--ease-out-soft) 0.25s both;
   }
-  .hero-map-end {
-    animation: hero-fade-in 0.3s linear 1.7s both;
+  [aria-hidden="false"] .hero-map-end {
+    animation: hero-fade-in 0.25s linear 1.05s both;
   }
-  .hero-note {
-    animation: hero-note-in 0.5s var(--ease-out-soft) 2s both;
+  [aria-hidden="false"] .hero-note {
+    animation: hero-note-in 0.45s var(--ease-out-soft) 1.25s both;
   }
 }
 @keyframes hero-phone-in {

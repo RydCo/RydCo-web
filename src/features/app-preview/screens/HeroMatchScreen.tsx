@@ -21,11 +21,12 @@ const streets = [
 const mainRoads = ["M-10 192 C70 170 190 240 290 214", "M124 -10 C118 100 88 210 66 340"];
 
 // The app's Sky Sheet layout (app-mocks/index (1).html): the Lahore map stays still and the screen is a sheet risen
-// over it. Here, a ride that has just been accepted.
+// over it. Here, a ride that has just been accepted. It sits under the phone's status bar, so the map reaches up
+// behind it. The route draws and the notification drops in each time this screen comes up (motion/hero-phone.css).
 export function HeroMatchScreen() {
   return (
     <>
-      <svg viewBox="0 0 280 340" aria-hidden="true" className="absolute inset-x-0 top-0 h-auto w-full">
+      <svg viewBox="0 0 280 340" aria-hidden="true" className="absolute inset-x-0 -top-[41px] h-auto w-full">
         {streets.map((d) => (
           <path key={d} d={d} className="fill-none stroke-line" strokeWidth="1" />
         ))}
@@ -47,13 +48,11 @@ export function HeroMatchScreen() {
           Arfa Tower
         </text>
         <text x="216" y="230" textAnchor="end" className="fill-ink stroke-surface text-[10px] font-semibold" strokeWidth="3" strokeLinejoin="round" style={{ paintOrder: "stroke" }}>
-          DHA Phase 5
+          Model Town
         </text>
       </svg>
 
-      <span aria-hidden="true" className="absolute top-[11px] left-1/2 z-10 h-[22px] w-[72px] -translate-x-1/2 rounded-full bg-ink-deep" />
-
-      <div className="hero-note absolute inset-x-2.5 top-[44px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
+      <div className="hero-note absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
         <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-[10px] action font-display text-[15px] font-extrabold">
           R
         </span>
@@ -69,21 +68,18 @@ export function HeroMatchScreen() {
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 rounded-t-[26px] bg-surface px-3 pt-2 pb-4 shadow-[0_-16px_30px_-22px_var(--color-ink-deep)]">
         <span aria-hidden="true" className="mx-auto h-1 w-9 rounded-full bg-line" />
         <div className="flex items-center justify-between gap-2 px-1">
-          <span className="font-display text-[17px] leading-tight font-bold">Tomorrow&rsquo;s ride</span>
-          <span className="rounded-full bg-panel px-2.5 py-1 text-[11px] font-semibold">Example</span>
-        </div>
-        <div className="px-1">
+          <span className="font-display text-[17px] leading-tight font-bold">Monday&rsquo;s ride</span>
           <Badge>Confirmed</Badge>
         </div>
         <TripCard
           compact
           trip={{
             driver: "Hamza",
-            car: "Toyota Corolla",
-            from: "Khayaban-e-Jinnah stop",
-            fromTime: "7:38",
+            car: "Honda City",
+            from: "Akbar Chowk",
+            fromTime: "7:40",
             to: "Arfa Tower gate",
-            toTime: "8:06",
+            toTime: "8:20",
             seatsLeft: 2,
             share: "Rs 245",
             shareNote: "Rs 180 if a 2nd rider joins",

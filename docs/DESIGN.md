@@ -165,8 +165,9 @@ One loud moment, everything else quiet.
 - The line enters from the right edge of the brand field, passes behind the phone, loops round the pilot label and
   underlines it, as the logo's line underlines the wordmark. The car rides its tip and parks at the end. The label is
   visible from the first paint.
-- Hero phone: leans back in space and rises in once (0.9s). The route on its map draws, then the "accepted"
-  notification drops in, finishing at about 2.5s. It never loops.
+- Hero phone: leans back in space and rises in once (0.9s), then steps through the whole process as an app tour (see
+  below): Check your route, Find a ride, Request a seat, Request accepted, Ride together, Settle up. All six screens
+  are one trip. On Request accepted, the route on the map draws and the notification drops in each time it comes up.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
@@ -186,8 +187,8 @@ One loud moment, everything else quiet.
 - Safety board (home): each tile marked `play` acts its feature out once when half of it is on screen (same
   `data-play` observer): the four driver checks go from pending to trust green one by one, the women-only switch
   slides on, the five stars pop in, "Sharing live" sends out one ring.
-- App tour (How it works hero, wide screens): one phone steps through Find a ride, Request a seat, Ride together and
-  Settle up every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
+- App tour (home hero; How it works hero, wide screens): one phone steps through the app's screens every 3.6s with a
+  500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
   with its pause button (WCAG 2.2.2); dots jump to a screen.
 - How it works rail: tied to scrolling (scroll-driven CSS). The line fills down to the middle of the screen and each
   stop fills as it's reached. Without scroll-driven animations the rail is drawn in full.
@@ -237,9 +238,10 @@ Crossfades become cuts.
 ### Home (riders first)
 1. **Hero:** brand field, full width, in two columns. Left: h1 "Your commute, in good company.", one line saying what
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
-   to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone showing
-   an accepted ride in the app's Sky Sheet layout (`HeroMatchScreen`), its details labelled "Example". Under both, the
-   route line ends beneath "Starting with a pilot in Lahore". On phones the columns stack, with the phone after the check.
+   to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone touring
+   the process (`AppTour`), including an accepted ride in the app's Sky Sheet layout (`HeroMatchScreen`), with "Names and
+   prices are examples" under it. Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
+   the columns stack, with the phone after the check.
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).

@@ -11,7 +11,20 @@ import { PhoneFrame } from "./PhoneFrame";
 
 type Slide = { title: string; screen: ReactNode };
 
-export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: number }) {
+export function AppTour({
+  slides,
+  seconds = 3.6,
+  inline = false,
+  note,
+  phoneClassName = "",
+}: {
+  slides: Slide[];
+  seconds?: number;
+  /** Puts the screen's title on one line with the dots, to save height. */
+  inline?: boolean;
+  note?: string;
+  phoneClassName?: string;
+}) {
   const [index, setIndex] = useState(0);
   // The visitor's own play or pause, once they press the button. Until then it plays unless motion is reduced.
   const [chosen, setChosen] = useState<boolean | null>(null);
@@ -19,6 +32,12 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
   const reduced = useReducedMotion();
   const playing = chosen ?? !reduced;
   const ref = useRef<HTMLDivElement>(null);
+
+  const title = (
+    <p aria-hidden="true" className={`font-display font-bold ${inline ? "min-w-[136px] text-center text-[16px] sm:text-right" : "mt-5 text-center text-[20px]"}`}>
+      {slides[index].title}
+    </p>
+  );
 
   useEffect(() => {
     const el = ref.current;
@@ -30,7 +49,7 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
 
   return (
     <div ref={ref} className="tour" data-running={playing && onScreen}>
-      <div className="tour-phone">
+      <div className={`tour-phone ${phoneClassName}`}>
         <PhoneFrame label="A tour of the RydCo app">
           <div className="relative min-h-0 flex-1">
             {slides.map((s, i) => (
@@ -49,10 +68,9 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
         </PhoneFrame>
       </div>
 
-      <p aria-hidden="true" className="mt-5 text-center font-display text-[20px] font-bold">
-        {slides[index].title}
-      </p>
-      <div className="mt-1 flex items-center justify-center gap-2">
+      {!inline && title}
+      <div className={`flex items-center justify-center gap-2 ${inline ? "mt-6 flex-wrap" : "mt-1"}`}>
+        {inline && title}
         <ol aria-label="App tour" className="flex items-center">
           {slides.map((s, i) => (
             <li key={s.title}>
@@ -61,7 +79,7 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
                 onClick={() => setIndex(i)}
                 aria-label={s.title}
                 aria-current={i === index ? "step" : undefined}
-                className="grid h-11 place-items-center px-1.5"
+                className="grid h-11 place-items-center px-2"
               >
                 <span
                   className={`relative block h-2 overflow-hidden rounded-full bg-ink-soft transition-[width] duration-300 motion-reduce:transition-none ${i === index ? "w-10" : "w-2"}`}
@@ -97,6 +115,7 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
           </svg>
         </button>
       </div>
+      {note && <p className="text-center t-small text-ink-soft">{note}</p>}
     </div>
   );
 }
