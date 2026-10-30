@@ -26,9 +26,11 @@ The finished site is written to the `out/` folder.
 
 1. Go to https://vercel.com/new and import the **RydCo/RydCo-web** repository. Vercel detects Next.js; the build
    command comes from `vercel.json`.
-2. Under **Environment Variables**, add `NEXT_PUBLIC_SITE_URL`: the site's address, e.g. `https://rydco.vercel.app`.
-   The forms are already connected (see "Connect the forms" below), so they need no variable.
-3. Deploy. After changing a variable, redeploy so the site picks it up.
+2. Deploy. No environment variables are needed: the site takes its address from the Vercel project (including a
+   custom domain once you add one), and the forms are already connected (see "Connect the forms" below).
+   To use a different address, set `NEXT_PUBLIC_SITE_URL`, e.g. `https://rydco.pk`, and redeploy.
+
+The live site is https://rydco-web.vercel.app.
 
 If Vercel won't import the private organization repository on the Hobby plan, deploy from this folder instead:
 
