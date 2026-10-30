@@ -15,9 +15,10 @@ export const site = {
   city: "Lahore",
   // [FILL] App status. While this is null, the main buttons take people to the waitlist form on the home page.
   playStoreUrl: null as string | null,
-  // [FILL] The Google Apps Script web app URL that stores form submissions (README → "Connect the forms").
-  // Set NEXT_PUBLIC_FORM_ENDPOINT on your host. Until then, forms open a pre-filled email instead.
-  formEndpoint: process.env.NEXT_PUBLIC_FORM_ENDPOINT || null,
+  // The Google Apps Script web app that stores form submissions (README → "Connect the forms").
+  // NEXT_PUBLIC_FORM_ENDPOINT on the host overrides it. Set this to null and forms open a pre-filled email instead.
+  formEndpoint: (process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
+    "https://script.google.com/macros/s/AKfycby8TSQMwPv6Xc9nktMRtbVF-0TUOosnVbNQN4hbgOxIfn8ReEClj5k_NqaaZ2O5sCc/exec") as string | null,
 };
 
 export function mailto(subject: string, body?: string) {
