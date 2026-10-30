@@ -13,9 +13,9 @@ export function WhatItIsSection() {
         </h2>
         <p className="font-display text-[clamp(24px,2.5vw,34px)] leading-[1.28] font-bold lg:col-span-7" {...reveal(1)}>
           Someone near you already drives your route every morning. RydCo gives you their spare seat{" "}
-          <Chip className="bg-apricot-tint">2 seats left</Chip>, a fair share of the fuel cost <Chip className="bg-cocoa text-cream">Rs 180</Chip>, and a
+          <Chip className="bg-panel">2 seats left</Chip>, a fair share of the fuel cost <Chip className="bg-ink text-surface">Rs 180</Chip>, and a
           driver we have checked{" "}
-          <Chip className="gap-[0.35em] bg-trust text-white">
+          <Chip className="gap-[0.35em] bg-trust text-on-trust">
             <Tick /> Licence checked
           </Chip>
           .

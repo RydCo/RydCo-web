@@ -14,11 +14,11 @@ export function WhoFor({ rows, previews }: { rows: Row[]; previews: ReactNode[] 
           <li key={row.href} data-row={i}>
             <Link
               href={row.href}
-              className="group grid grid-cols-[28px_1fr_auto] items-center gap-x-4 rounded-[28px] py-5 transition-colors duration-150 sm:py-6 lg:-mx-6 lg:px-6 lg:hover:bg-apricot-tint"
+              className="group grid grid-cols-[28px_1fr_auto] items-center gap-x-4 rounded-surface py-5 transition-colors duration-150 sm:py-6 lg:-mx-6 lg:px-6 lg:hover:bg-panel"
             >
               <span aria-hidden="true" className="relative mt-[0.6em] h-4 w-7 self-start">
-                <span className="who-dot absolute top-0 left-0 h-4 w-4 rounded-full bg-cocoa" />
-                <span className="who-line absolute top-1/2 left-3 h-[4px] w-4 -translate-y-1/2 rounded-full bg-cocoa" />
+                <span className="who-dot absolute top-0 left-0 h-4 w-4 rounded-full bg-ink" />
+                <span className="who-line absolute top-1/2 left-3 h-[4px] w-4 -translate-y-1/2 rounded-full bg-ink" />
               </span>
               <span>
                 <span className="block font-display text-[clamp(28px,3.2vw,44px)] leading-[1.05] font-extrabold tracking-tight">{row.title}</span>

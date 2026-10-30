@@ -49,7 +49,7 @@ export function TripToolsSection() {
             {tripTools.map((t, i) => (
               <li key={t.title} {...reveal(1 + i)}>
                 <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot-deep" />
+                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-accent" />
                   {t.title}
                 </h3>
                 <p className="mt-2 sm:pl-6">{t.text}</p>

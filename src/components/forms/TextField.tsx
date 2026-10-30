@@ -31,7 +31,7 @@ export function TextField({
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(id, error, hint)}
-        className={`${control} mt-2 h-[56px] rounded-full ${error ? "outline-3 outline-offset-2 outline-apricot-deep" : ""}`}
+        className={`${control} mt-2 h-[56px] rounded-full ${error ? "outline-3 outline-offset-2 outline-accent" : ""}`}
         {...rest}
       />
       <Described id={id} error={error} hint={hint} />

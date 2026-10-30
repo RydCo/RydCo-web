@@ -38,7 +38,7 @@ export function CompaniesSection() {
             {problems.map((p, i) => (
               <li key={p.title} className="grid gap-2 sm:grid-cols-[200px_1fr] sm:gap-8" {...reveal(2 + i)}>
                 <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot-deep" />
+                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-accent" />
                   {p.title}
                 </h3>
                 <p>{p.text}</p>

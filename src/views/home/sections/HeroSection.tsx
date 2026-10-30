@@ -5,7 +5,7 @@ import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
 
 export function HeroSection() {
   return (
-    <section aria-labelledby="hero-title" className="overflow-x-clip bg-apricot text-cocoa">
+    <section aria-labelledby="hero-title" className="overflow-x-clip bg-brand text-ink">
       <div className="wrap pt-12 pb-12 md:pt-16 lg:pt-14 lg:pb-16">
         <h1 id="hero-title" className="t-display">
           Your commute, <span className="whitespace-nowrap">in good company.</span>

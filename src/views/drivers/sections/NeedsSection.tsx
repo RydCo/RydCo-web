@@ -25,14 +25,14 @@ export function NeedsSection() {
             {needs.map((n, i) => (
               <li key={n.title} {...reveal(2 + i)}>
                 <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot-deep" />
+                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-accent" />
                   {n.title}
                 </h3>
                 <p className="mt-2 sm:pl-6">{n.text}</p>
               </li>
             ))}
           </ul>
-          <p className="mt-12 max-w-[52ch] rounded-[28px] bg-apricot-tint p-6" {...reveal(6)}>
+          <p className="mt-12 max-w-[52ch] rounded-surface bg-panel p-6" {...reveal(6)}>
             You can prepare your commute while we review, and save your progress to finish later. You can publish rides once every check is approved.
           </p>
         </div>

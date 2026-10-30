@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { site } from "@/config/site";
+import { theme } from "@/config/theme.mjs";
 import "@/styles/globals.css";
 
 // The app's own faces, so the site and the app read as one product.
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFE8D7",
+  themeColor: theme.brand,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

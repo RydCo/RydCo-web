@@ -37,7 +37,7 @@ export function LahorePilotSection() {
           <ul className="mt-4 grid gap-3" {...reveal(3)}>
             {pilotFeatures.map((f) => (
               <li key={f} className="flex gap-3">
-                <Tick className="mt-[0.3em] text-apricot-deep" />
+                <Tick className="mt-[0.3em] text-accent" />
                 {f}
               </li>
             ))}

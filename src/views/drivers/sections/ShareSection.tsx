@@ -3,7 +3,7 @@ import { reveal } from "@/lib/reveal";
 
 export function ShareSection() {
   return (
-    <Section ground="tint" id="share" labelledBy="share-title">
+    <Section ground="panel" id="share" labelledBy="share-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-6">
           <h2 id="share-title" className="t-h2" {...reveal(0)}>
@@ -19,20 +19,20 @@ export function ShareSection() {
           </div>
         </div>
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(2)}>
-          <div data-ui className="relative rounded-[28px] bg-white p-7 md:p-9">
-            <span className="absolute top-0 right-0 rounded-tr-[28px] rounded-bl-[18px] bg-cocoa px-4 py-2 text-[14px] font-semibold text-cream">Example</span>
+          <div data-ui className="relative rounded-surface bg-screen p-7 md:p-9">
+            <span className="absolute top-0 right-0 rounded-tr-surface rounded-bl-[18px] bg-ink px-4 py-2 text-[14px] font-semibold text-surface">Example</span>
             <p className="font-semibold">Honda City, 10 km to work</p>
-            <p className="mt-1 text-cocoa-soft">Rs 38.94 per km · Rs 50 pickup fee</p>
+            <p className="mt-1 text-ink-soft">Rs 38.94 per km · Rs 50 pickup fee</p>
             <dl className="mt-7 grid gap-6">
               <div>
                 <dt>With one rider</dt>
                 <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">Rs 245</dd>
-                <dd className="mt-2 text-[15px] text-cocoa-soft">Rs 50 + (10 km × Rs 38.94) ÷ 2 people</dd>
+                <dd className="mt-2 text-[15px] text-ink-soft">Rs 50 + (10 km × Rs 38.94) ÷ 2 people</dd>
               </div>
               <div>
                 <dt>With two riders</dt>
                 <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">Rs 180 each</dd>
-                <dd className="mt-2 text-[15px] text-cocoa-soft">Rs 50 + (10 km × Rs 38.94) ÷ 3 people</dd>
+                <dd className="mt-2 text-[15px] text-ink-soft">Rs 50 + (10 km × Rs 38.94) ÷ 3 people</dd>
               </div>
             </dl>
           </div>

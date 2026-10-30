@@ -12,10 +12,10 @@ export function HeroSection() {
       lead="You already drive to work. Offer your empty seats to people going the same way, and they share the cost of the fuel."
       actions={
         <>
-          <Button href={cta.href} external={cta.external} variant="onApricot">
+          <Button href={cta.href} external={cta.external} variant="onBrand">
             {cta.label}
           </Button>
-          <Button href="#share" variant="cream">
+          <Button href="#share" variant="surface">
             How the share works
           </Button>
         </>

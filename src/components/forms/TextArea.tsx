@@ -13,7 +13,7 @@ export function TextArea({ id, label, error, hint, value, onChange, ...rest }: B
         onChange={(e) => onChange(e.target.value)}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy(id, error, hint)}
-        className={`${control} mt-2 block min-h-[150px] resize-y rounded-[28px] py-4 ${error ? "outline-3 outline-offset-2 outline-apricot-deep" : ""}`}
+        className={`${control} mt-2 block min-h-[150px] resize-y rounded-surface py-4 ${error ? "outline-3 outline-offset-2 outline-accent" : ""}`}
         {...rest}
       />
       <Described id={id} error={error} hint={hint} />

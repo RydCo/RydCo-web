@@ -3,7 +3,7 @@ import { reveal } from "@/lib/reveal";
 
 export function RidersSection() {
   return (
-    <Section ground="apricot" labelledBy="riders-title">
+    <Section ground="brand" labelledBy="riders-title">
       <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
         <h2 id="riders-title" className="t-h2 lg:col-span-6" {...reveal(0)}>
           Every rider is phone verified

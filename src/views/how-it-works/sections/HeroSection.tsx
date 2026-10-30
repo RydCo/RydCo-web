@@ -21,7 +21,7 @@ export function HeroSection() {
   const cta = site.playStoreUrl ? riderCta() : { label: "Join the waitlist", href: "#check", external: false };
   return (
     <PageHero
-      ground="cream"
+      ground="surface"
       title={
         <>
           Your first ride, <span className="whitespace-nowrap">step by step.</span>

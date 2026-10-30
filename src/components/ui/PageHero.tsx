@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 
-type Ground = "apricot" | "cocoa" | "tint" | "cream";
+type Ground = "brand" | "ink" | "panel" | "surface";
 
 const grounds: Record<Ground, string> = {
-  apricot: "bg-apricot text-cocoa",
-  cocoa: "on-cocoa bg-cocoa text-cream",
-  tint: "bg-apricot-tint text-cocoa",
-  cream: "bg-cream text-cocoa",
+  brand: "bg-brand text-ink",
+  ink: "on-ink bg-ink text-surface",
+  panel: "bg-panel text-ink",
+  surface: "bg-surface text-ink",
 };
 
 // The first screen of every inner page: one h1, one line, the actions, and an optional picture beside them.
 export function PageHero({
-  ground = "apricot",
+  ground = "brand",
   title,
   lead,
   actions,

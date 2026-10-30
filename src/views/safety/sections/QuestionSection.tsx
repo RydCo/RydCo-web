@@ -5,7 +5,7 @@ import { reveal } from "@/lib/reveal";
 
 export function QuestionSection() {
   return (
-    <Section ground="cocoa" labelledBy="safety-q-title">
+    <Section ground="ink" labelledBy="safety-q-title">
       <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-8">
           <h2 id="safety-q-title" className="t-h2" {...reveal(0)}>
@@ -16,7 +16,7 @@ export function QuestionSection() {
           </p>
         </div>
         <div className="lg:col-span-4 lg:justify-self-end" {...reveal(2)}>
-          <Button href={safetyEnquiry} variant="apricot">
+          <Button href={safetyEnquiry} variant="brand">
             Send us a message
           </Button>
         </div>

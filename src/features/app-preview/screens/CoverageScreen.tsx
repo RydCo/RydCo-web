@@ -42,13 +42,13 @@ export function CoverageScreen() {
       <Header title="Pilot coverage" />
       <Body>
         <Bot>Here&rsquo;s where the pilot runs.</Bot>
-        <div className="rounded-[20px] bg-white p-2">
+        <div className="rounded-[20px] bg-screen p-2">
           <svg viewBox="0 0 260 232" className="block h-auto w-full" role="img" aria-label="Map of the Lahore pilot area with covered routes">
             {soon.map(([a, b]) => (
-              <path key={a + b} d={curve(a, b)} className="fill-none stroke-cocoa-soft" strokeWidth="2.5" strokeDasharray="4 6" strokeLinecap="round" />
+              <path key={a + b} d={curve(a, b)} className="fill-none stroke-ink-soft" strokeWidth="2.5" strokeDasharray="4 6" strokeLinecap="round" />
             ))}
             {covered.map(([a, b]) => (
-              <path key={a + b} d={curve(a, b)} className="fill-none stroke-apricot-deep" strokeWidth="4.5" strokeLinecap="round" />
+              <path key={a + b} d={curve(a, b)} className="fill-none stroke-accent" strokeWidth="4.5" strokeLinecap="round" />
             ))}
             {Object.entries(places).map(([name, [x, y, side]]) => {
               const isSoon = name === "Township" || name === "Bahria Town";
@@ -60,12 +60,12 @@ export function CoverageScreen() {
                     : { x, y: y + 17, anchor: "middle" as const };
               return (
                 <g key={name}>
-                  <circle cx={x} cy={y} r="5" className={isSoon ? "fill-white stroke-cocoa-soft" : "fill-white stroke-cocoa"} strokeWidth="2.5" />
+                  <circle cx={x} cy={y} r="5" className={isSoon ? "fill-screen stroke-ink-soft" : "fill-screen stroke-ink"} strokeWidth="2.5" />
                   <text
                     x={label.x}
                     y={label.y}
                     textAnchor={label.anchor}
-                    className="fill-cocoa stroke-white text-[10px] font-semibold"
+                    className="fill-ink stroke-screen text-[10px] font-semibold"
                     strokeWidth="3.5"
                     strokeLinejoin="round"
                     style={{ paintOrder: "stroke" }}
@@ -79,14 +79,14 @@ export function CoverageScreen() {
         </div>
         <div className="flex gap-4 text-[12px]">
           <span className="flex items-center gap-1.5">
-            <span className="h-1 w-5 rounded-full bg-apricot-deep" /> Covered
+            <span className="h-1 w-5 rounded-full bg-accent" /> Covered
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="h-1 w-5 rounded-full bg-cocoa-soft" /> Not yet
+            <span className="h-1 w-5 rounded-full bg-ink-soft" /> Not yet
           </span>
         </div>
         <Bot>Check your commute?</Bot>
-        <div className="flex items-center justify-between rounded-[18px] bg-apricot-tint px-3.5 py-2.5">
+        <div className="flex items-center justify-between rounded-[18px] bg-panel px-3.5 py-2.5">
           <span className="font-semibold">Johar Town → Arfa Tower</span>
           <Badge>Covered</Badge>
         </div>

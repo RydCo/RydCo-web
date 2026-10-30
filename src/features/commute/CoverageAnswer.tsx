@@ -9,7 +9,7 @@ function Answer({ from, to }: { from: string; to: string }) {
   if (!picked) return null;
   return (
     <p className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      <span className="text-[20px]">{covered ? <Badge>Covered</Badge> : <Badge tone="cream">Not covered yet</Badge>}</span>
+      <span className="text-[20px]">{covered ? <Badge>Covered</Badge> : <Badge tone="surface">Not covered yet</Badge>}</span>
       <span>{covered ? "RydCo runs on this route in the pilot." : "Join anyway and we’ll tell you when it opens."}</span>
     </p>
   );

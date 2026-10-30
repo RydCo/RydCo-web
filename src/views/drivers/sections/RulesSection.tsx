@@ -12,7 +12,7 @@ const yourRules = [
 
 export function RulesSection() {
   return (
-    <Section ground="tint" labelledBy="rules-title">
+    <Section ground="panel" labelledBy="rules-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <h2 id="rules-title" className="t-h2" {...reveal(0)}>
@@ -25,7 +25,7 @@ export function RulesSection() {
         <ul className="grid gap-4 lg:col-span-6 lg:col-start-7" {...reveal(2)}>
           {yourRules.map((r) => (
             <li key={r} className="flex gap-3">
-              <Tick className="mt-[0.3em] text-apricot-deep" />
+              <Tick className="mt-[0.3em] text-accent" />
               {r}
             </li>
           ))}

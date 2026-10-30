@@ -64,12 +64,12 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
                 className="grid h-11 place-items-center px-1.5"
               >
                 <span
-                  className={`relative block h-2 overflow-hidden rounded-full bg-cocoa-soft transition-[width] duration-300 motion-reduce:transition-none ${i === index ? "w-10" : "w-2"}`}
+                  className={`relative block h-2 overflow-hidden rounded-full bg-ink-soft transition-[width] duration-300 motion-reduce:transition-none ${i === index ? "w-10" : "w-2"}`}
                 >
                   {i === index && (
                     <span
                       key={index}
-                      className="tour-fill absolute inset-0 rounded-full bg-cocoa"
+                      className="tour-fill absolute inset-0 rounded-full bg-ink"
                       style={{ animationDuration: `${seconds}s` }}
                       onAnimationEnd={() => setIndex((index + 1) % slides.length)}
                     />
@@ -83,7 +83,7 @@ export function AppTour({ slides, seconds = 3.6 }: { slides: Slide[]; seconds?: 
           type="button"
           onClick={() => setChosen(!playing)}
           aria-label={playing ? "Pause the tour" : "Play the tour"}
-          className="grid h-11 w-11 place-items-center rounded-full bg-apricot-tint transition-colors duration-150 hover:bg-cocoa hover:text-cream"
+          className="grid h-11 w-11 place-items-center rounded-full bg-panel transition-colors duration-150 hover:bg-ink hover:text-surface"
         >
           <svg viewBox="0 0 20 20" aria-hidden="true" className="h-4 w-4 fill-current">
             {playing ? (

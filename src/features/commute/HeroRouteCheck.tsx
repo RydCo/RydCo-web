@@ -25,11 +25,11 @@ function Chevron() {
 function CarMark() {
   return (
     <svg viewBox="-16 -17 32 20" aria-hidden="true" className="block h-[16px] w-[26px]">
-      <rect className="fill-cocoa" x="-15" y="-10" width="30" height="8" rx="3" />
-      <path className="fill-cocoa" d="M-9 -10 L-5 -16 H6 L10 -10Z" />
-      <rect className="fill-cream" x="-4" y="-14.5" width="8" height="3.5" rx="1" />
-      <circle className="fill-cocoa" cx="-8.5" cy="-1.5" r="3.2" />
-      <circle className="fill-cocoa" cx="8.5" cy="-1.5" r="3.2" />
+      <rect className="fill-ink" x="-15" y="-10" width="30" height="8" rx="3" />
+      <path className="fill-ink" d="M-9 -10 L-5 -16 H6 L10 -10Z" />
+      <rect className="fill-surface" x="-4" y="-14.5" width="8" height="3.5" rx="1" />
+      <circle className="fill-ink" cx="-8.5" cy="-1.5" r="3.2" />
+      <circle className="fill-ink" cx="8.5" cy="-1.5" r="3.2" />
     </svg>
   );
 }
@@ -38,11 +38,11 @@ function CarMark() {
 // phone's own picker; the label and value underneath are what people see.
 function Area({ name, label, value, areas, marker }: { name: "from" | "to"; label: string; value: string; areas: string[]; marker: ReactNode }) {
   return (
-    <div className="relative flex min-h-[64px] min-w-0 flex-1 items-center gap-3.5 rounded-[22px] px-4 transition-colors duration-150 hover:bg-apricot has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-cocoa md:rounded-full md:px-5">
+    <div className="relative flex min-h-[64px] min-w-0 flex-1 items-center gap-3.5 rounded-[22px] px-4 transition-colors duration-150 hover:bg-brand has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-ink md:rounded-full md:px-5">
       <span className="relative z-[2] grid w-[26px] flex-none place-items-center">{marker}</span>
       <span aria-hidden="true" className="min-w-0 flex-1 pr-7">
         <span className="block text-[14px] leading-tight font-semibold">{label}</span>
-        <span className={`block truncate text-[17px] leading-snug ${value ? "font-semibold" : "text-cocoa-soft"}`}>{value || "Choose an area"}</span>
+        <span className={`block truncate text-[17px] leading-snug ${value ? "font-semibold" : "text-ink-soft"}`}>{value || "Choose an area"}</span>
       </span>
       <Chevron />
       <select
@@ -78,15 +78,15 @@ export function HeroRouteCheck({ aside }: { aside?: ReactNode }) {
   const cta = riderCta();
 
   const button =
-    "inline-flex min-h-[56px] flex-none items-center justify-center rounded-full bg-apricot-deep px-7 text-[17px] font-semibold text-white transition-[transform,background-color] duration-150 hover:bg-cocoa active:scale-[0.97] motion-reduce:transition-none md:ml-1";
+    "inline-flex min-h-[56px] flex-none items-center justify-center rounded-full bg-accent px-7 text-[17px] font-semibold text-on-accent transition-[transform,background-color] duration-150 hover:bg-ink active:scale-[0.97] motion-reduce:transition-none md:ml-1";
 
   return (
     <div>
-      <form action="/#waitlist" onSubmit={goToWaitlist} className="relative flex flex-col gap-1.5 rounded-[28px] bg-cream p-2 md:flex-row md:items-center md:gap-0 md:rounded-full">
+      <form action="/#waitlist" onSubmit={goToWaitlist} className="relative flex flex-col gap-1.5 rounded-surface bg-surface p-2 md:flex-row md:items-center md:gap-0 md:rounded-full">
         {/* On phones the route runs down the left, from the start dot to the car. */}
-        <span aria-hidden="true" className="absolute top-[40px] left-[35px] z-[1] h-[70px] w-[4px] rounded-full bg-cocoa md:hidden" />
-        <Area name="from" label="I start in" value={from} areas={startAreas} marker={<span className="block h-3.5 w-3.5 rounded-full bg-cocoa" />} />
-        <span aria-hidden="true" className="hidden h-[4px] w-7 flex-none rounded-full bg-cocoa md:block" />
+        <span aria-hidden="true" className="absolute top-[40px] left-[35px] z-[1] h-[70px] w-[4px] rounded-full bg-ink md:hidden" />
+        <Area name="from" label="I start in" value={from} areas={startAreas} marker={<span className="block h-3.5 w-3.5 rounded-full bg-ink" />} />
+        <span aria-hidden="true" className="hidden h-[4px] w-7 flex-none rounded-full bg-ink md:block" />
         <Area name="to" label="I’m headed to" value={to} areas={destAreas} marker={<CarMark />} />
         {cta.external ? (
           <a href={cta.href} target="_blank" rel="noopener" className={button}>

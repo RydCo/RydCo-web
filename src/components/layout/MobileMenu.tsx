@@ -32,14 +32,14 @@ export function MobileMenu({ items, cta }: { items: { label: string; href: strin
         aria-expanded={open}
         aria-controls="mobile-menu"
         onClick={() => setOpen((o) => !o)}
-        className="grid h-12 w-12 place-items-center rounded-full bg-apricot-tint transition-colors duration-150 hover:bg-cocoa hover:text-cream"
+        className="grid h-12 w-12 place-items-center rounded-full bg-panel transition-colors duration-150 hover:bg-ink hover:text-surface"
       >
         <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
         <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
           {open ? <path d="M6 6l12 12M18 6 6 18" /> : <path d="M4 8h16M4 16h16" />}
         </svg>
       </button>
-      <div id="mobile-menu" hidden={!open} className={`absolute inset-x-0 top-full bg-cream pb-8 ${floatShadow}`}>
+      <div id="mobile-menu" hidden={!open} className={`absolute inset-x-0 top-full bg-surface pb-8 ${floatShadow}`}>
         <nav aria-label="Main" className="wrap">
           <ul className="grid">
             {items.map((item) => (

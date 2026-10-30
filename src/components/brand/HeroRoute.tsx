@@ -20,7 +20,7 @@ const hero = {
 };
 
 function HeroSvg({ g, className }: { g: (typeof hero)["desktop"]; className: string }) {
-  const tone = toneOn.apricot;
+  const tone = toneOn.brand;
   return (
     <svg viewBox={g.viewBox} className={`block h-auto w-full overflow-visible ${className}`} aria-hidden="true" data-route-hero="">
       <path

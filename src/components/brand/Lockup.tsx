@@ -3,7 +3,7 @@ import { toneOn } from "./tones";
 import { Wordmark } from "./Wordmark";
 
 // The static logo: wordmark, underline and car, with the line's tail curling in from the left.
-export function Lockup({ on = "cream", className = "", title }: { on?: keyof typeof toneOn; className?: string; title?: string }) {
+export function Lockup({ on = "surface", className = "", title }: { on?: keyof typeof toneOn; className?: string; title?: string }) {
   const tone = toneOn[on];
   return (
     <svg

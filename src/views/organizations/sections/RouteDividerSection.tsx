@@ -2,7 +2,7 @@ import { RouteBand } from "@/components/brand/RouteBand";
 
 export function RouteDividerSection() {
   return (
-    <div className="bg-apricot">
+    <div className="bg-brand">
       <RouteBand />
     </div>
   );

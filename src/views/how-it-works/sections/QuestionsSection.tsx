@@ -38,17 +38,17 @@ const questions = [
 
 export function QuestionsSection() {
   return (
-    <Section ground="tint" id="questions" labelledBy="questions-title">
+    <Section ground="panel" id="questions" labelledBy="questions-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
         <h2 id="questions-title" className="t-h2 lg:col-span-4" {...reveal(0)}>
           Good to know
         </h2>
         <div className="grid gap-2 lg:col-span-8" {...reveal(1)}>
           {questions.map((item) => (
-            <details key={item.q} className="group rounded-[28px] bg-cream px-6 py-5 md:px-8">
+            <details key={item.q} className="group rounded-surface bg-surface px-6 py-5 md:px-8">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-[20px] font-bold md:text-[22px] [&::-webkit-details-marker]:hidden">
                 {item.q}
-                <span aria-hidden="true" className="grid h-10 w-10 flex-none place-items-center rounded-full bg-apricot-tint transition-transform duration-200 group-open:rotate-45">
+                <span aria-hidden="true" className="grid h-10 w-10 flex-none place-items-center rounded-full bg-panel transition-transform duration-200 group-open:rotate-45">
                   <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
                     <path d="M10 4v12M4 10h12" />
                   </svg>

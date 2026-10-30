@@ -1,17 +1,17 @@
 /* Safety board (views/home/components/SafetyBoard.tsx): each tile marked to play acts its feature out once, when half of it is
-   on screen. Checks go from pending (cocoa-soft) to trust green with their tick, the women-only switch slides on,
+   on screen. Checks go from pending (ink-soft) to trust green with their tick, the women-only switch slides on,
    the stars pop in one by one, and "Sharing live" sends out one ring. Same .reveal-ready rule as Many into one. */
 @media (prefers-reduced-motion: no-preference) {
   .reveal-ready [data-play] .sb-check {
-    background-color: var(--color-cocoa-soft);
-    color: var(--color-cream);
+    background-color: var(--color-ink-soft);
+    color: var(--color-surface);
   }
   .reveal-ready [data-play] .sb-check > svg,
   .reveal-ready [data-play] .sb-star {
     scale: 0;
   }
   .reveal-ready [data-play] .sb-track {
-    background-color: var(--color-cocoa-soft);
+    background-color: var(--color-ink-soft);
   }
   .reveal-ready [data-play] .sb-knob {
     translate: -1.1em 0;
@@ -44,12 +44,12 @@
 }
 @keyframes sb-verify {
   from {
-    background-color: var(--color-cocoa-soft);
-    color: var(--color-cream);
+    background-color: var(--color-ink-soft);
+    color: var(--color-surface);
   }
   to {
     background-color: var(--color-trust);
-    color: var(--color-white);
+    color: var(--color-on-trust);
   }
 }
 @keyframes sb-pop {
@@ -62,10 +62,10 @@
 }
 @keyframes sb-track {
   from {
-    background-color: var(--color-cocoa-soft);
+    background-color: var(--color-ink-soft);
   }
   to {
-    background-color: var(--color-cocoa);
+    background-color: var(--color-ink);
   }
 }
 @keyframes sb-switch {

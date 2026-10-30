@@ -1,7 +1,7 @@
 @layer base {
   html {
-    background: var(--color-cream);
-    color: var(--color-cocoa);
+    background: var(--color-surface);
+    color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 96px;
   }
@@ -17,18 +17,18 @@
     }
   }
   :focus-visible {
-    outline: 3px solid var(--color-cocoa);
+    outline: 3px solid var(--color-ink);
     outline-offset: 3px;
   }
-  .on-cocoa :focus-visible {
-    outline-color: var(--color-cream);
+  .on-ink :focus-visible {
+    outline-color: var(--color-surface);
   }
-  /* A light panel inside a cocoa section goes back to the cocoa outline. */
-  .on-cocoa .on-light :focus-visible {
-    outline-color: var(--color-cocoa);
+  /* A light panel inside an ink section goes back to the ink outline. */
+  .on-ink .on-light :focus-visible {
+    outline-color: var(--color-ink);
   }
   ::selection {
-    background: var(--color-cocoa);
-    color: var(--color-cream);
+    background: var(--color-ink);
+    color: var(--color-surface);
   }
 }

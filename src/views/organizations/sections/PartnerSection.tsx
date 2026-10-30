@@ -6,7 +6,7 @@ import { reveal } from "@/lib/reveal";
 
 export function PartnerSection() {
   return (
-    <Section ground="apricot" labelledBy="partner-title">
+    <Section ground="brand" labelledBy="partner-title">
       <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-8">
           <h2 id="partner-title" className="t-h2" {...reveal(0)}>
@@ -17,7 +17,7 @@ export function PartnerSection() {
           </p>
         </div>
         <div className="flex flex-col items-start gap-4 lg:col-span-4 lg:items-end" {...reveal(2)}>
-          <Button href={partnerEnquiry} variant="onApricot">
+          <Button href={partnerEnquiry} variant="onBrand">
             Partner with us
           </Button>
           <a href={`mailto:${site.email}`} className="py-1 font-semibold underline decoration-2 underline-offset-[6px]">
