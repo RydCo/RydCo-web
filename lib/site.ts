@@ -6,9 +6,12 @@ export const site = {
   tagline: "Your commute, in good company.",
   description:
     "RydCo is carpooling for daily commuters in Pakistan, starting with a pilot in Lahore. Share the car, split the fuel cost, and ride with checked drivers.",
-  // [FILL] Real address. Set NEXT_PUBLIC_SITE_URL on your host (e.g. https://rydco.netlify.app) or edit the fallback.
+  // The site's address, used for link previews, the sitemap and robots.txt. On Vercel it comes from the project's
+  // production domain (and follows a custom domain once one is added). NEXT_PUBLIC_SITE_URL overrides it anywhere.
   // ".example" is a reserved placeholder so nothing points at someone else's site.
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://rydco.example",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://rydco.example"),
   email: "rydcoapp@gmail.com",
   instagram: "https://www.instagram.com/rydco.app/",
   instagramHandle: "@rydco.app",
