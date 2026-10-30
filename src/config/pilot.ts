@@ -21,8 +21,14 @@ export const pilot = {
 // The last choice in every area picker, for commutes outside the pilot list.
 export const otherArea = "Another area";
 
-const withOther = (list: { name: string }[]) => [...list.map((a) => a.name), otherArea];
+const covered = "In the pilot";
+const notCovered = "Not covered yet";
 
-// What the area pickers offer.
+const withOther = (list: { name: string; covered: boolean }[]) => [
+  ...list.map((a) => ({ value: a.name, label: a.name, group: a.covered ? covered : notCovered })),
+  { value: otherArea, label: otherArea, group: notCovered },
+];
+
+// What the area pickers offer, grouped by whether the pilot reaches them.
 export const startAreas = withOther(pilot.starts);
 export const destinationAreas = withOther(pilot.destinations);

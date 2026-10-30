@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
+import { Dropdown, type DropdownOption } from "@/components/forms/Dropdown";
 import { buttonClasses } from "@/components/ui/button-styles";
 import { Chevron } from "@/components/ui/icons";
 import { riderCta } from "@/config/cta";
@@ -24,32 +25,29 @@ function CarMark() {
   );
 }
 
-// One end of the trip. The native select covers the whole segment, invisibly, so a tap anywhere opens the
-// phone's own picker; the label and value underneath are what people see.
-function Area({ name, label, value, areas, marker }: { name: "from" | "to"; label: string; value: string; areas: string[]; marker: ReactNode }) {
+// One end of the trip. A tap anywhere on the segment opens its list.
+function Area({ name, label, value, areas, marker }: { name: "from" | "to"; label: string; value: string; areas: DropdownOption[]; marker: ReactNode }) {
   return (
-    <div className="relative flex min-h-[64px] min-w-0 flex-1 items-center gap-3.5 rounded-[22px] px-4 transition-colors duration-150 hover:bg-brand has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-ink md:rounded-full md:px-5">
+    <Dropdown
+      id={`${HERO}-${name}`}
+      name={name}
+      label={label}
+      value={value}
+      onChange={(v) => setCommute({ [name]: v, by: HERO })}
+      options={areas}
+      className="min-w-0 flex-1"
+      panelClassName="md:min-w-[320px]"
+      triggerClassName="flex min-h-[64px] w-full items-center gap-3.5 rounded-[22px] px-4 text-left transition-colors duration-150 hover:bg-brand aria-expanded:bg-brand md:rounded-full md:px-5"
+    >
       <span className="relative z-[2] grid w-[26px] flex-none place-items-center">{marker}</span>
-      <span aria-hidden="true" className="min-w-0 flex-1 pr-7">
-        <span className="block text-[14px] leading-tight font-semibold">{label}</span>
+      <span className="min-w-0 flex-1">
+        <span aria-hidden="true" className="block text-[14px] leading-tight font-semibold">
+          {label}
+        </span>
         <span className={`block truncate text-[17px] leading-snug ${value ? "font-semibold" : "text-ink-soft"}`}>{value || "Choose an area"}</span>
       </span>
-      <Chevron className="pointer-events-none absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 md:right-5" />
-      <select
-        name={name}
-        aria-label={label}
-        value={value}
-        onChange={(e) => setCommute({ [name]: e.target.value, by: HERO })}
-        className="absolute inset-0 h-full w-full cursor-pointer appearance-none rounded-[inherit] opacity-0"
-      >
-        <option value="">Choose an area</option>
-        {areas.map((a) => (
-          <option key={a} value={a}>
-            {a}
-          </option>
-        ))}
-      </select>
-    </div>
+      <Chevron className="h-5 w-5 flex-none transition-transform duration-150 group-aria-expanded:rotate-180" />
+    </Dropdown>
   );
 }
 

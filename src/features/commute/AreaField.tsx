@@ -9,5 +9,5 @@ const ends = {
 // One end of a commute, as a form field. `id` is the form's own id; the field adds its name to it.
 export function AreaField({ id, name, value, onChange }: { id: string; name: keyof typeof ends; value: string; onChange: (v: string) => void }) {
   const { label, areas } = ends[name];
-  return <SelectField id={`${id}-${name}`} name={name} label={label} value={value} onChange={onChange} placeholder="Choose an area" options={areas.map((a) => ({ value: a, label: a }))} />;
+  return <SelectField id={`${id}-${name}`} name={name} label={label} value={value} onChange={onChange} placeholder="Choose an area" options={areas} />;
 }

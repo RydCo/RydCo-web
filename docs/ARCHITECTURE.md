@@ -25,7 +25,7 @@ rydco-web/
 │   │   └── trips/               The trip card
 │   ├── components/          Shared parts that know nothing about RydCo's features
 │   │   ├── ui/                  Button, Badge, Section, PageHero, icons
-│   │   ├── forms/               Text field, select, submit button, thank-you panel
+│   │   ├── forms/               Text field, dropdown, submit button, thank-you panel
 │   │   ├── layout/              Navbar, mobile menu, footer, scroll observer
 │   │   └── brand/               Logo, route line, car, hero animation
 │   ├── config/              Facts that change: the theme, site details, pilot areas, links, navigation

@@ -1,0 +1,51 @@
+/* The dropdown's list, opening out of its field. */
+.dropdown-panel {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dropdown-panel {
+    --dropdown-from: -6px;
+    transform-origin: top;
+    animation: dropdown-in 0.18s var(--ease-out-soft);
+  }
+  .dropdown-panel[data-up] {
+    --dropdown-from: 6px;
+    transform-origin: bottom;
+  }
+}
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--dropdown-from)) scale(0.98);
+  }
+}
+
+/* A fade along the bottom while there's more to scroll to. A list that fits has no scroll range, so the timeline
+   stays inactive and the fade stays hidden. Browsers without scroll timelines just show a cut-off list. */
+.dropdown-more {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .dropdown-more {
+    display: block;
+    position: sticky;
+    bottom: -6px;
+    height: 36px;
+    margin-top: -36px;
+    pointer-events: none;
+    opacity: 0;
+    background-image: linear-gradient(180deg, transparent, var(--color-screen));
+    animation: dropdown-more linear both;
+    animation-timeline: scroll(nearest);
+  }
+}
+@keyframes dropdown-more {
+  0%,
+  88% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
