@@ -1,0 +1,27 @@
+/* Route band (components/brand/RouteBand.tsx): the car rides the band's own line (--band-path) from left to right while
+   the band crosses the screen, tilting with the curve. Its parked translate is swapped for the path position. */
+@supports (animation-timeline: view()) and (offset-path: path("M0 0")) {
+  @media (prefers-reduced-motion: no-preference) {
+    .band {
+      view-timeline-name: --band;
+      view-timeline-axis: block;
+    }
+    .band-car {
+      offset-path: var(--band-path);
+      offset-rotate: auto;
+      animation: band-drive linear both;
+      animation-timeline: --band;
+    }
+    .band-car > g {
+      transform: scale(2.4);
+    }
+  }
+}
+@keyframes band-drive {
+  from {
+    offset-distance: 12%;
+  }
+  to {
+    offset-distance: 88%;
+  }
+}

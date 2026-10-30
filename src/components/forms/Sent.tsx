@@ -1,0 +1,27 @@
+import type { ReactNode } from "react";
+
+// The thank-you after a form is sent. A short route draws from the dot and the car parks at its end, then the
+// message rises in (CSS in styles/motion/sent.css); with reduced motion it all simply appears.
+export function Sent({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div role="status" className="rounded-[28px] bg-cream p-7 md:p-9">
+      <svg viewBox="0 0 220 40" aria-hidden="true" className="block h-auto w-[176px]">
+        <circle cx="8" cy="30" r="7" className="fill-cocoa" />
+        <path d="M8 30 H184" pathLength={1} className="sent-line fill-none stroke-cocoa" strokeWidth="6" strokeLinecap="round" />
+        <g className="sent-car">
+          <g transform="translate(192 30) scale(1.7)">
+            <rect className="fill-cocoa" x="-15" y="-10" width="30" height="8" rx="3" />
+            <path className="fill-cocoa" d="M-9 -10 L-5 -16 H6 L10 -10Z" />
+            <rect className="fill-cream" x="-4" y="-14.5" width="8" height="3.5" rx="1" />
+            <circle className="fill-cocoa" cx="-8.5" cy="-1.5" r="3.2" />
+            <circle className="fill-cocoa" cx="8.5" cy="-1.5" r="3.2" />
+          </g>
+        </g>
+      </svg>
+      <div className="sent-text mt-5">
+        <p className="font-display text-[clamp(26px,2.6vw,36px)] leading-tight font-extrabold tracking-tight">{title}</p>
+        <div className="mt-3 max-w-[48ch]">{children}</div>
+      </div>
+    </div>
+  );
+}
