@@ -98,6 +98,9 @@ To add a scene:
 3. Add it to `scenes` in `scripts/motion/render.mjs`.
 4. Show the result with `<MotionVideo name="..." />`.
 
+Video suits motion that can wait to load. Anything that must start the moment someone acts, from where things are on the
+page, stays live: see `HeroLaunch` in `src/views/home/components/`.
+
 To preview a scene while working, build with `MOTION_RENDER=1` and open its route from `.motion-build`: it plays in a loop.
 
 ## Where does this go?

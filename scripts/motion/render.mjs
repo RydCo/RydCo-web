@@ -14,9 +14,10 @@ const root = process.cwd();
 const buildDir = path.join(root, ".motion-build");
 const outDir = path.join(root, "public", "motion");
 
+// bitexact stops FFmpeg stamping a random ID into each file, so a re-render with no real change doesn't show up in git.
 const encodings = (file) => [
-  ["-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "36", "-row-mt", "1", "-pix_fmt", "yuv420p", "-an", `${file}.webm`],
-  ["-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", `${file}.mp4`],
+  ["-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "36", "-row-mt", "1", "-pix_fmt", "yuv420p", "-an", "-fflags", "+bitexact", "-flags:v", "+bitexact", `${file}.webm`],
+  ["-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", "-fflags", "+bitexact", "-flags:v", "+bitexact", `${file}.mp4`],
 ];
 
 function findFfmpeg() {

@@ -199,7 +199,15 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing video is the hero
+- Hero launch (home): on the first scroll down, on every page load, about 2.6s. The parked car drives into the phone, the
+  phone comes to the front as night (`ink-deep` mixed with black, the one ground outside the palette) blooms out from it,
+  road lines and the things a ride is made of burst out of it, then it drops away pulling the route line down the screen
+  with the car riding it, and the next section rises to meet the car. Live, not a video, so it starts at once from wherever
+  the phone is. On phones it waits until the mockup reaches the middle of the screen, so the route check stays usable.
+  Nothing locks: it sits over the page, and the page moves to the next section while it's dark. This is the site's one
+  scripted scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and
+  while a dropdown is open.
+- No parallax, cursor effects, other scroll-jacking or looping background motion. The only auto-playing video is the hero
   phone's silent motion graphic.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
@@ -244,7 +252,7 @@ Crossfades become cuts.
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
    to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
    one ride as a rider and then as its driver (`MotionVideo`, rendered from the `journey` screens in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
-   the columns stack, with the phone after the check.
+   the columns stack, with the phone after the check. The first scroll sets off the hero launch (`HeroLaunch`, §6).
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).
