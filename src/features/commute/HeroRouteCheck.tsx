@@ -9,7 +9,7 @@ import { Chevron } from "@/components/ui/icons";
 import { riderCta } from "@/config/cta";
 import { startAreas, destinationAreas } from "@/config/pilot";
 import { setCommute, useCommute } from "@/features/commute/commute-store";
-import { skipInterlude } from "@/lib/interlude";
+import { skipHeroLaunch } from "@/lib/hero-launch";
 import { CoverageAnswer } from "./CoverageAnswer";
 
 // The app's "Check your commute?" step as the hero's main action, the way Uber opens on its trip planner and
@@ -57,7 +57,7 @@ function goToWaitlist(e: { preventDefault(): void }) {
   const target = document.getElementById("waitlist");
   if (!target) return;
   e.preventDefault();
-  skipInterlude();
+  skipHeroLaunch();
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   target.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "start" });
   target.querySelector<HTMLInputElement>("input[name=name]")?.focus({ preventScroll: true });
