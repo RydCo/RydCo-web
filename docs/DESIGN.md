@@ -199,8 +199,15 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing video is the hero
-  phone's silent motion graphic.
+- Night drive (home, after the hero): a one-time motion graphic, once each time the site is opened in a new tab. A dark
+  rounded sheet (`ink-deep` mixed with black, the one ground outside the palette) rises over the hero and stays pinned
+  while a 4.3s video plays: road lines rush past with cars, riders and
+  fuel shares among them, then the route line draws in under the logo and it holds there. The next section rises over it
+  as a rounded sheet, and once that has covered it the extra scroll length is removed, so the way back up is just the
+  page. It's only a longer scroll, never a locked one: fast scrollers get through at once. Skipped without JavaScript and
+  with reduced motion.
+- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing videos are these two
+  silent motion graphics.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
 finished screen, with no drawing. "Many into one", the safety board, the rail and the Sent route show their finished state, the band's car
@@ -244,7 +251,7 @@ Crossfades become cuts.
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
    to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
    one ride as a rider and then as its driver (`MotionVideo`, rendered from the `journey` screens in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
-   the columns stack, with the phone after the check.
+   the columns stack, with the phone after the check. On a first open, the night drive follows (`RideInterlude`, §6).
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).

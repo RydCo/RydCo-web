@@ -8,15 +8,22 @@ import { createServer } from "node:http";
 import path from "node:path";
 import { chromium } from "playwright";
 
-const scenes = [{ name: "two-rides", route: "/motion/two-rides/", width: 280, height: 592, scale: 2, fps: 30 }];
+// `blend` films that many frames for each one kept and mixes them: real motion blur, for fast movement.
+// `posterAtEnd` makes the still image the last frame instead of the first. `finer` spends more file size on quality, for
+// soft gradients that would otherwise show bands.
+const scenes = [
+  { name: "two-rides", route: "/motion/two-rides/", width: 280, height: 592, scale: 2, fps: 30 },
+  { name: "ride-interlude", route: "/motion/ride-interlude/", width: 800, height: 800, scale: 1.75, fps: 30, blend: 4, posterAtEnd: true, finer: true },
+];
 
 const root = process.cwd();
 const buildDir = path.join(root, ".motion-build");
 const outDir = path.join(root, "public", "motion");
 
-const encodings = (file) => [
-  ["-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "36", "-row-mt", "1", "-pix_fmt", "yuv420p", "-an", `${file}.webm`],
-  ["-c:v", "libx264", "-crf", "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", `${file}.mp4`],
+// bitexact stops FFmpeg stamping a random ID into each file, so a re-render with no real change doesn't show up in git.
+const encodings = (file, filter, finer) => [
+  [...filter, "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", finer ? "28" : "36", "-row-mt", "1", "-pix_fmt", "yuv420p", "-an", "-fflags", "+bitexact", "-flags:v", "+bitexact", `${file}.webm`],
+  [...filter, "-c:v", "libx264", "-crf", finer ? "20" : "26", "-preset", "slow", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an", "-fflags", "+bitexact", "-flags:v", "+bitexact", `${file}.mp4`],
 ];
 
 function findFfmpeg() {
@@ -69,7 +76,10 @@ async function renderScene(browser, port, scene) {
   await page.goto(`http://127.0.0.1:${port}${scene.route}`);
   await page.waitForFunction(() => window.__motion?.ready);
   const duration = await page.evaluate(() => window.__motion.capture());
-  const frames = Math.round((duration / 1000) * scene.fps);
+  const blend = scene.blend ?? 1;
+  const filmedFps = scene.fps * blend;
+  const frames = Math.round((duration / 1000) * filmedFps);
+  const filter = blend > 1 ? ["-vf", `tmix=frames=${blend},fps=${scene.fps}`] : [];
 
   const seek = (ms) =>
     page.evaluate((t) => {
@@ -77,10 +87,10 @@ async function renderScene(browser, port, scene) {
       return new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
     }, ms);
 
-  await seek(0);
+  await seek(scene.posterAtEnd ? duration - 1 : 0);
   await page.screenshot({ path: `${file}-poster.jpg`, type: "jpeg", quality: 88 });
 
-  const ffmpeg = spawn(findFfmpeg(), ["-y", "-hide_banner", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(scene.fps), "-c:v", "png", "-i", "-", ...encodings(file).flat()], { stdio: ["pipe", "inherit", "inherit"] });
+  const ffmpeg = spawn(findFfmpeg(), ["-y", "-hide_banner", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(filmedFps), "-c:v", "png", "-i", "-", ...encodings(file, filter, scene.finer).flat()], { stdio: ["pipe", "inherit", "inherit"] });
   const finished = new Promise((resolve, reject) => {
     ffmpeg.on("error", (error) => reject(error.code === "ENOENT" ? new Error("FFmpeg not found. Install it (winget install Gyan.FFmpeg) or set FFMPEG_PATH.") : error));
     ffmpeg.on("exit", (code) => (code === 0 ? resolve() : reject(new Error(`FFmpeg exited with ${code}`))));
@@ -88,10 +98,10 @@ async function renderScene(browser, port, scene) {
 
   const started = Date.now();
   for (let frame = 0; frame < frames; frame++) {
-    await seek((frame * 1000) / scene.fps);
+    await seek((frame * 1000) / filmedFps);
     const png = await page.screenshot({ type: "png" });
     if (!ffmpeg.stdin.write(png)) await new Promise((resume) => ffmpeg.stdin.once("drain", resume));
-    if (frame % scene.fps === 0) process.stdout.write(`\r${scene.name}: frame ${frame} of ${frames}`);
+    if (frame % filmedFps === 0) process.stdout.write(`\r${scene.name}: frame ${frame} of ${frames}`);
   }
   ffmpeg.stdin.end();
   await finished;

@@ -1,4 +1,5 @@
 import { RouteDivider } from "@/components/brand/RouteDivider";
+import { RideInterlude } from "./components/RideInterlude";
 import { GetTheAppSection } from "./sections/GetTheAppSection";
 import { HeroSection } from "./sections/HeroSection";
 import { HowItWorksSection } from "./sections/HowItWorksSection";
@@ -10,6 +11,7 @@ export function HomeView() {
   return (
     <>
       <HeroSection />
+      <RideInterlude />
       <WhatItIsSection />
       <HowItWorksSection />
       <SafetySection />

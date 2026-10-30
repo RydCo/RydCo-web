@@ -96,7 +96,7 @@ To add a scene:
 2. Give it a route ending in `page.motion.tsx`. That ending keeps it out of the real site, since Next only sees it in
    the motion build.
 3. Add it to `scenes` in `scripts/motion/render.mjs`.
-4. Show the result with `<MotionVideo name="..." />`.
+4. Show the result with `<MotionVideo name="..." />` for a loop, or play it your own way as `RideInterlude` does.
 
 To preview a scene while working, build with `MOTION_RENDER=1` and open its route from `.motion-build`: it plays in a loop.
 

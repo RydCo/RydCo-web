@@ -1,0 +1,22 @@
+/* The home page's one-time motion graphic (views/home/components/RideInterlude.tsx). It only exists with JavaScript, without
+   reduced motion, and until it has been seen. Its height is three parts: the stage arriving, a stretch held still while the
+   video plays, and the next section rising over it. The negative margin lets that section overlap the pinned stage. */
+[data-interlude] {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .js:not(.interlude-seen) [data-interlude] {
+    display: block;
+    position: relative;
+    z-index: 20;
+    height: 280svh;
+    margin-top: -40px;
+    margin-bottom: -100svh;
+  }
+  .js:not(.interlude-seen) [data-interlude] + * {
+    position: relative;
+    z-index: 30;
+    border-radius: 40px 40px 0 0;
+    box-shadow: 0 -24px 50px -20px color-mix(in srgb, var(--color-ink-deep) 70%, transparent);
+  }
+}

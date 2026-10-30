@@ -7,7 +7,8 @@ import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
 
 export function HeroSection() {
   return (
-    <section aria-labelledby="hero-title" className="overflow-x-clip field-hero text-ink">
+    // It fills the first screen, so the next section's edge only arrives with the first scroll.
+    <section aria-labelledby="hero-title" className="overflow-x-clip field-hero text-ink lg:flex lg:min-h-[calc(100svh-44px)] lg:flex-col lg:justify-center">
       <div className="wrap pt-12 pb-10 md:pt-16 lg:pt-8">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-12">
           <div className="relative z-20 lg:pt-8 xl:pt-[72px]">

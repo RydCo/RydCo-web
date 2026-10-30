@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { site } from "@/config/site";
 import { theme } from "@/config/theme.mjs";
+import { interludeHeadCheck } from "@/lib/interlude";
 import { fontVariables } from "@/styles/fonts";
 import "@/styles/globals.css";
 
@@ -33,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${heroScript}` }} />
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${interludeHeadCheck}${heroScript}` }} />
       </head>
       <body className="flex min-h-svh flex-col">
         <Navbar />
