@@ -152,10 +152,24 @@ One loud moment, everything else quiet.
   once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
   car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
   observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
+- Safety board (home): each tile marked `play` acts its feature out once when half of it is on screen (same
+  `data-play` observer): the four driver checks go from pending to trust green one by one, the women-only switch
+  slides on, the five stars pop in, "Sharing live" sends out one ring.
+- App tour (How it works hero, wide screens): one phone steps through Find a ride, Request a seat, Ride together and
+  Settle up every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
+  with its pause button (WCAG 2.2.2); dots jump to a screen.
+- How it works rail: tied to scrolling (scroll-driven CSS). The line fills down to the middle of the screen and each
+  stop fills as it's reached. Without scroll-driven animations the rail is drawn in full.
+- Route band: the car rides the band's own path (`offset-path`) from left to right while the band crosses the screen,
+  tilting with the curve. Without scroll-driven animations it stays parked in the middle.
+- Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
+  (about 1s).
 - No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished logo lockup (line, underline, car, wordmark) with no
-drawing. "Many into one" shows its finished picture. Entrances become instant. Crossfades become cuts.
+drawing. "Many into one", the safety board, the rail and the Sent route show their finished state, the band's car
+stays parked, and the app tour starts paused (its screens swap without sliding). Entrances become instant.
+Crossfades become cuts.
 
 ---
 
