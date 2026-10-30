@@ -1,5 +1,5 @@
 /* Hero route line: held undrawn until the head script starts drawing it (components/brand/hero-script.ts).
-   If the script never takes over, the finished logo appears after 4 seconds. */
+   If the script never takes over, the finished line appears after 4 seconds. */
 .route-pending [data-route-path] {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 1;
