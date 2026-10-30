@@ -1,11 +1,9 @@
 /* The site's gradients. Every stop is a theme colour, so they follow src/config/theme.mjs. */
 
-/* Big colour blocks: from the page colour into brand, with the app's orange glowing in from the top right. */
+/* Big colour blocks: from the page colour into brand. */
 @utility field-brand {
   background-color: var(--color-brand);
-  background-image:
-    radial-gradient(48% 62% at 88% 22%, color-mix(in srgb, var(--color-accent) 20%, transparent), transparent 72%),
-    linear-gradient(180deg, var(--color-surface), var(--color-brand));
+  background-image: linear-gradient(180deg, var(--color-surface), var(--color-brand));
 }
 /* Soft sections: a gentle step down into panel. */
 @utility field-panel {

@@ -60,7 +60,7 @@ file, `src/config/theme.mjs`, and are named for their job, not their look. To ch
 | `panel` | #FBE3D4 | `--accent-wash` | Soft sections, cards, chips. |
 | `screen` | #FFFFFF | `--surface` | Form fields, secondary buttons, the inside of phone mockups. |
 | `line` | #E3C6AF | `--line-2` | The edge of a secondary button. |
-| `accent` | #DB6A33 | `--accent` | The app's orange: the top of the button gradient, the sun, bullets, stars, map routes. |
+| `accent` | #DB6A33 | `--accent` | The app's orange: the top of the button gradient, bullets, stars, map routes. |
 | `accent-strong` | #C2551F | none | Where button labels start sitting. Route lines on brand or panel, selected states. |
 | `accent-deep` | #A8430F | none | The foot of the button gradient, text links, ticks. |
 | `on-accent` | #FFFFFF | `--on-accent` | Text on the button gradient. |
@@ -79,7 +79,7 @@ on those. The same fix would help the app.
 Defined once in `src/styles/gradients.css`, with every stop a theme colour.
 
 - `action`: every primary button and selected state.
-- `field-brand`: hero and big colour blocks, from surface into brand, with a soft glow of the orange.
+- `field-brand`: hero and big colour blocks, from surface into brand.
 - `field-panel`: soft sections.
 - `field-ink`: dark sections and the footer.
 - `text-sun`: orange headline words, display size only.
