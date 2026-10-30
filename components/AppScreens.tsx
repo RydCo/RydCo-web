@@ -230,7 +230,7 @@ export function CoverageScreen() {
               <path key={a + b} d={curve(a, b)} className="fill-none stroke-cocoa-soft" strokeWidth="2.5" strokeDasharray="4 6" strokeLinecap="round" />
             ))}
             {covered.map(([a, b]) => (
-              <path key={a + b} d={curve(a, b)} className="fill-none stroke-apricot" strokeWidth="4.5" strokeLinecap="round" />
+              <path key={a + b} d={curve(a, b)} className="fill-none stroke-apricot-deep" strokeWidth="4.5" strokeLinecap="round" />
             ))}
             {Object.entries(places).map(([name, [x, y, side]]) => {
               const isSoon = name === "Township" || name === "Bahria Town";
@@ -261,7 +261,7 @@ export function CoverageScreen() {
         </div>
         <div className="flex gap-4 text-[12px]">
           <span className="flex items-center gap-1.5">
-            <span className="h-1 w-5 rounded-full bg-apricot" /> Covered
+            <span className="h-1 w-5 rounded-full bg-apricot-deep" /> Covered
           </span>
           <span className="flex items-center gap-1.5">
             <span className="h-1 w-5 rounded-full bg-cocoa-soft" /> Not yet
@@ -314,7 +314,7 @@ export function TripLiveScreen() {
         <div className="relative overflow-hidden rounded-[20px] bg-apricot-tint">
           <svg viewBox="0 0 260 150" className="block h-auto w-full" aria-hidden="true">
             <path d="M-10 120 C60 120 70 60 130 62 S210 30 270 34" className="fill-none stroke-white" strokeWidth="16" strokeLinecap="round" />
-            <path d="M-10 120 C60 120 70 60 130 62 S210 30 270 34" className="fill-none stroke-apricot" strokeWidth="6" strokeLinecap="round" />
+            <path d="M-10 120 C60 120 70 60 130 62 S210 30 270 34" className="fill-none stroke-apricot-deep" strokeWidth="6" strokeLinecap="round" />
             <circle cx="214" cy="38" r="9" className="fill-white stroke-cocoa" strokeWidth="4" />
             <g transform="translate(118 60) scale(1.3)">
               <rect className="fill-cocoa" x="-15" y="-10" width="30" height="8" rx="3" />
@@ -382,7 +382,7 @@ export function RequestScreen() {
       <Body>
         <div className="grid grid-cols-2 rounded-full bg-white p-1 text-center text-[12.5px] font-semibold">
           <span className="rounded-full py-2">This date</span>
-          <span className="rounded-full bg-apricot py-2">Repeating</span>
+          <span className="rounded-full bg-apricot-deep py-2 text-white">Repeating</span>
         </div>
         <div className="flex gap-1.5">
           {["Mon", "Tue", "Wed", "Thu", "Fri"].map((d) => (
@@ -458,7 +458,7 @@ export function ChecklistScreen() {
             <span className="tabular-nums">2 of 5</span>
           </p>
           <span className="mt-2 block h-2 overflow-hidden rounded-full bg-apricot-tint">
-            <span className="block h-full w-2/5 rounded-full bg-apricot" />
+            <span className="block h-full w-2/5 rounded-full bg-apricot-deep" />
           </span>
         </div>
         <ol className="grid gap-1.5">

@@ -74,7 +74,7 @@ export default function Drivers() {
               {needs.map((n, i) => (
                 <li key={n.title} {...reveal(2 + i)}>
                   <h3 className="t-title flex items-start gap-3">
-                    <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot" />
+                    <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot-deep" />
                     {n.title}
                   </h3>
                   <p className="mt-2 sm:pl-6">{n.text}</p>

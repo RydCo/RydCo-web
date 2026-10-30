@@ -3,9 +3,9 @@
 /* The palette is closed: Tailwind's default colours are removed so only brand colours exist. */
 @theme {
   --color-*: initial;
-  --color-apricot: #FF7518;
+  --color-apricot: #FFE8D7;
   --color-apricot-deep: #C24E15;
-  --color-apricot-tint: #FCE3D3;
+  --color-apricot-tint: #FFD7BD;
   --color-cocoa: #2C1E18;
   --color-cocoa-soft: #6B5A52;
   --color-cream: #FFF8F3;
