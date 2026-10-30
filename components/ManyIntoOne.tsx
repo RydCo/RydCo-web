@@ -41,7 +41,7 @@ function Diagram({ g, className }: { g: Geo; className: string }) {
       ))}
       <path d={`M${g.merge} ${mid} L${g.end} ${mid}`} className="stroke-cocoa" strokeWidth={g.line} strokeLinecap="round" />
       {g.riders.map((x) => (
-        <circle key={x} cx={x} cy={mid} r={g.line * 0.95} className="fill-apricot stroke-cream" strokeWidth="4" />
+        <circle key={x} cx={x} cy={mid} r={g.line * 0.95} className="fill-apricot-deep stroke-cream" strokeWidth="4" />
       ))}
       <g transform={`translate(${g.car} ${mid - g.line / 2}) scale(${g.scale})`}>
         <rect className="fill-cocoa" x="-15" y="-10" width="30" height="8" rx="3" />

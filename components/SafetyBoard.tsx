@@ -89,7 +89,7 @@ export function SafetyBoard() {
       </Tile>
 
       <Tile ground="cream" step={7} title="Rate every trip" line="Riders rate their driver after each ride." place="row-span-2 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-7">
-        <div className="absolute top-4 -right-8 flex gap-0.5 text-apricot lg:top-6 lg:right-8">
+        <div className="absolute top-4 -right-8 flex gap-0.5 text-apricot-deep lg:top-6 lg:right-8">
           {[0, 1, 2, 3, 4].map((i) => (
             <svg key={i} viewBox="0 0 24 24" className="h-10 w-10 fill-current sm:h-12 sm:w-12 lg:h-14 lg:w-14">
               <path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />

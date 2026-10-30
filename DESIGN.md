@@ -52,11 +52,11 @@ Six colours. Nothing else, except one derived text tone (marked below).
 
 | Token | Hex | Job |
 | --- | --- | --- |
-| `apricot` | #EA6A2A | Brand colour. Hero field, big colour blocks, highlights. Used boldly, in whole sections. |
-| `apricot-deep` | #C24E15 | Main buttons (white text) on light grounds. Links on cream. |
+| `apricot` | #FFE8D7 | Brand colour, a soft peach. Hero field and big colour blocks, in whole sections. Highlights on cocoa. |
+| `apricot-deep` | #C24E15 | Main buttons (white text) on light grounds. Links on cream. Small accent marks on light grounds: route lines, bullet dots, stars, progress. |
 | `cocoa` | #2C1E18 | All text, the logo, dark sections, buttons on an apricot field. |
 | `cream` | #FFF8F3 | Page background. |
-| `apricot-tint` | #FCE3D3 | Soft section backgrounds, cards on cream, input fills. |
+| `apricot-tint` | #FFD7BD | One step deeper than apricot: soft section backgrounds, panels and cards (on cream or apricot), chips, input surrounds. |
 | `trust` | #1F7A5A | Only for "verified" or "confirmed" signals: badges, ticks. Never decoration or buttons. |
 | `cocoa-soft` *(derived, needs your OK)* | #6B5A52 | Secondary text only (captions, footnotes). The same tone the app uses. |
 
@@ -67,21 +67,25 @@ Six colours. Nothing else, except one derived text tone (marked below).
 | Pair | Ratio | Use |
 | --- | --- | --- |
 | cocoa on cream | 15:1 | All body text |
-| cocoa on apricot | 5.0:1 | Text on the hero and on apricot blocks (AA, any size) |
+| cocoa on apricot | 13.8:1 | Text on the hero and on apricot blocks |
+| cocoa on apricot-tint | 12.2:1 | Text in panels and chips |
+| apricot on cocoa | 13.8:1 | Footer headings, links and highlights on dark sections |
 | white on apricot-deep | 4.8:1 | Button labels (AA) |
 | apricot-deep on cream | 4.5:1 | Text links (AA, just) |
+| apricot-deep on apricot / on cocoa | 4.0 / 3.4:1 | Accent marks only (3:1 for graphics). Never text. |
 | trust on cream / white on trust | 5.0 / 5.3:1 | Verified badges |
-| cocoa-soft on cream | 6.2:1 | Secondary text |
-| apricot on cocoa | 5.0:1 | Highlights in dark sections |
-| ~~white on apricot~~ | 3.2:1 | **Never.** Use cocoa text on apricot. |
+| cocoa-soft on cream / apricot / tint | 6.2 / 5.5 / 4.9:1 | Secondary text |
+| ~~white on apricot~~ | 1.2:1 | **Never.** Use cocoa text on apricot. |
 
 ### Rules
 - Proportions on a typical page: cream about 50%, apricot 25% (in big blocks), cocoa 15% (dark sections, footer), tint 10%.
 - **No opacity tints of the oranges.** A 20% apricot-deep over apricot is a new orange. Use the six colours flat.
-- **On an apricot field,** the primary button is cocoa with cream text (deep apricot on apricot has too little edge contrast).
-  Everywhere else the primary button is deep apricot with white text.
+- **On an apricot field,** the primary button is cocoa with cream text, so the hero's main action is the strongest
+  thing on it. Everywhere else the primary button is deep apricot with white text.
+- **Apricot is too pale to mark anything on a light ground.** Route lines, dots, stars and progress bars on cream,
+  white, apricot or tint use apricot-deep. On cocoa they use apricot.
 - No blue, purple, yellow, beige or any other orange. No black and no pure white page grounds.
-- Surfaces are separated by a step in tone (cream → tint → apricot → cocoa), never by lines or shadows.
+- Surfaces are separated by a step in tone (cream → apricot → tint → cocoa), never by lines or shadows.
 
 ---
 
