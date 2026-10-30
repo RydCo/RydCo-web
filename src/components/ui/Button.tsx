@@ -14,7 +14,7 @@ const variants: Record<Variant, string> = {
   surface: "px-7 bg-surface text-ink hover:bg-panel",
   // For ink grounds only.
   brand: "px-7 bg-brand text-ink hover:bg-surface",
-  ghost: "text-ink underline decoration-2 underline-offset-[6px] hover:decoration-accent",
+  ghost: "text-ink t-link hover:decoration-accent",
 };
 
 type Props = {

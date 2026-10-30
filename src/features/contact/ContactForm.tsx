@@ -1,15 +1,18 @@
 "use client";
 
 import { useId, useState, useSyncExternalStore } from "react";
-import { FormError, MailNote } from "@/components/forms/FormMessages";
+import { FormStatus } from "@/components/forms/FormMessages";
 import { Honeypot } from "@/components/forms/Honeypot";
+import { NameField } from "@/components/forms/PersonFields";
 import { SelectField } from "@/components/forms/SelectField";
 import { Sent } from "@/components/forms/Sent";
 import { SubmitButton } from "@/components/forms/SubmitButton";
 import { TextArea } from "@/components/forms/TextArea";
 import { TextField } from "@/components/forms/TextField";
 import { contactTopics, type ContactTopic } from "@/config/contact";
-import { sendForm } from "@/lib/send-form";
+import { useFields } from "@/hooks/use-fields";
+import { useSendForm } from "@/hooks/use-send-form";
+import { firstName, nameError } from "@/lib/person";
 
 const labels = { topic: "About", name: "Name", reply: "Reply to", organization: "Organization", message: "Message" };
 
@@ -26,42 +29,30 @@ export function ContactForm() {
   const id = useId();
   const urlTopic = useTopicFromUrl();
   const [chosenTopic, setChosenTopic] = useState<ContactTopic | null>(null);
-  const [f, setF] = useState({ name: "", reply: "", organization: "", message: "" });
+  const [f, set] = useFields({ name: "", reply: "", organization: "", message: "" });
   const [trap, setTrap] = useState("");
   const [errors, setErrors] = useState<{ name?: string; reply?: string; message?: string }>({});
-  const [state, setState] = useState<"idle" | "sending" | "sent" | "mailed" | "error">("idle");
-  const set = (k: keyof typeof f) => (v: string) => setF((prev) => ({ ...prev, [k]: v }));
+  const { state, send } = useSendForm("contact", labels);
 
   const topicId = chosenTopic ?? urlTopic ?? "riding";
   const needsOrg = topicId === "company" || topicId === "partner";
 
-  async function submit(e: { preventDefault(): void }) {
+  function submit(e: { preventDefault(): void }) {
     e.preventDefault();
     const next = {
-      name: f.name.trim() ? undefined : "Add your name.",
+      name: nameError(f.name),
       reply: f.reply.trim() ? undefined : "Add an email or phone number so we can reply.",
       message: f.message.trim() ? undefined : "Write a short message.",
     };
     setErrors(next);
     if (next.name || next.reply || next.message) return;
-    setState("sending");
     const topic = contactTopics.find((t) => t.id === topicId)?.label ?? topicId;
-    try {
-      setState(
-        await sendForm(
-          "contact",
-          { topic, name: f.name.trim(), reply: f.reply.trim(), organization: needsOrg ? f.organization.trim() : "", message: f.message.trim(), website: trap },
-          labels,
-        ),
-      );
-    } catch {
-      setState("error");
-    }
+    send({ topic, name: f.name.trim(), reply: f.reply.trim(), organization: needsOrg ? f.organization.trim() : "", message: f.message.trim(), website: trap });
   }
 
   if (state === "sent") {
     return (
-      <Sent title={`Thanks, ${f.name.trim().split(" ")[0]}. We've got it.`}>
+      <Sent title={`Thanks, ${firstName(f.name)}. We've got it.`}>
         <p>Someone on the team will reply to {f.reply.trim()}.</p>
       </Sent>
     );
@@ -78,7 +69,7 @@ export function ContactForm() {
         options={contactTopics.map((t) => ({ value: t.id, label: t.label }))}
       />
       <div className="grid gap-5 sm:grid-cols-2">
-        <TextField id={`${id}-name`} name="name" label="Your name" autoComplete="name" value={f.name} onChange={set("name")} error={errors.name} required />
+        <NameField id={id} value={f.name} onChange={set("name")} error={errors.name} />
         <TextField
           id={`${id}-reply`}
           name="reply"
@@ -96,8 +87,7 @@ export function ContactForm() {
       <Honeypot value={trap} onChange={setTrap} />
       <div>
         <SubmitButton sending={state === "sending"}>Send message</SubmitButton>
-        <FormError show={state === "error"} />
-        <MailNote show={state === "mailed"} />
+        <FormStatus state={state} />
       </div>
     </form>
   );

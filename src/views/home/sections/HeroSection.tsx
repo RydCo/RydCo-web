@@ -11,7 +11,7 @@ export function HeroSection() {
           Your commute, <span className="whitespace-nowrap">in good company.</span>
         </h1>
         <div className="mt-7 grid gap-7 md:mt-9 lg:grid-cols-12 lg:items-start lg:gap-10">
-          <p className="max-w-[36ch] text-[19px] md:text-[21px] lg:col-span-4 lg:pt-2">
+          <p className="max-w-[36ch] t-lead lg:col-span-4 lg:pt-2">
             RydCo matches you with people in Lahore who drive your way every day. Share the car and split the fuel cost.
           </p>
           <div className="lg:col-span-8">

@@ -14,7 +14,7 @@ export function RouteBand({ on = "brand" }: { on?: keyof typeof toneOn }) {
       <svg viewBox="0 0 1440 140" preserveAspectRatio="xMidYMid slice" className="block h-[96px] w-full md:h-[140px]">
         <path d={bandPath} className={tone.line} fill="none" strokeWidth="10" strokeLinecap="round" />
         <g className="band-car">
-          <Car tone={tone} transform="translate(720 70) scale(2.4)" scale={2.4} />
+          <Car tone={tone} transform="translate(720 70) scale(2.4)" />
         </g>
       </svg>
     </div>

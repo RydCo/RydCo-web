@@ -20,3 +20,9 @@ export const pilot = {
 
 // The last choice in every area picker, for commutes outside the pilot list.
 export const otherArea = "Another area";
+
+const withOther = (list: { name: string }[]) => [...list.map((a) => a.name), otherArea];
+
+// What the area pickers offer.
+export const startAreas = withOther(pilot.starts);
+export const destinationAreas = withOther(pilot.destinations);

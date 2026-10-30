@@ -1,14 +1,15 @@
-import { control, Described, describedBy, type Base } from "./field-base";
+import { control, describedProps, Field, invalidRing, type Base } from "./field-base";
 
 export function TextField({
-  id,
-  label,
-  error,
-  hint,
   value,
   onChange,
   type = "text",
-  ...rest
+  name,
+  required,
+  autoComplete,
+  inputMode,
+  placeholder,
+  ...base
 }: Base & {
   value: string;
   onChange: (v: string) => void;
@@ -20,21 +21,20 @@ export function TextField({
   placeholder?: string;
 }) {
   return (
-    <div>
-      <label htmlFor={id} className="block font-semibold">
-        {label}
-      </label>
+    <Field {...base}>
       <input
-        id={id}
+        id={base.id}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={describedBy(id, error, hint)}
-        className={`${control} mt-2 h-[56px] rounded-full ${error ? "outline-3 outline-offset-2 outline-accent" : ""}`}
-        {...rest}
+        {...describedProps(base)}
+        className={`${control} mt-2 h-[56px] rounded-full ${invalidRing(base.error)}`}
+        name={name}
+        required={required}
+        autoComplete={autoComplete}
+        inputMode={inputMode}
+        placeholder={placeholder}
       />
-      <Described id={id} error={error} hint={hint} />
-    </div>
+    </Field>
   );
 }

@@ -1,5 +1,5 @@
-import { Tick } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
+import { TickItem } from "@/components/ui/TickItem";
 import { pilot } from "@/config/pilot";
 import { site } from "@/config/site";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
@@ -36,10 +36,7 @@ export function LahorePilotSection() {
           </h3>
           <ul className="mt-4 grid gap-3" {...reveal(3)}>
             {pilotFeatures.map((f) => (
-              <li key={f} className="flex gap-3">
-                <Tick className="mt-[0.3em] text-accent" />
-                {f}
-              </li>
+              <TickItem key={f}>{f}</TickItem>
             ))}
           </ul>
           <h3 className="t-title mt-10" {...reveal(4)}>

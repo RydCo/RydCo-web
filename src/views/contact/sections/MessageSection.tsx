@@ -19,7 +19,7 @@ export function MessageSection() {
         <aside className="grid content-start gap-4 lg:col-span-4 lg:col-start-9" aria-label="Other ways to reach us" {...reveal(2)}>
           <div className="rounded-surface bg-panel p-7">
             <h3 className="t-title">Rather email?</h3>
-            <a href={`mailto:${site.email}`} className="mt-2 inline-block py-1 font-semibold break-all underline decoration-2 underline-offset-[6px]">
+            <a href={`mailto:${site.email}`} className="mt-2 inline-block py-1 break-all t-link">
               {site.email}
             </a>
           </div>
@@ -29,7 +29,7 @@ export function MessageSection() {
               href={site.instagram}
               target="_blank"
               rel="noopener"
-              className="mt-2 inline-block py-1 font-semibold underline decoration-2 underline-offset-[6px]"
+              className="mt-2 inline-block py-1 t-link"
             >
               {site.instagramHandle}
             </a>

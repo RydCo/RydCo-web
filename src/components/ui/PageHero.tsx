@@ -33,7 +33,7 @@ export function PageHero({
             <h1 id="page-title" className={`t-display ${aside ? "lg:[--display-size:80px]" : ""}`}>
               {title}
             </h1>
-            {lead && <p className="mt-7 max-w-[42ch] text-[19px] md:text-[21px]">{lead}</p>}
+            {lead && <p className="mt-7 max-w-[42ch] t-lead">{lead}</p>}
             {actions && <div className="mt-9 flex flex-wrap gap-3">{actions}</div>}
           </div>
           {aside && <div className={`lg:col-span-5 ${asideClassName}`}>{aside}</div>}

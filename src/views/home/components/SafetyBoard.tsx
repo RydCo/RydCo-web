@@ -1,8 +1,8 @@
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Tick, Arrow } from "@/components/ui/icons";
-import { reveal } from "@/lib/reveal";
+import { playAt, reveal } from "@/lib/reveal";
 
 // A board of the app's real safety controls, each enlarged and cropped by its tile's edges.
 // Every item here is a feature shown in the app mocks; wording follows the app (never "NADRA verified").
@@ -22,9 +22,6 @@ type TileProps = {
 };
 
 const grounds = { surface: "bg-surface", panel: "bg-panel", brand: "bg-brand" };
-
-// When a part of a tile's moment starts, after the tile begins to play.
-const at = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
 function Tile({ ground, title, line, place, step, play, children }: TileProps) {
   return (
@@ -57,25 +54,25 @@ export function SafetyBoard() {
 
       <Tile ground="panel" step={1} play title="Every driver is checked" line="CNIC, a live selfie, licence and car, all reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
         <div className="absolute top-6 -right-6 grid justify-items-end gap-2.5 text-[20px] sm:-right-10 sm:gap-3 sm:text-[34px] lg:text-[40px]">
-          <Badge className="sb-check pr-[1.6em]" style={at(250)}>CNIC reviewed</Badge>
-          <Badge className="sb-check mr-[2.4em]" style={at(600)}>Live selfie checked</Badge>
-          <Badge className="sb-check pr-[1.6em]" style={at(950)}>Licence checked</Badge>
-          <Badge className="sb-check mr-[3.2em]" style={at(1300)}>Vehicle checked</Badge>
+          <Badge className="sb-check pr-[1.6em]" style={playAt(250)}>CNIC reviewed</Badge>
+          <Badge className="sb-check mr-[2.4em]" style={playAt(600)}>Live selfie checked</Badge>
+          <Badge className="sb-check pr-[1.6em]" style={playAt(950)}>Licence checked</Badge>
+          <Badge className="sb-check mr-[3.2em]" style={playAt(1300)}>Vehicle checked</Badge>
         </div>
       </Tile>
 
       <Tile ground="brand" step={2} play title="Women-only rides" line="Choose to ride only with women." place="row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-3">
         <div className="absolute top-5 -right-10 flex items-center gap-3 rounded-full bg-surface py-2.5 pr-12 pl-4 text-[14px] font-semibold sm:-right-12 sm:py-3 sm:pr-16 sm:pl-5 sm:text-[24px] lg:top-10 lg:text-[28px]">
           <span className="whitespace-nowrap">Women-only</span>
-          <span className="sb-track relative h-[1.5em] w-[2.6em] flex-none rounded-full bg-ink" style={at(450)}>
-            <span className="sb-knob absolute top-[0.15em] right-[0.15em] h-[1.2em] w-[1.2em] rounded-full bg-brand" style={at(450)} />
+          <span className="sb-track relative h-[1.5em] w-[2.6em] flex-none rounded-full bg-ink" style={playAt(450)}>
+            <span className="sb-knob absolute top-[0.15em] right-[0.15em] h-[1.2em] w-[1.2em] rounded-full bg-brand" style={playAt(450)} />
           </span>
         </div>
       </Tile>
 
       <Tile ground="surface" step={3} play title="Every rider too" line="Each account starts with a verified phone number." place="row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-2 lg:row-start-1">
         <div className="absolute top-5 -right-5 text-[16px] sm:-right-6 sm:text-[24px] lg:top-6 lg:text-[28px]">
-          <Badge className="sb-check pr-[1.8em]" style={at(350)}>
+          <Badge className="sb-check pr-[1.8em]" style={playAt(350)}>
             Phone verified
           </Badge>
         </div>
@@ -101,7 +98,7 @@ export function SafetyBoard() {
       <Tile ground="surface" step={7} play title="Rate every trip" line="Riders rate their driver after each ride." place="row-span-2 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-7">
         <div className="absolute top-4 -right-8 flex gap-0.5 text-accent lg:top-6 lg:right-8">
           {[0, 1, 2, 3, 4].map((i) => (
-            <svg key={i} viewBox="0 0 24 24" className="sb-star h-10 w-10 fill-current sm:h-12 sm:w-12 lg:h-14 lg:w-14" style={at(250 + i * 130)}>
+            <svg key={i} viewBox="0 0 24 24" className="sb-star h-10 w-10 fill-current sm:h-12 sm:w-12 lg:h-14 lg:w-14" style={playAt(250 + i * 130)}>
               <path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />
             </svg>
           ))}
@@ -115,7 +112,7 @@ export function SafetyBoard() {
             <b className="block leading-tight">Ammi</b>
             <span className="text-[16px]">Trusted contact</span>
           </span>
-          <span className="sb-pulse relative ml-3 flex items-center gap-1.5 rounded-full bg-trust px-3 py-1.5 text-[15px] font-semibold text-on-trust" style={at(500)}>
+          <span className="sb-pulse relative ml-3 flex items-center gap-1.5 rounded-full bg-trust px-3 py-1.5 text-[15px] font-semibold text-on-trust" style={playAt(500)}>
             <Tick /> Sharing live
           </span>
         </div>

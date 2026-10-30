@@ -1,5 +1,5 @@
-import { Tick } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
+import { TickItem } from "@/components/ui/TickItem";
 import { reveal } from "@/lib/reveal";
 
 const yourRules = [
@@ -24,10 +24,7 @@ export function RulesSection() {
         </div>
         <ul className="grid gap-4 lg:col-span-6 lg:col-start-7" {...reveal(2)}>
           {yourRules.map((r) => (
-            <li key={r} className="flex gap-3">
-              <Tick className="mt-[0.3em] text-accent" />
-              {r}
-            </li>
+            <TickItem key={r}>{r}</TickItem>
           ))}
         </ul>
       </div>

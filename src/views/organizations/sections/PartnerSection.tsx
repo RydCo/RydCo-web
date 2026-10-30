@@ -12,7 +12,7 @@ export function PartnerSection() {
           <h2 id="partner-title" className="t-h2" {...reveal(0)}>
             Partner with us
           </h2>
-          <p className="mt-6 max-w-[48ch] text-[19px] md:text-[21px]" {...reveal(1)}>
+          <p className="mt-6 max-w-[48ch] t-lead" {...reveal(1)}>
             We&rsquo;re looking for incubators, sponsors and employers who want better daily commutes in Pakistan, and want to help the Lahore pilot grow.
           </p>
         </div>
@@ -20,7 +20,7 @@ export function PartnerSection() {
           <Button href={partnerEnquiry} variant="onBrand">
             Partner with us
           </Button>
-          <a href={`mailto:${site.email}`} className="py-1 font-semibold underline decoration-2 underline-offset-[6px]">
+          <a href={`mailto:${site.email}`} className="py-1 t-link">
             {site.email}
           </a>
         </div>

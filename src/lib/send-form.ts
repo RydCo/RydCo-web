@@ -15,6 +15,9 @@ const subjects: Record<FormKind, string> = {
 
 export type Fields = Record<string, string>;
 
+// What a form is doing, for the screen. "sent" and "mailed" are what sendForm returns.
+export type SendState = "idle" | "sending" | "sent" | "mailed" | "error";
+
 // "sent": stored by the form endpoint. "mailed": no endpoint yet, so the visitor's email app opened instead.
 // The honeypot field ("website") is never put in the email.
 export async function sendForm(kind: FormKind, fields: Fields, labels: Record<string, string>): Promise<"sent" | "mailed"> {

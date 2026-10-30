@@ -1,7 +1,7 @@
+import { RouteDivider } from "@/components/brand/RouteDivider";
 import { GetTheAppSection } from "./sections/GetTheAppSection";
 import { HeroSection } from "./sections/HeroSection";
 import { HowItWorksSection } from "./sections/HowItWorksSection";
-import { RouteDividerSection } from "./sections/RouteDividerSection";
 import { SafetySection } from "./sections/SafetySection";
 import { WhatItIsSection } from "./sections/WhatItIsSection";
 import { WhoItsForSection } from "./sections/WhoItsForSection";
@@ -13,7 +13,7 @@ export function HomeView() {
       <WhatItIsSection />
       <HowItWorksSection />
       <SafetySection />
-      <RouteDividerSection />
+      <RouteDivider />
       <WhoItsForSection />
       <GetTheAppSection />
     </>

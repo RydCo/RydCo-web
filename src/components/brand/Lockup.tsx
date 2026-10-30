@@ -20,7 +20,7 @@ export function Lockup({ on = "surface", className = "", title }: { on?: keyof t
         strokeLinejoin="round"
       />
       <Wordmark tone={tone} x={60} y={150} size={150} length={440} />
-      <Car tone={tone} transform="translate(520 216) scale(2.6)" scale={2.6} />
+      <Car tone={tone} transform="translate(520 216) scale(2.6)" />
     </svg>
   );
 }

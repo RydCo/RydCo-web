@@ -1,6 +1,7 @@
+import { BulletTitle } from "@/components/ui/BulletTitle";
 import { Section } from "@/components/ui/Section";
-import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { ChecklistScreen } from "@/features/app-preview/screens/ChecklistScreen";
+import { StickyPhone } from "@/features/app-preview/StickyPhone";
 import { reveal } from "@/lib/reveal";
 
 const needs = [
@@ -24,10 +25,7 @@ export function NeedsSection() {
           <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-x-10">
             {needs.map((n, i) => (
               <li key={n.title} {...reveal(2 + i)}>
-                <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-accent" />
-                  {n.title}
-                </h3>
+                <BulletTitle>{n.title}</BulletTitle>
                 <p className="mt-2 sm:pl-6">{n.text}</p>
               </li>
             ))}
@@ -37,11 +35,9 @@ export function NeedsSection() {
           </p>
         </div>
         <div className="lg:col-span-4 lg:col-start-9" {...reveal(3)}>
-          <div className="lg:sticky lg:top-32">
-            <PhoneFrame label="The driver checklist in the RydCo app: identity, live selfie, driving licence, vehicle, submit">
-              <ChecklistScreen />
-            </PhoneFrame>
-          </div>
+          <StickyPhone label="The driver checklist in the RydCo app: identity, live selfie, driving licence, vehicle, submit">
+            <ChecklistScreen />
+          </StickyPhone>
         </div>
       </div>
     </Section>

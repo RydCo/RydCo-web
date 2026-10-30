@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { RouteBand } from "@/components/brand/RouteBand";
+import { RouteDivider } from "@/components/brand/RouteDivider";
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 
@@ -25,9 +25,7 @@ export default function NotFound() {
           </>
         }
       />
-      <div className="bg-brand pb-16">
-        <RouteBand />
-      </div>
+      <RouteDivider className="pb-16" />
     </>
   );
 }

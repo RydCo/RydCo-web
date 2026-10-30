@@ -29,7 +29,7 @@ export function GetTheAppSection() {
             <WaitlistForm />
           </div>
           <details className="group mt-8">
-            <summary className="inline-flex cursor-pointer list-none items-center gap-2 py-2 font-semibold underline decoration-2 underline-offset-[6px]">
+            <summary className="inline-flex cursor-pointer list-none items-center gap-2 py-2 t-link">
               See all pilot areas
             </summary>
             <div className="mt-4 grid gap-6 sm:grid-cols-2">

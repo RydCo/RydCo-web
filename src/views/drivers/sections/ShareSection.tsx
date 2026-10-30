@@ -1,3 +1,4 @@
+import { ExampleTag } from "@/components/ui/ExampleTag";
 import { Section } from "@/components/ui/Section";
 import { reveal } from "@/lib/reveal";
 
@@ -20,7 +21,7 @@ export function ShareSection() {
         </div>
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(2)}>
           <div data-ui className="relative rounded-surface bg-screen p-7 md:p-9">
-            <span className="absolute top-0 right-0 rounded-tr-surface rounded-bl-[18px] bg-ink px-4 py-2 text-[14px] font-semibold text-surface">Example</span>
+            <ExampleTag>Example</ExampleTag>
             <p className="font-semibold">Honda City, 10 km to work</p>
             <p className="mt-1 text-ink-soft">Rs 38.94 per km · Rs 50 pickup fee</p>
             <dl className="mt-7 grid gap-6">

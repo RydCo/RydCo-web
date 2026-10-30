@@ -73,12 +73,12 @@ The build checks these for whichever theme is active.
 | Pair | Ratio | Use |
 | --- | --- | --- |
 | ink on surface | 15:1 | All body text |
-| ink on brand | 13.8:1 | Text on the hero and on brand blocks |
-| ink on panel | 12.2:1 | Text in panels and chips |
-| brand on ink | 13.8:1 | Footer headings, links and highlights on dark sections |
+| ink on brand | 13.6:1 | Text on the hero and on brand blocks |
+| ink on panel | 12.0:1 | Text in panels and chips |
+| brand on ink | 13.6:1 | Footer headings, links and highlights on dark sections |
 | on-accent on accent | 4.8:1 | Button labels (AA) |
 | accent on surface | 4.5:1 | Text links (AA, just) |
-| accent on panel / on screen | 3.6 / 5.1:1 | Marks only (3:1 for graphics). Never text. |
+| accent on panel / on screen | 3.6 / 4.8:1 | Marks only (3:1 for graphics). Never text. |
 | on-trust on trust | 5.3:1 | Verified badges |
 | ink-soft on surface / panel | 6.2 / 4.9:1 | Secondary text |
 
@@ -193,7 +193,7 @@ Crossfades become cuts.
 | --- | --- |
 | `Navbar` | Surface bar, sticky with a solid background (no blur). Ink wordmark left; links: How it works · Safety · Drivers · Organizations; one pill action: "Join the waitlist" or "Get the app". On phones a menu button opens a full-width sheet. |
 | `Footer` | Ink field. The full logo lockup (route line + car + wordmark) set large in brand and surface, then link columns, contact line, "Lahore pilot", copyright, legal links. |
-| `Button` | Pill. Variants: `primary` (accent / white), `onApricot` (ink / surface), `secondary` (tint / ink), `ghost` (ink text, underline on hover). Renders as `<a>` or `<button>`. |
+| `Button` | Pill. Variants: `primary` (accent / white), `onBrand` (ink / surface), `secondary` (tint / ink), `ghost` (ink text, underline on hover). Renders as `<a>` or `<button>`. |
 | `Section` | Sets the ground (`surface`, `tint`, `brand`, `ink`), section padding, max width, and the entrance motion for its children. |
 | `PhoneFrame` | Ink device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
 | `RouteLine` | The SVG motif. Modes: `hero` (animated signature), `lockup` (static logo for the footer and OG image), `band` (full-width crossing), `mark` (small pickup-to-drop-off dot-and-line). |

@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
+import { ExampleTag } from "@/components/ui/ExampleTag";
 
 // The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat.
 export type Trip = {
@@ -20,9 +21,7 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
   return (
     <div data-ui className={`relative bg-screen text-ink ${compact ? "rounded-[18px] p-3 text-[12.5px]" : "rounded-surface p-6 text-[16px] md:p-8"}`}>
       {label && (
-        <span className="absolute top-0 right-0 rounded-tr-surface rounded-bl-[18px] bg-ink px-4 py-2 text-[14px] font-semibold text-surface">
-          {label}
-        </span>
+        <ExampleTag>{label}</ExampleTag>
       )}
       <div className="flex items-center gap-3">
         <span
@@ -40,16 +39,8 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
       <ol
         className={`relative before:absolute before:bg-ink ${compact ? "mt-3 space-y-2 pl-5 before:top-[7px] before:bottom-[7px] before:left-[5px] before:w-[2px]" : "mt-6 space-y-4 pl-7 before:top-[9px] before:bottom-[9px] before:left-[7px] before:w-[3px]"}`}
       >
-        <li className="relative flex justify-between gap-3">
-          <span aria-hidden="true" className={`absolute rounded-full bg-ink ${compact ? "top-[3px] -left-5 h-3 w-3" : "top-[4px] -left-7 h-[17px] w-[17px]"}`} />
-          <span className="font-semibold">{trip.from}</span>
-          <span className="tabular-nums">{trip.fromTime}</span>
-        </li>
-        <li className="relative flex justify-between gap-3">
-          <span aria-hidden="true" className={`absolute rounded-full border-ink bg-screen ${compact ? "top-[3px] -left-5 h-3 w-3 border-[3px]" : "top-[4px] -left-7 h-[17px] w-[17px] border-[4px]"}`} />
-          <span className="font-semibold">{trip.to}</span>
-          <span className="tabular-nums">{trip.toTime}</span>
-        </li>
+        <Stop place={trip.from} time={trip.fromTime} marker={`bg-ink ${compact ? "top-[3px] -left-5 h-3 w-3" : "top-[4px] -left-7 h-[17px] w-[17px]"}`} />
+        <Stop place={trip.to} time={trip.toTime} marker={`border-ink bg-screen ${compact ? "top-[3px] -left-5 h-3 w-3 border-[3px]" : "top-[4px] -left-7 h-[17px] w-[17px] border-[4px]"}`} />
       </ol>
 
       <div className={`flex flex-wrap items-end justify-between gap-x-4 gap-y-2 ${compact ? "mt-3" : "mt-6"}`}>
@@ -72,6 +63,16 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
         </div>
       )}
     </div>
+  );
+}
+
+function Stop({ place, time, marker }: { place: string; time: string; marker: string }) {
+  return (
+    <li className="relative flex justify-between gap-3">
+      <span aria-hidden="true" className={`absolute rounded-full ${marker}`} />
+      <span className="font-semibold">{place}</span>
+      <span className="tabular-nums">{time}</span>
+    </li>
   );
 }
 

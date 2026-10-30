@@ -26,7 +26,7 @@ export function RouteConverge({ from, to, className = "" }: { from: string[]; to
           </text>
         </g>
       ))}
-      <Car tone={toneOn.ink} transform={`translate(482 ${merge.y - 4}) scale(2.6)`} scale={2.6} />
+      <Car tone={toneOn.ink} transform={`translate(482 ${merge.y - 4}) scale(2.6)`} />
       <circle cx={end.x} cy={end.y} r="18" className="fill-surface" />
       <circle cx={end.x} cy={end.y} r="7" className="fill-ink" />
       <text x={end.x} y={end.y + 56} textAnchor="middle" className="fill-surface font-display text-[26px] font-bold">

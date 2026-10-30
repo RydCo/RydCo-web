@@ -1,8 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { Car } from "@/components/brand/Car";
+import { toneOn } from "@/components/brand/tones";
+import { Chevron } from "@/components/ui/icons";
 import { riderCta } from "@/config/cta";
-import { otherArea, pilot } from "@/config/pilot";
+import { startAreas, destinationAreas } from "@/config/pilot";
 import { setCommute, useCommute } from "@/features/commute/commute-store";
 import { CoverageAnswer } from "./CoverageAnswer";
 
@@ -10,26 +13,12 @@ import { CoverageAnswer } from "./CoverageAnswer";
 // Airbnb on its search bar. The choice is shared with the waitlist form further down the page.
 
 const HERO = "hero";
-const startAreas = [...pilot.starts.map((a) => a.name), otherArea];
-const destAreas = [...pilot.destinations.map((a) => a.name), otherArea];
-
-function Chevron() {
-  return (
-    <svg viewBox="0 0 20 20" aria-hidden="true" className="pointer-events-none absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 md:right-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m5 8 5 5 5-5" />
-    </svg>
-  );
-}
 
 // The motif's car, parked at the destination.
 function CarMark() {
   return (
     <svg viewBox="-16 -17 32 20" aria-hidden="true" className="block h-[16px] w-[26px]">
-      <rect className="fill-ink" x="-15" y="-10" width="30" height="8" rx="3" />
-      <path className="fill-ink" d="M-9 -10 L-5 -16 H6 L10 -10Z" />
-      <rect className="fill-surface" x="-4" y="-14.5" width="8" height="3.5" rx="1" />
-      <circle className="fill-ink" cx="-8.5" cy="-1.5" r="3.2" />
-      <circle className="fill-ink" cx="8.5" cy="-1.5" r="3.2" />
+      <Car tone={toneOn.surface} />
     </svg>
   );
 }
@@ -44,7 +33,7 @@ function Area({ name, label, value, areas, marker }: { name: "from" | "to"; labe
         <span className="block text-[14px] leading-tight font-semibold">{label}</span>
         <span className={`block truncate text-[17px] leading-snug ${value ? "font-semibold" : "text-ink-soft"}`}>{value || "Choose an area"}</span>
       </span>
-      <Chevron />
+      <Chevron className="pointer-events-none absolute top-1/2 right-4 h-5 w-5 -translate-y-1/2 md:right-5" />
       <select
         name={name}
         aria-label={label}
@@ -87,7 +76,7 @@ export function HeroRouteCheck({ aside }: { aside?: ReactNode }) {
         <span aria-hidden="true" className="absolute top-[40px] left-[35px] z-[1] h-[70px] w-[4px] rounded-full bg-ink md:hidden" />
         <Area name="from" label="I start in" value={from} areas={startAreas} marker={<span className="block h-3.5 w-3.5 rounded-full bg-ink" />} />
         <span aria-hidden="true" className="hidden h-[4px] w-7 flex-none rounded-full bg-ink md:block" />
-        <Area name="to" label="I’m headed to" value={to} areas={destAreas} marker={<CarMark />} />
+        <Area name="to" label="I’m headed to" value={to} areas={destinationAreas} marker={<CarMark />} />
         {cta.external ? (
           <a href={cta.href} target="_blank" rel="noopener" className={button}>
             {cta.label}

@@ -10,7 +10,7 @@ export function HeroSection() {
         </h1>
         <div className="mt-10 grid items-center gap-14 lg:mt-14 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
-          <p className="max-w-[40ch] text-[19px] md:text-[21px]">
+          <p className="max-w-[40ch] t-lead">
             Companies can give their teams a cheaper, safer way to get to work. Sponsors and partners can help it reach more of Pakistan.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">

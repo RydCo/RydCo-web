@@ -1,22 +1,26 @@
-import { control, Described, describedBy, type Base } from "./field-base";
+import { control, describedProps, Field, invalidRing, type Base } from "./field-base";
 
-export function TextArea({ id, label, error, hint, value, onChange, ...rest }: Base & { value: string; onChange: (v: string) => void; name: string; required?: boolean; placeholder?: string }) {
+export function TextArea({
+  value,
+  onChange,
+  name,
+  required,
+  placeholder,
+  ...base
+}: Base & { value: string; onChange: (v: string) => void; name: string; required?: boolean; placeholder?: string }) {
   return (
-    <div>
-      <label htmlFor={id} className="block font-semibold">
-        {label}
-      </label>
+    <Field {...base}>
       <textarea
-        id={id}
+        id={base.id}
         value={value}
         rows={5}
         onChange={(e) => onChange(e.target.value)}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={describedBy(id, error, hint)}
-        className={`${control} mt-2 block min-h-[150px] resize-y rounded-surface py-4 ${error ? "outline-3 outline-offset-2 outline-accent" : ""}`}
-        {...rest}
+        {...describedProps(base)}
+        className={`${control} mt-2 block min-h-[150px] resize-y rounded-surface py-4 ${invalidRing(base.error)}`}
+        name={name}
+        required={required}
+        placeholder={placeholder}
       />
-      <Described id={id} error={error} hint={hint} />
-    </div>
+    </Field>
   );
 }

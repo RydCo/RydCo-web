@@ -6,5 +6,6 @@ export type Tone = { ink: string; line: string; glass: string };
 export const toneOn = {
   brand: { ink: "fill-ink", line: "stroke-ink", glass: "fill-brand" },
   surface: { ink: "fill-ink", line: "stroke-ink", glass: "fill-surface" },
+  panel: { ink: "fill-ink", line: "stroke-ink", glass: "fill-panel" },
   ink: { ink: "fill-surface", line: "stroke-brand", glass: "fill-ink" },
 } satisfies Record<string, Tone>;

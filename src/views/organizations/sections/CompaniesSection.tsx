@@ -1,6 +1,7 @@
+import { BulletTitle } from "@/components/ui/BulletTitle";
 import { Section } from "@/components/ui/Section";
-import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { StopsScreen } from "@/features/app-preview/screens/StopsScreen";
+import { StickyPhone } from "@/features/app-preview/StickyPhone";
 import { reveal } from "@/lib/reveal";
 
 // What a company deals with, and what RydCo does about each. Only features shown in the app.
@@ -37,21 +38,16 @@ export function CompaniesSection() {
           <ul className="mt-14 grid gap-12">
             {problems.map((p, i) => (
               <li key={p.title} className="grid gap-2 sm:grid-cols-[200px_1fr] sm:gap-8" {...reveal(2 + i)}>
-                <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-accent" />
-                  {p.title}
-                </h3>
+                <BulletTitle>{p.title}</BulletTitle>
                 <p>{p.text}</p>
               </li>
             ))}
           </ul>
         </div>
         <div className="lg:col-span-4 lg:col-start-9" {...reveal(3)}>
-          <div className="lg:sticky lg:top-32">
-            <PhoneFrame label="A confirmed trip in the RydCo app: one car picks up colleagues in Model Town, Garden Town and Faisal Town on the way to Arfa Software Technology Park">
-              <StopsScreen />
-            </PhoneFrame>
-          </div>
+          <StickyPhone label="A confirmed trip in the RydCo app: one car picks up colleagues in Model Town, Garden Town and Faisal Town on the way to Arfa Software Technology Park">
+            <StopsScreen />
+          </StickyPhone>
         </div>
       </div>
     </Section>

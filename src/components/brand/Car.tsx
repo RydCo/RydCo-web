@@ -1,6 +1,6 @@
 import type { Tone } from "./tones";
 
-export function Car({ tone, transform, scale, live }: { tone: Tone; transform: string; scale: number; live?: boolean }) {
+export function Car({ tone, transform, scale, live }: { tone: Tone; transform?: string; scale?: number; live?: boolean }) {
   const body = tone.line.replace("stroke-", "fill-");
   return (
     <g

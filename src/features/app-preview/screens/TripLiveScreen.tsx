@@ -1,3 +1,5 @@
+import { Car } from "@/components/brand/Car";
+import { toneOn } from "@/components/brand/tones";
 import { Tick } from "@/components/ui/icons";
 import { Header, Body } from "./parts";
 
@@ -11,13 +13,7 @@ export function TripLiveScreen() {
             <path d="M-10 120 C60 120 70 60 130 62 S210 30 270 34" className="fill-none stroke-screen" strokeWidth="16" strokeLinecap="round" />
             <path d="M-10 120 C60 120 70 60 130 62 S210 30 270 34" className="fill-none stroke-accent" strokeWidth="6" strokeLinecap="round" />
             <circle cx="214" cy="38" r="9" className="fill-screen stroke-ink" strokeWidth="4" />
-            <g transform="translate(118 60) scale(1.3)">
-              <rect className="fill-ink" x="-15" y="-10" width="30" height="8" rx="3" />
-              <path className="fill-ink" d="M-9 -10 L-5 -16 H6 L10 -10Z" />
-              <rect className="fill-panel" x="-4" y="-14.5" width="8" height="3.5" rx="1" />
-              <circle className="fill-ink" cx="-8.5" cy="-1.5" r="3.2" />
-              <circle className="fill-ink" cx="8.5" cy="-1.5" r="3.2" />
-            </g>
+            <Car tone={toneOn.panel} transform="translate(118 60) scale(1.3)" />
           </svg>
         </div>
         <div className="rounded-[18px] bg-screen p-3.5">
