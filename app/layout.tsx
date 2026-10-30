@@ -3,6 +3,7 @@ import { Figtree, Urbanist } from "next/font/google";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { RevealObserver } from "@/components/RevealObserver";
+import { heroScript } from "@/components/RouteLine";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -46,7 +47,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${urbanist.variable} ${figtree.variable}`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${heroScript}` }} />
       </head>
       <body className="flex min-h-svh flex-col">
         <Navbar />
