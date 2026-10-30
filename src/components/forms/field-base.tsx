@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 // and any error or hint is tied to it with aria-describedby.
 
 // One-line fields are pills, like the buttons; the message box keeps the surface radius.
-export const control = "w-full bg-surface px-5 text-[17px] text-ink placeholder:text-ink-soft";
+export const control = "w-full bg-screen px-5 text-[17px] text-ink placeholder:text-ink-soft";
 
 export type Base = { id: string; label: string; error?: string; hint?: string };
 
@@ -16,7 +16,7 @@ export const describedProps = ({ id, error, hint }: Base) => ({
   "aria-describedby": describedBy(id, error, hint),
 });
 
-export const invalidRing = (error?: string) => (error ? "outline-3 outline-offset-2 outline-accent" : "");
+export const invalidRing = (error?: string) => (error ? "outline-3 outline-offset-2 outline-accent-deep" : "");
 
 // The label above a control, and any error or hint below it.
 export function Field({ id, label, error, hint, children }: Base & { children: ReactNode }) {

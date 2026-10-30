@@ -25,7 +25,7 @@ rydco-web/
 │   │   └── trips/               The trip card
 │   ├── components/          Shared parts that know nothing about RydCo's features
 │   │   ├── ui/                  Button, Badge, Section, PageHero, icons
-│   │   ├── forms/               Text field, select, submit button, thank-you panel
+│   │   ├── forms/               Text field, dropdown, submit button, thank-you panel
 │   │   ├── layout/              Navbar, mobile menu, footer, scroll observer
 │   │   └── brand/               Logo, route line, car, hero animation
 │   ├── config/              Facts that change: the theme, site details, pilot areas, links, navigation
@@ -62,9 +62,10 @@ Everything visual starts in `src/config/theme.mjs`. Change a colour, or point `a
 - `src/app/icon.svg`: the favicon
 - `public/og.png`: the link-preview image
 
-The browser bar colour reads the theme directly. The build fails with a clear message if a theme's text wouldn't be
-readable. Don't edit the generated files, and don't write a hex colour anywhere else: use a role such as `bg-brand` or
-`text-ink-soft`. Commit the generated files along with the theme change.
+The browser bar colour reads the theme directly. The `apricot` theme is the app's own palette, so keep the two in step. The build fails with a clear message if a theme's text wouldn't be
+readable. Gradients are in `src/styles/gradients.css`, built from the same colours, so they follow too. Don't edit the generated
+files, and don't write a hex colour anywhere else: use a role such as `bg-brand` or `text-ink-soft`. Every button look is
+in `src/components/ui/button-styles.ts`. Commit the generated files along with the theme change.
 
 ## Where does this go?
 

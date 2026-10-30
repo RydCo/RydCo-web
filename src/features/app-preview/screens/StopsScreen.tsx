@@ -16,12 +16,12 @@ export function StopsScreen() {
           <Badge>Confirmed</Badge>
           <span className="font-semibold">Mon 2 Nov</span>
         </div>
-        <ol className="relative mt-2 space-y-4 rounded-[20px] bg-screen py-4 pr-4 pl-10 before:absolute before:top-[26px] before:bottom-[26px] before:left-[19px] before:w-[3px] before:bg-ink">
+        <ol className="relative mt-2 space-y-4 rounded-[20px] bg-screen py-4 pr-4 pl-10 before:absolute before:top-[26px] before:bottom-[26px] before:left-[19px] before:w-[3px] before:bg-accent-strong">
           {stops.map((s, i) => (
             <li key={s.place} className="relative">
               <span
                 aria-hidden="true"
-                className={`absolute top-[3px] -left-[27px] h-[13px] w-[13px] rounded-full ${i === stops.length - 1 ? "border-[3px] border-ink bg-screen" : "bg-ink"}`}
+                className={`absolute top-[3px] -left-[27px] h-[13px] w-[13px] rounded-full ${i === stops.length - 1 ? "border-[3px] border-accent-strong bg-screen" : "bg-accent-strong"}`}
               />
               <span className="flex justify-between gap-2">
                 <b className="leading-tight">{s.place}</b>

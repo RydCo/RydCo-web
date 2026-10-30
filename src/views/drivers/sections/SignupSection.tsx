@@ -24,7 +24,7 @@ export function SignupSection() {
         </div>
         <div className="lg:col-span-7" {...reveal(2)}>
           {site.playStoreUrl ? (
-            <Button href={cta.href} external={cta.external} variant="brand">
+            <Button href={cta.href} external={cta.external}>
               {cta.label}
             </Button>
           ) : (

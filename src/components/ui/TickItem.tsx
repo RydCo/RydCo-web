@@ -5,7 +5,7 @@ import { Tick } from "./icons";
 export function TickItem({ children }: { children: ReactNode }) {
   return (
     <li className="flex gap-3">
-      <Tick className="mt-[0.3em] text-accent" />
+      <Tick className="mt-[0.3em] text-accent-deep" />
       {children}
     </li>
   );

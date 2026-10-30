@@ -16,7 +16,7 @@ export function QuestionSection() {
           </p>
         </div>
         <div className="lg:col-span-4 lg:justify-self-end" {...reveal(2)}>
-          <Button href={safetyEnquiry} variant="brand">
+          <Button href={safetyEnquiry}>
             Send us a message
           </Button>
         </div>

@@ -20,7 +20,7 @@ export function HeroSection() {
           <Button href={cta.href} external={cta.external}>
             {cta.label}
           </Button>
-          <Button href="#checks" variant="surface">
+          <Button href="#checks" variant="secondary">
             See the checks
           </Button>
         </>

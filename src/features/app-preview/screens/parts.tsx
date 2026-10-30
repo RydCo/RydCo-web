@@ -31,5 +31,5 @@ export function Body({ children }: { children: ReactNode }) {
 }
 
 export function PrimaryButton({ children }: { children: ReactNode }) {
-  return <span className="mt-auto grid h-11 flex-none place-items-center rounded-full bg-accent font-semibold text-on-accent">{children}</span>;
+  return <span className="mt-auto grid h-11 flex-none place-items-center rounded-full action font-semibold">{children}</span>;
 }

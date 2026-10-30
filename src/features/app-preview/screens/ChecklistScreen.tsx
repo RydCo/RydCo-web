@@ -19,7 +19,7 @@ export function ChecklistScreen() {
             <span className="tabular-nums">2 of 5</span>
           </p>
           <span className="mt-2 block h-2 overflow-hidden rounded-full bg-panel">
-            <span className="block h-full w-2/5 rounded-full bg-accent" />
+            <span className="block h-full w-2/5 rounded-full bg-accent-strong" />
           </span>
         </div>
         <ol className="grid gap-1.5">

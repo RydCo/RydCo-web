@@ -1,12 +1,9 @@
 import type { ReactNode } from "react";
+import { buttonClasses } from "@/components/ui/button-styles";
 
 export function SubmitButton({ sending, children }: { sending: boolean; children: ReactNode }) {
   return (
-    <button
-      type="submit"
-      disabled={sending}
-      className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-accent px-7 text-[17px] font-semibold text-on-accent transition-[transform,background-color] duration-150 hover:bg-ink active:scale-[0.97] disabled:cursor-wait disabled:bg-ink-soft motion-reduce:transition-none"
-    >
+    <button type="submit" disabled={sending} className={`${buttonClasses("primary")} disabled:cursor-wait disabled:bg-ink-soft disabled:bg-none disabled:shadow-none`}>
       {sending ? "Sending…" : children}
     </button>
   );

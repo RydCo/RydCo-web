@@ -5,7 +5,7 @@ import { site } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="on-ink bg-ink text-surface">
+    <footer className="on-ink field-ink text-surface">
       <div className="wrap pt-24 pb-10 lg:pt-32">
         <Lockup on="ink" title="RydCo" className="w-full max-w-[880px]" />
         <p className="mt-8 font-display text-[clamp(24px,2.6vw,36px)] leading-tight font-bold">

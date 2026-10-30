@@ -4,9 +4,9 @@ type Ground = "surface" | "panel" | "brand" | "ink";
 
 const grounds: Record<Ground, string> = {
   surface: "bg-surface text-ink",
-  panel: "bg-panel text-ink",
-  brand: "bg-brand text-ink",
-  ink: "on-ink bg-ink text-surface",
+  panel: "field-panel text-ink",
+  brand: "field-brand text-ink",
+  ink: "on-ink field-ink text-surface",
 };
 
 type Props = {

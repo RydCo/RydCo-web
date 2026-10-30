@@ -90,7 +90,7 @@ export function SafetyBoard() {
       </Tile>
 
       <Tile ground="panel" step={6} title="SOS on every trip" line="Sends your trusted contact your live location by SMS." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-5">
-        <span className="absolute -top-6 -right-6 grid h-[100px] w-[100px] place-items-center rounded-full bg-ink font-display text-[22px] font-extrabold text-surface sm:-top-8 sm:-right-8 sm:h-[150px] sm:w-[150px] sm:text-[30px]">
+        <span className="absolute -top-6 -right-6 grid h-[100px] w-[100px] place-items-center rounded-full bg-sos font-display text-[22px] font-extrabold text-on-sos sm:-top-8 sm:-right-8 sm:h-[150px] sm:w-[150px] sm:text-[30px]">
           <span className="-translate-x-2 translate-y-1.5 sm:-translate-x-2.5 sm:translate-y-2">SOS</span>
         </span>
       </Tile>
