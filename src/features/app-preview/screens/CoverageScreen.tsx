@@ -87,7 +87,7 @@ export function CoverageScreen() {
         </div>
         <Bot>Check your commute?</Bot>
         <div className="flex items-center justify-between rounded-[18px] bg-panel px-3.5 py-2.5">
-          <span className="font-semibold">Model Town → Arfa Tower</span>
+          <span className="font-semibold">Johar Town → Arfa Tower</span>
           <Badge>Covered</Badge>
         </div>
       </Body>

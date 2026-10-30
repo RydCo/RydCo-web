@@ -7,6 +7,12 @@
     transform: perspective(1500px) rotateY(-17deg) rotateX(6deg) rotateZ(4deg);
   }
 }
+/* On short laptop screens, a smaller phone keeps the tour's controls above the fold. HeroSection moves the route to match. */
+@media (width >= 80rem) and (height <= 860px) {
+  .hero-phone {
+    zoom: 0.88;
+  }
+}
 .hero-phone figure > div {
   box-shadow:
     inset 0 0 0 1.5px color-mix(in srgb, var(--color-surface) 22%, transparent),
@@ -14,9 +20,9 @@
     46px 44px 60px -26px color-mix(in srgb, var(--color-ink-deep) 55%, transparent);
 }
 
-/* The phone arrives once on load. On the accepted-ride screen, each time it comes up, the route draws on the map and
-   then the notification drops in. Without motion, all of it is simply there. */
-.hero-map-route {
+/* The phone arrives once on load. The journey's screens (features/app-preview/screens/journey) act out their one
+   moment each time they come up, within their short time on screen. Without motion, all of it is simply there. */
+.journey-draw {
   stroke-dasharray: 1 1;
   stroke-dashoffset: 0;
 }
@@ -24,14 +30,17 @@
   .hero-phone {
     animation: hero-phone-in 0.9s var(--ease-out-soft) both;
   }
-  [aria-hidden="false"] .hero-map-route {
-    animation: draw-line 1s var(--ease-out-soft) 0.25s both;
+  [aria-hidden="false"] .journey-draw {
+    animation: draw-line 0.8s var(--ease-out-soft) 0.2s both;
   }
-  [aria-hidden="false"] .hero-map-end {
-    animation: hero-fade-in 0.25s linear 1.05s both;
+  [aria-hidden="false"] .journey-fade {
+    animation: journey-fade-in 0.25s linear 0.8s both;
   }
-  [aria-hidden="false"] .hero-note {
-    animation: hero-note-in 0.45s var(--ease-out-soft) 1.25s both;
+  [aria-hidden="false"] .journey-note {
+    animation: journey-note-in 0.4s var(--ease-out-soft) 0.95s both;
+  }
+  [aria-hidden="false"] .journey-digit {
+    animation: journey-digit-in 0.16s var(--ease-out-soft) both;
   }
 }
 @keyframes hero-phone-in {
@@ -40,14 +49,20 @@
     translate: 0 28px;
   }
 }
-@keyframes hero-fade-in {
+@keyframes journey-fade-in {
   from {
     opacity: 0;
   }
 }
-@keyframes hero-note-in {
+@keyframes journey-note-in {
   from {
     opacity: 0;
     translate: 0 -14px;
+  }
+}
+@keyframes journey-digit-in {
+  from {
+    opacity: 0;
+    scale: 0.6;
   }
 }

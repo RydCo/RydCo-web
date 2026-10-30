@@ -2,23 +2,8 @@ import { HeroRoute } from "@/components/brand/HeroRoute";
 import { Button } from "@/components/ui/Button";
 import { site } from "@/config/site";
 import { AppTour } from "@/features/app-preview/AppTour";
-import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
-import { HeroMatchScreen } from "@/features/app-preview/screens/HeroMatchScreen";
-import { RequestScreen } from "@/features/app-preview/screens/RequestScreen";
-import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
-import { SettleScreen } from "@/features/app-preview/screens/SettleScreen";
-import { TripLiveScreen } from "@/features/app-preview/screens/TripLiveScreen";
+import { journey } from "@/features/app-preview/screens/journey/journey";
 import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
-
-// The whole process on one phone, all one trip: Model Town to Arfa Tower with Hamza.
-const tour = [
-  { title: "Check your route", screen: <CoverageScreen /> },
-  { title: "Find a ride", screen: <ResultsScreen /> },
-  { title: "Request a seat", screen: <RequestScreen /> },
-  { title: "Request accepted", screen: <HeroMatchScreen /> },
-  { title: "Ride together", screen: <TripLiveScreen /> },
-  { title: "Settle up", screen: <SettleScreen /> },
-];
 
 export function HeroSection() {
   return (
@@ -41,11 +26,11 @@ export function HeroSection() {
             </div>
           </div>
           <div className="relative z-10">
-            <AppTour slides={tour} inline note="Names and prices are examples" phoneClassName="hero-phone" />
+            <AppTour slides={journey} seconds={2.2} long note="Names and prices are examples" phoneClassName="hero-phone" />
           </div>
         </div>
         {/* The line runs up behind the phone, above the tour's controls. */}
-        <div className="mt-10 lg:-mt-[128px] xl:-mt-[168px]">
+        <div className="mt-10 lg:-mt-[136px] xl:-mt-[176px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[106px]">
           <HeroRoute label={`Starting with a pilot in ${site.city}`} />
         </div>
       </div>
