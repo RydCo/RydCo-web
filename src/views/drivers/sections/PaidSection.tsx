@@ -3,7 +3,7 @@ import { reveal } from "@/lib/reveal";
 
 export function PaidSection() {
   return (
-    <Section ground="apricot" labelledBy="paid-title">
+    <Section ground="brand" labelledBy="paid-title">
       <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-6">
           <h2 id="paid-title" className="t-h2" {...reveal(0)}>
@@ -16,7 +16,7 @@ export function PaidSection() {
         </div>
         <ul className="flex flex-wrap gap-3 lg:col-span-5 lg:col-start-8" {...reveal(2)}>
           {["Cash", "JazzCash", "NayaPay", "Bank / Raast"].map((m) => (
-            <li key={m} className="rounded-full bg-cream px-6 py-4 font-display text-[22px] font-bold">
+            <li key={m} className="rounded-full bg-surface px-6 py-4 font-display text-[22px] font-bold">
               {m}
             </li>
           ))}

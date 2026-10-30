@@ -9,7 +9,7 @@ import { reveal } from "@/lib/reveal";
 export function GetTheAppSection() {
   const live = Boolean(site.playStoreUrl);
   return (
-    <Section ground="tint" id="waitlist" labelledBy="app-title">
+    <Section ground="panel" id="waitlist" labelledBy="app-title">
       <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="order-2 lg:order-1 lg:col-span-5" {...reveal(2)}>
           <PhoneFrame label="The first screen of the RydCo app: Assalam o alaikum. I'm RydCo. How would you like to travel?">
@@ -29,7 +29,7 @@ export function GetTheAppSection() {
             <WaitlistForm />
           </div>
           <details className="group mt-8">
-            <summary className="inline-flex cursor-pointer list-none items-center gap-2 py-2 font-semibold underline decoration-2 underline-offset-[6px]">
+            <summary className="inline-flex cursor-pointer list-none items-center gap-2 py-2 t-link">
               See all pilot areas
             </summary>
             <div className="mt-4 grid gap-6 sm:grid-cols-2">
@@ -51,7 +51,7 @@ function AreaList({ title, areas }: { title: string; areas: { name: string; cove
         {areas.map((a) => (
           <li key={a.name}>
             {a.name}
-            {!a.covered && <span className="text-cocoa-soft"> (not covered yet)</span>}
+            {!a.covered && <span className="text-ink-soft"> (not covered yet)</span>}
           </li>
         ))}
       </ul>

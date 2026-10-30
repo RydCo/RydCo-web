@@ -5,7 +5,7 @@ import { ManyIntoOne } from "@/views/home/components/ManyIntoOne";
 
 export function HowItWorksSection() {
   return (
-    <Section ground="tint" labelledBy="how-title">
+    <Section ground="panel" labelledBy="how-title">
       <div className="grid gap-6 lg:grid-cols-12">
         <h2 id="how-title" className="t-h2 lg:col-span-6" {...reveal(0)}>
           How RydCo works

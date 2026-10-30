@@ -1,26 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree, Urbanist } from "next/font/google";
 import { heroScript } from "@/components/brand/hero-script";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { site } from "@/config/site";
+import { theme } from "@/config/theme.mjs";
+import { fontVariables } from "@/styles/fonts";
 import "@/styles/globals.css";
-
-// The app's own faces, so the site and the app read as one product.
-const urbanist = Urbanist({
-  variable: "--font-urbanist",
-  subsets: ["latin"],
-  weight: ["700", "800"],
-  display: "swap",
-});
-
-const figtree = Figtree({
-  variable: "--font-figtree",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -40,12 +26,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFE8D7",
+  themeColor: theme.brand,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${urbanist.variable} ${figtree.variable}`} suppressHydrationWarning>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `document.documentElement.classList.add('js');${heroScript}` }} />
       </head>

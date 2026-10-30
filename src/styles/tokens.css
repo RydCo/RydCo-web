@@ -1,16 +1,6 @@
-/* The palette is closed: Tailwind's default colours are removed so only brand colours exist. */
+/* Colours and radius live in theme.generated.css, made from src/config/theme.mjs. These don't change with the theme.
+   The palette is closed: Tailwind's default colours are removed there, so only the theme's colours exist. */
 @theme {
-  --color-*: initial;
-  --color-apricot: #FFE8D7;
-  --color-apricot-deep: #C24E15;
-  --color-apricot-tint: #FFD7BD;
-  --color-cocoa: #2C1E18;
-  --color-cocoa-soft: #6B5A52;
-  --color-cream: #FFF8F3;
-  --color-trust: #1F7A5A;
-  --color-white: #FFFFFF;
-
-  --radius-surface: 28px;
   --ease-out-soft: cubic-bezier(0.22, 0.8, 0.26, 1);
 }
 

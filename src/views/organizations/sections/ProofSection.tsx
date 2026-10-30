@@ -3,7 +3,7 @@ import { reveal } from "@/lib/reveal";
 
 export function ProofSection() {
   return (
-    <Section ground="apricot" labelledBy="proof-title">
+    <Section ground="brand" labelledBy="proof-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-10">
         <div className="lg:col-span-6">
           <h2 id="proof-title" className="t-h2" {...reveal(0)}>

@@ -1,6 +1,7 @@
+import { BulletTitle } from "@/components/ui/BulletTitle";
 import { Section } from "@/components/ui/Section";
-import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { TripLiveScreen } from "@/features/app-preview/screens/TripLiveScreen";
+import { StickyPhone } from "@/features/app-preview/StickyPhone";
 import { reveal } from "@/lib/reveal";
 
 const tripTools = [
@@ -35,11 +36,9 @@ export function TripToolsSection() {
     <Section labelledBy="trip-title">
       <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-4" {...reveal(2)}>
-          <div className="lg:sticky lg:top-32">
-            <PhoneFrame label="A trip in progress in the RydCo app, with Share trip, Chat and SOS buttons">
-              <TripLiveScreen />
-            </PhoneFrame>
-          </div>
+          <StickyPhone label="A trip in progress in the RydCo app, with Share trip, Chat and SOS buttons">
+            <TripLiveScreen />
+          </StickyPhone>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">
           <h2 id="trip-title" className="t-h2" {...reveal(0)}>
@@ -48,10 +47,7 @@ export function TripToolsSection() {
           <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-x-10">
             {tripTools.map((t, i) => (
               <li key={t.title} {...reveal(1 + i)}>
-                <h3 className="t-title flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[0.35em] h-3 w-3 flex-none rounded-full bg-apricot-deep" />
-                  {t.title}
-                </h3>
+                <BulletTitle>{t.title}</BulletTitle>
                 <p className="mt-2 sm:pl-6">{t.text}</p>
               </li>
             ))}

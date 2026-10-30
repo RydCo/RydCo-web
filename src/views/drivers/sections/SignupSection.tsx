@@ -9,7 +9,7 @@ import { reveal } from "@/lib/reveal";
 export function SignupSection() {
   const cta = driverCta();
   return (
-    <Section ground="cocoa" id="driver-signup" labelledBy="drive-cta-title">
+    <Section ground="ink" id="driver-signup" labelledBy="drive-cta-title">
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <h2 id="drive-cta-title" className="t-h2" {...reveal(0)}>
@@ -24,11 +24,11 @@ export function SignupSection() {
         </div>
         <div className="lg:col-span-7" {...reveal(2)}>
           {site.playStoreUrl ? (
-            <Button href={cta.href} external={cta.external} variant="apricot">
+            <Button href={cta.href} external={cta.external} variant="brand">
               {cta.label}
             </Button>
           ) : (
-            <div className="on-light rounded-[28px] bg-apricot-tint p-6 text-cocoa md:p-8">
+            <div className="on-light rounded-surface bg-panel p-6 text-ink md:p-8">
               <DriverForm />
             </div>
           )}

@@ -10,14 +10,14 @@ export function Badge({
   style,
 }: {
   children: ReactNode;
-  tone?: "trust" | "neutral" | "cream";
+  tone?: "trust" | "neutral" | "surface";
   className?: string;
   style?: CSSProperties;
 }) {
   const tones = {
-    trust: "bg-trust text-white",
-    neutral: "bg-apricot-tint text-cocoa",
-    cream: "bg-cream text-cocoa",
+    trust: "bg-trust text-on-trust",
+    neutral: "bg-panel text-ink",
+    surface: "bg-surface text-ink",
   };
   return (
     <span style={style} className={`inline-flex items-center gap-[0.35em] whitespace-nowrap rounded-full px-[0.7em] py-[0.3em] text-[0.8125em] font-semibold leading-none ${tones[tone]} ${className}`}>

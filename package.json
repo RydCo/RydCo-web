@@ -4,7 +4,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "theme": "node scripts/build-theme.mjs",
+    "predev": "node scripts/build-theme.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/build-theme.mjs",
     "build": "next build",
     "postbuild": "node scripts/flatten-segments.mjs",
     "start": "next start",

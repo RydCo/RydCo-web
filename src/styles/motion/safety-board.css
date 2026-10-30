@@ -1,17 +1,17 @@
 /* Safety board (views/home/components/SafetyBoard.tsx): each tile marked to play acts its feature out once, when half of it is
-   on screen. Checks go from pending (cocoa-soft) to trust green with their tick, the women-only switch slides on,
+   on screen. Checks go from pending (ink-soft) to trust green with their tick, the women-only switch slides on,
    the stars pop in one by one, and "Sharing live" sends out one ring. Same .reveal-ready rule as Many into one. */
 @media (prefers-reduced-motion: no-preference) {
   .reveal-ready [data-play] .sb-check {
-    background-color: var(--color-cocoa-soft);
-    color: var(--color-cream);
+    background-color: var(--color-ink-soft);
+    color: var(--color-surface);
   }
   .reveal-ready [data-play] .sb-check > svg,
   .reveal-ready [data-play] .sb-star {
     scale: 0;
   }
   .reveal-ready [data-play] .sb-track {
-    background-color: var(--color-cocoa-soft);
+    background-color: var(--color-ink-soft);
   }
   .reveal-ready [data-play] .sb-knob {
     translate: -1.1em 0;
@@ -20,7 +20,7 @@
     animation: sb-verify 380ms var(--ease-out-soft) var(--d) both;
   }
   .reveal-ready [data-play].is-playing .sb-check > svg {
-    animation: sb-pop 360ms var(--ease-out-soft) calc(var(--d) + 120ms) both;
+    animation: pop-in 360ms var(--ease-out-soft) calc(var(--d) + 120ms) both;
   }
   .reveal-ready [data-play].is-playing .sb-track {
     animation: sb-track 420ms ease var(--d) both;
@@ -29,7 +29,7 @@
     animation: sb-switch 420ms cubic-bezier(0.3, 0.7, 0.4, 1) var(--d) both;
   }
   .reveal-ready [data-play].is-playing .sb-star {
-    animation: sb-pop 420ms cubic-bezier(0.3, 1.6, 0.5, 1) var(--d) both;
+    animation: pop-in 420ms cubic-bezier(0.3, 1.6, 0.5, 1) var(--d) both;
   }
   .reveal-ready [data-play].is-playing .sb-pulse::after {
     content: "";
@@ -44,28 +44,20 @@
 }
 @keyframes sb-verify {
   from {
-    background-color: var(--color-cocoa-soft);
-    color: var(--color-cream);
+    background-color: var(--color-ink-soft);
+    color: var(--color-surface);
   }
   to {
     background-color: var(--color-trust);
-    color: var(--color-white);
-  }
-}
-@keyframes sb-pop {
-  from {
-    scale: 0;
-  }
-  to {
-    scale: 1;
+    color: var(--color-on-trust);
   }
 }
 @keyframes sb-track {
   from {
-    background-color: var(--color-cocoa-soft);
+    background-color: var(--color-ink-soft);
   }
   to {
-    background-color: var(--color-cocoa);
+    background-color: var(--color-ink);
   }
 }
 @keyframes sb-switch {

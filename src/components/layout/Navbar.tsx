@@ -8,10 +8,10 @@ import { MobileMenu } from "./MobileMenu";
 export function Navbar() {
   const cta = riderCta();
   return (
-    <header className="sticky top-0 z-40 bg-cream">
+    <header className="sticky top-0 z-40 bg-surface">
       <a
         href="#main"
-        className="absolute top-2 left-2 z-50 -translate-y-24 rounded-full bg-cocoa px-5 py-3 font-semibold text-cream focus:translate-y-0"
+        className="absolute top-2 left-2 z-50 -translate-y-24 rounded-full bg-ink px-5 py-3 font-semibold text-surface focus:translate-y-0"
       >
         Skip to content
       </a>
@@ -25,7 +25,7 @@ export function Navbar() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="rounded-full px-4 py-3 font-semibold transition-colors duration-150 hover:bg-apricot-tint"
+                  className="rounded-full px-4 py-3 font-semibold transition-colors duration-150 hover:bg-panel"
                 >
                   {item.label}
                 </Link>

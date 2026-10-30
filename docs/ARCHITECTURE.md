@@ -28,12 +28,12 @@ rydco-web/
 │   │   ├── forms/               Text field, select, submit button, thank-you panel
 │   │   ├── layout/              Navbar, mobile menu, footer, scroll observer
 │   │   └── brand/               Logo, route line, car, hero animation
-│   ├── config/              Facts that change: site details, pilot areas, links, navigation
+│   ├── config/              Facts that change: the theme, site details, pilot areas, links, navigation
 │   ├── hooks/               Shared React hooks
 │   ├── lib/                 Plain helpers: sending forms, phone numbers, mailto
-│   └── styles/              Tokens, base styles, utilities, one file per animation
+│   └── styles/              Generated theme, base styles, utilities, one file per animation
 ├── public/                  Files served as they are
-├── scripts/                 Build steps (flatten-segments runs after `next build`)
+├── scripts/                 Build steps: build-theme before, flatten-segments after `next build`
 ├── infra/                   Code that runs elsewhere: the Google Apps Script behind the forms
 └── docs/                    This file and DESIGN.md
 ```
@@ -53,6 +53,19 @@ Two things ESLint doesn't check, so please keep to them in review:
 - A view doesn't import from another view. If two pages need something, move it down to `features` or `components`.
 - A feature may use another feature (the waitlist uses `commute`), but never in a circle.
 
+## Changing the theme
+
+Everything visual starts in `src/config/theme.mjs`. Change a colour, or point `activeTheme` at another theme, and run
+`npm run dev` or `npm run build`. `scripts/build-theme.mjs` then regenerates:
+
+- `src/styles/theme.generated.css`: the colour and radius tokens Tailwind uses
+- `src/app/icon.svg`: the favicon
+- `public/og.png`: the link-preview image
+
+The browser bar colour reads the theme directly. The build fails with a clear message if a theme's text wouldn't be
+readable. Don't edit the generated files, and don't write a hex colour anywhere else: use a role such as `bg-brand` or
+`text-ink-soft`. Commit the generated files along with the theme change.
+
 ## Where does this go?
 
 | You're adding | Put it in |
@@ -64,6 +77,7 @@ Two things ESLint doesn't check, so please keep to them in review:
 | Something two pages need, with RydCo logic | `src/features/<name>/` |
 | A reusable part with no RydCo logic | `src/components/` |
 | A new pilot area, link or email | `src/config/` |
+| A colour or theme | `src/config/theme.mjs` |
 | An animation's CSS | `src/styles/motion/<name>.css`, imported in `globals.css` |
 
 Search for `[FILL]` to find every placeholder still waiting for a real value.
@@ -76,7 +90,7 @@ Search for `[FILL]` to find every placeholder still waiting for a real value.
 - **Server by default.** Add `"use client"` only to the file that needs the browser, as low in the tree as possible.
 - **CSS:** Tailwind classes in the markup. Custom CSS only for tokens and animations. The order in `globals.css` is
   deliberate, and Tailwind scans `src/` only.
-- **Colour:** the palette is closed. New colours go through `src/styles/tokens.css` and DESIGN.md.
+- **Colour:** the palette is closed. Only the roles in `src/config/theme.mjs` exist.
 
 ## Before pushing
 

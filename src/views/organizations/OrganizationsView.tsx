@@ -1,10 +1,10 @@
+import { RouteDivider } from "@/components/brand/RouteDivider";
 import { CompaniesSection } from "./sections/CompaniesSection";
 import { HeroSection } from "./sections/HeroSection";
 import { LahorePilotSection } from "./sections/LahorePilotSection";
 import { PartnerSection } from "./sections/PartnerSection";
 import { PilotStepsSection } from "./sections/PilotStepsSection";
 import { ProofSection } from "./sections/ProofSection";
-import { RouteDividerSection } from "./sections/RouteDividerSection";
 import { WhyRydCoSection } from "./sections/WhyRydCoSection";
 
 export function OrganizationsView() {
@@ -13,7 +13,7 @@ export function OrganizationsView() {
       <HeroSection />
       <CompaniesSection />
       <PilotStepsSection />
-      <RouteDividerSection />
+      <RouteDivider />
       <WhyRydCoSection />
       <ProofSection />
       <LahorePilotSection />

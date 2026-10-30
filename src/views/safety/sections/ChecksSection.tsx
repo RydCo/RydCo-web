@@ -44,7 +44,7 @@ export function ChecksSection() {
       </div>
       <ul className="mt-14 grid gap-2">
         {driverChecks.map((c, i) => (
-          <li key={c.name} className="grid gap-4 rounded-[28px] bg-apricot-tint p-6 md:grid-cols-12 md:gap-8 md:p-8" {...reveal(2 + i)}>
+          <li key={c.name} className="grid gap-4 rounded-surface bg-panel p-6 md:grid-cols-12 md:gap-8 md:p-8" {...reveal(2 + i)}>
             <div className="md:col-span-3">
               <h3 className="t-title">{c.name}</h3>
               <p className="mt-3 text-[18px]">

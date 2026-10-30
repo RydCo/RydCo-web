@@ -6,7 +6,7 @@ export function Choice({ legend, name, value, onChange, options }: { legend: str
         {options.map((o) => (
           <label
             key={o.value}
-            className="flex min-h-[48px] cursor-pointer items-center rounded-full bg-cream px-5 font-semibold transition-colors duration-150 has-[:checked]:bg-cocoa has-[:checked]:text-cream has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-cocoa"
+            className="flex min-h-[48px] cursor-pointer items-center rounded-full bg-surface px-5 font-semibold transition-colors duration-150 has-[:checked]:bg-ink has-[:checked]:text-surface has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-ink"
           >
             <input type="radio" name={name} value={o.value} checked={value === o.value} onChange={() => onChange(o.value)} className="sr-only" />
             {o.label}

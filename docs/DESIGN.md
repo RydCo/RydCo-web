@@ -26,11 +26,11 @@ The homepage serves riders first. Every other audience is one click away from it
 
 > On this site, **RydCo's own route line with the small car** becomes **the one shape that runs the whole system.**
 
-The route line is RydCo's logo: a cocoa line with round ends that travels, turns, and finishes as the
+The route line is RydCo's logo: a ink line with round ends that travels, turns, and finishes as the
 underline of the wordmark, with the car parked at its end. A daily commute is a line you draw again every morning,
 and carpooling means two lines becoming one. So the line is the only motif, used at four scales:
 
-1. **Huge:** the hero. The line draws itself across an apricot field and ends under the wordmark (the signature moment).
+1. **Huge:** the hero. The line draws itself across an brand field and ends under the wordmark (the signature moment).
 2. **Section scale:** one full-width band where the line crosses the page once, between the rider half and the
    "who it's for" half of the homepage. It also drives the "How it works" diagram, where scattered dots join into one line.
 3. **Component scale:** every button is a pill (a short piece of road with round ends). Image and screen crops use
@@ -48,44 +48,49 @@ from the app's own "Check your commute?" screen. Without JavaScript it falls bac
 
 ## 3. Colour
 
-Six colours. Nothing else, except one derived text tone (marked below).
+All colours live in one file, `src/config/theme.mjs`, and are named for their job, not their look, so `bg-brand`
+stays true in any theme. To change the theme, edit that file or point `activeTheme` at another theme. The site's colours,
+the browser bar, the favicon and the link-preview image all follow (`scripts/build-theme.mjs` generates them), and the
+build stops if a theme's text wouldn't be readable.
 
-| Token | Hex | Job |
+| Role | Current value | Job |
 | --- | --- | --- |
-| `apricot` | #FFE8D7 | Brand colour, a soft peach. Hero field and big colour blocks, in whole sections. Highlights on cocoa. |
-| `apricot-deep` | #C24E15 | Main buttons (white text) on light grounds. Links on cream. Small accent marks on light grounds: route lines, bullet dots, stars, progress. |
-| `cocoa` | #2C1E18 | All text, the logo, dark sections, buttons on an apricot field. |
-| `cream` | #FFF8F3 | Page background. |
-| `apricot-tint` | #FFD7BD | One step deeper than apricot: soft section backgrounds, panels and cards (on cream or apricot), chips, input surrounds. |
+| `brand` | #FFE8D7 | Hero field and big colour blocks, in whole sections. Highlights on ink. |
+| `panel` | #FFD7BD | One step deeper than brand: soft section backgrounds, panels and cards, chips, input surrounds. |
+| `accent` | #C24E15 | Main buttons on light grounds. Links on surface. Small marks on light grounds: route lines, bullet dots, stars, progress. |
+| `on-accent` | #FFFFFF | Text on an accent button. |
+| `ink` | #2C1E18 | All text, the logo, dark sections, buttons on a brand field. |
+| `ink-soft` | #6B5A52 | Secondary text only (captions, footnotes). The same tone the app uses. |
+| `surface` | #FFF8F3 | Page background, light cards, light text on ink. |
+| `screen` | #FFFFFF | Only the inside of a phone mockup. |
 | `trust` | #1F7A5A | Only for "verified" or "confirmed" signals: badges, ticks. Never decoration or buttons. |
-| `cocoa-soft` *(derived, needs your OK)* | #6B5A52 | Secondary text only (captions, footnotes). The same tone the app uses. |
+| `on-trust` | #FFFFFF | Text on a trust badge. |
 
-**White (#FFFFFF)** is used only as text on deep apricot, cocoa or trust, and as the inside of a phone screen.
+### Contrast (the current theme)
 
-### Contrast (checked)
+The build checks these for whichever theme is active.
 
 | Pair | Ratio | Use |
 | --- | --- | --- |
-| cocoa on cream | 15:1 | All body text |
-| cocoa on apricot | 13.8:1 | Text on the hero and on apricot blocks |
-| cocoa on apricot-tint | 12.2:1 | Text in panels and chips |
-| apricot on cocoa | 13.8:1 | Footer headings, links and highlights on dark sections |
-| white on apricot-deep | 4.8:1 | Button labels (AA) |
-| apricot-deep on cream | 4.5:1 | Text links (AA, just) |
-| apricot-deep on apricot / on cocoa | 4.0 / 3.4:1 | Accent marks only (3:1 for graphics). Never text. |
-| trust on cream / white on trust | 5.0 / 5.3:1 | Verified badges |
-| cocoa-soft on cream / apricot / tint | 6.2 / 5.5 / 4.9:1 | Secondary text |
-| ~~white on apricot~~ | 1.2:1 | **Never.** Use cocoa text on apricot. |
+| ink on surface | 15:1 | All body text |
+| ink on brand | 13.6:1 | Text on the hero and on brand blocks |
+| ink on panel | 12.0:1 | Text in panels and chips |
+| brand on ink | 13.6:1 | Footer headings, links and highlights on dark sections |
+| on-accent on accent | 4.8:1 | Button labels (AA) |
+| accent on surface | 4.5:1 | Text links (AA, just) |
+| accent on panel / on screen | 3.6 / 4.8:1 | Marks only (3:1 for graphics). Never text. |
+| on-trust on trust | 5.3:1 | Verified badges |
+| ink-soft on surface / panel | 6.2 / 4.9:1 | Secondary text |
 
 ### Rules
-- Proportions on a typical page: cream about 50%, apricot 25% (in big blocks), cocoa 15% (dark sections, footer), tint 10%.
-- **No opacity tints of the oranges.** A 20% apricot-deep over apricot is a new orange. Use the six colours flat.
-- **On an apricot field,** the primary button is cocoa with cream text, so the hero's main action is the strongest
-  thing on it. Everywhere else the primary button is deep apricot with white text.
-- **Apricot is too pale to mark anything on a light ground.** Route lines, dots, stars and progress bars on cream,
-  white, apricot or tint use apricot-deep. On cocoa they use apricot.
-- No blue, purple, yellow, beige or any other orange. No black and no pure white page grounds.
-- Surfaces are separated by a step in tone (cream → apricot → tint → cocoa), never by lines or shadows.
+- Proportions on a typical page: surface about 50%, brand 25% (in big blocks), ink 15% (dark sections, footer), panel 10%.
+- **No opacity tints of the theme colours.** A 20% accent over brand is a new colour. Use the theme's colours flat.
+- **On a brand field,** the primary button is ink with surface text, so the hero's main action is the strongest thing on
+  it. Everywhere else the primary button is accent with on-accent text.
+- **Brand is too pale to mark anything on a light ground** in the current theme. Route lines, dots, stars and progress bars
+  on surface, screen, brand or panel use accent. On ink they use brand.
+- Only the theme's colours exist: Tailwind's default palette is removed. No black and no pure white page grounds.
+- Surfaces are separated by a step in tone (surface → brand → panel → ink), never by lines or shadows.
 
 ---
 
@@ -109,7 +114,7 @@ Five sizes, no more:
 
 - Headlines fit in **two lines or fewer at every width**. About 32 characters is safe.
 - Left-aligned. At most one centred moment per page.
-- Body text is full cocoa at 17px or more. `cocoa-soft` is only for secondary notes.
+- Body text is full ink at 17px or more. `ink-soft` is only for secondary notes.
 - No uppercase letter-spaced labels, no monospace, no italic or coloured "accent word" inside a headline.
 
 ---
@@ -119,7 +124,7 @@ Five sizes, no more:
 - **Buttons and chips:** fully round pills (from the route line). Height 52px for main buttons and 44px minimum for any tap target.
 - **Surfaces** (cards, phone screens, image crops): one radius, **28px**, the same family as the app's 24–30px sheets.
   Small chips and badges are pills.
-- **Phone frame:** cocoa body, 44px outer radius, the screen inside at 34px. No notch drawing, no reflections.
+- **Phone frame:** ink body, 44px outer radius, the screen inside at 34px. No notch drawing, no reflections.
 - **Grid:** 12 columns, max width 1200px, outer margins 16px on phones and 32px on desktop. The two margins always match.
 - **Section gap:** 96px on phones, 160px on desktop. The gap inside a section is always smaller than the gap between sections.
 - **Depth:** flat. No shadows on anything at rest. Only things that truly float (mobile menu, dropdown) get one soft
@@ -133,7 +138,7 @@ Five sizes, no more:
 One loud moment, everything else quiet.
 
 **The signature: the route line (homepage hero only).**
-- The cocoa line enters from the right edge of the apricot field, sweeps across, and turns into the underline under the
+- The ink line enters from the right edge of the brand field, sweeps across, and turns into the underline under the
   wordmark. The car rides its tip and parks at the end. The wordmark itself is visible from the first paint, so it
   never delays the page's largest paint.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
@@ -175,7 +180,7 @@ Crossfades become cuts.
 
 ## 7. Density and layout variance
 
-- **Visual density 3 of 10 (airy):** one idea per section, one strong headline, lots of cream around it. A section that
+- **Visual density 3 of 10 (airy):** one idea per section, one strong headline, lots of surface around it. A section that
   needs a long explanation gets cut, not squeezed.
 - **Design variance 6 of 10:** neighbouring sections never share a layout. Asymmetric splits (5/7, 7/5) are inside the
   grid, never in the frame. No rows of identical icon cards.
@@ -186,33 +191,33 @@ Crossfades become cuts.
 
 | Component | What it is |
 | --- | --- |
-| `Navbar` | Cream bar, sticky with a solid background (no blur). Cocoa wordmark left; links: How it works · Safety · Drivers · Organizations; one pill action: "Join the waitlist" or "Get the app". On phones a menu button opens a full-width sheet. |
-| `Footer` | Cocoa field. The full logo lockup (route line + car + wordmark) set large in apricot and cream, then link columns, contact line, "Lahore pilot", copyright, legal links. |
-| `Button` | Pill. Variants: `primary` (deep apricot / white), `onApricot` (cocoa / cream), `secondary` (tint / cocoa), `ghost` (cocoa text, underline on hover). Renders as `<a>` or `<button>`. |
-| `Section` | Sets the ground (`cream`, `tint`, `apricot`, `cocoa`), section padding, max width, and the entrance motion for its children. |
-| `PhoneFrame` | Cocoa device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
+| `Navbar` | Surface bar, sticky with a solid background (no blur). Ink wordmark left; links: How it works · Safety · Drivers · Organizations; one pill action: "Join the waitlist" or "Get the app". On phones a menu button opens a full-width sheet. |
+| `Footer` | Ink field. The full logo lockup (route line + car + wordmark) set large in brand and surface, then link columns, contact line, "Lahore pilot", copyright, legal links. |
+| `Button` | Pill. Variants: `primary` (accent / white), `onBrand` (ink / surface), `secondary` (tint / ink), `ghost` (ink text, underline on hover). Renders as `<a>` or `<button>`. |
+| `Section` | Sets the ground (`surface`, `tint`, `brand`, `ink`), section padding, max width, and the entrance motion for its children. |
+| `PhoneFrame` | Ink device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
 | `RouteLine` | The SVG motif. Modes: `hero` (animated signature), `lockup` (static logo for the footer and OG image), `band` (full-width crossing), `mark` (small pickup-to-drop-off dot-and-line). |
 | `TripCard` | The BlaBlaCar-pattern trip summary: driver first name, rating, specific badges, pickup → drop-off with the route mark, times, seats left, Rs per seat. Used only as a clearly labelled example. |
 | `Badge` | Trust-green pill with a tick for checks that really happen ("Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"). Neutral tint pill for everything else. |
-| `HeroRouteCheck` | The live thing (§2) as the hero's main action: "I start in" and "I'm headed to" in one cream pill joined by the route (start dot → line → car; on phones the line runs down the left), the main button, and the "Covered / Not covered yet" answer underneath. The chosen route is shared with `WaitlistForm` (`src/features/commute/commute-store.ts`), and the button scrolls to the waitlist with the cursor in the name field. |
+| `HeroRouteCheck` | The live thing (§2) as the hero's main action: "I start in" and "I'm headed to" in one surface pill joined by the route (start dot → line → car; on phones the line runs down the left), the main button, and the "Covered / Not covered yet" answer underneath. The chosen route is shared with `WaitlistForm` (`src/features/commute/commute-store.ts`), and the button scrolls to the waitlist with the cursor in the name field. |
 | `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number and ride / drive / both. A route picked in the hero is already filled in. |
-| `DriverForm`, `ContactForm` | Driver sign-up and the contact form (topic picker, preselected from `?topic=`). All three forms post to a Google Sheet (see `infra/google-apps-script/forms.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, cream pill fields on a tint panel. |
+| `DriverForm`, `ContactForm` | Driver sign-up and the contact form (topic picker, preselected from `?topic=`). All three forms post to a Google Sheet (see `infra/google-apps-script/forms.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, surface pill fields on a tint panel. |
 
 ---
 
 ## 9. Page plans
 
 ### Home (riders first)
-1. **Hero:** apricot field, full width. The route line draws and ends under the wordmark. h1 "Your commute, in good company."
+1. **Hero:** brand field, full width. The route line draws and ends under the wordmark. h1 "Your commute, in good company."
    One line saying what RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app)
    and a secondary "Driving to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb.
-2. **What it is:** one statement on cream: RydCo matches people going the same way every day so they share the car and
+2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).
 3. **How it works:** "Many into one". Scattered dots (everyone driving alone) are pulled into one route line (one shared car).
    Under it, three steps in an `<ol>`, each named by its verb: *Request · Ride · Split*. They follow the app's real flow:
    request a seat, the driver confirms; meet at the pickup point; pay your share to the driver directly.
-4. **Is my commute covered?** The live thing, on an apricot-tint field, with a phone showing the app's coverage screen.
+4. **Is my commute covered?** The live thing, on an panel field, with a phone showing the app's coverage screen.
 5. **Safety:** a board of enlarged real app elements on flat tiles: verified badges, the women-only rides toggle, "Numbers stay hidden",
    trip sharing with a trusted contact, "Report anytime". Each has a one-line caption. Links to the Safety page.
 6. **Route band:** the line crosses the page once, from riders to everyone else.
@@ -258,11 +263,11 @@ Crossfades become cuts.
 - Price examples (e.g. "Rs 245 alone · Rs 180 with two") appear only labelled "Example" and only once you confirm the formula.
 
 ### SEO and accessibility
-- Every page: its own `title` ("Page · RydCo") and description, one `h1`, Open Graph image (the logo lockup on apricot),
+- Every page: its own `title` ("Page · RydCo") and description, one `h1`, Open Graph image (the logo lockup on brand),
   canonical URL. `sitemap.xml` and `robots.txt` are generated at build.
 - Meaningful `alt` text. Decorative SVG is `aria-hidden`.
 - Keyboard: skip link, logical order, menu and live thing fully usable without a mouse.
-- Focus: 3px cocoa outline with a 3px offset on light grounds; cream outline on cocoa; cocoa outline on apricot.
+- Focus: 3px ink outline with a 3px offset on light grounds; surface outline on ink; ink outline on brand.
 - Tested at 375px first. Target Lighthouse mobile performance 90+: no animation libraries, self-hosted fonts, no images
   above about 150KB, everything below the fold lazy-loaded.
 
@@ -281,7 +286,7 @@ Crossfades become cuts.
 6. **Photos:** we have none. Options: (a) your own photos (best), (b) a few credited photos of Lahore streets and commutes from
    open collections, shown only as the city, never as RydCo users, or (c) none, only app screens and the route line.
    Recommended: (b) now, swapped for (a) later.
-7. Approval of the derived `cocoa-soft` text tone and the cocoa button on apricot fields (§3).
+7. Approval of the derived `ink-soft` text tone and the ink button on brand fields (§3).
 
 ---
 
@@ -290,9 +295,9 @@ Crossfades become cuts.
 ### RydCo app mocks (`app-mocks/v8.html`)
 | Took | Left behind |
 | --- | --- |
-| The wordmark "RydCo" (Urbanist 800, tight tracking, cocoa) and the splash route line that becomes its underline, with the car at the end | Dusty lavender (#EADBD0), honey (#C98A12 and its tints), peach mist #FFF0E6, SOS red |
-| Urbanist + Figtree, so the site matches the app | The app's dark theme (the site is light, with cocoa sections) |
-| The idea of an apricot field with cocoa ink (the splash) | The small orange circle on beige (apricot is used in big blocks instead) |
+| The wordmark "RydCo" (Urbanist 800, tight tracking, ink) and the splash route line that becomes its underline, with the car at the end | Dusty lavender (#EADBD0), honey (#C98A12 and its tints), peach mist #FFF0E6, SOS red |
+| Urbanist + Figtree, so the site matches the app | The app's dark theme (the site is light, with ink sections) |
+| The idea of an brand field with ink ink (the splash) | The small orange circle on beige (brand is used in big blocks instead) |
 | Copy and tone: "Assalam o alaikum. I'm RydCo.", "Your commute, in good company.", one short idea per line | The chat-bubble layout (fine in the app, wrong for a website) |
 | The real flow: choose a role → pilot coverage → phone sign-up → request → driver confirms → ride → settle up | Mock names, phone numbers and prices as if they were real |
 | Specific badge names and the "never say" wording rules | — |
@@ -308,7 +313,7 @@ Crossfades become cuts.
 - **Took:** short, direct, declarative sentences; the order "problem → what we do → how it works → act"; the business-pitch
   structure for the Organizations page (pain points named, a plain explanation, one clear contact action); pricing shown as an
   explanation, not a pricing table; touch targets of 44px or more; the trip planner as the hero, and the idea of the
-  pickup/dropoff rail, drawn in RydCo's own motif (cocoa dot, route line, car).
+  pickup/dropoff rail, drawn in RydCo's own motif (ink dot, route line, car).
 - **Left:** black-and-white monochrome, black nav and footer bars, UberMove, square-ish black buttons, grey input fills,
   its exact rail styling and its photography style.
 
@@ -324,7 +329,7 @@ Crossfades become cuts.
   no 01/02/03 numbering, no icon-card rows, two-line headlines, equal margins.
 - **Overridden by the brand brief:**
   - The dealt "tabbed folder" hero is replaced by the route-line hero you asked for.
-  - The skill bans "cream + orange" palettes as an AI tell; RydCo's real brand is cream + apricot, so the brand wins.
+  - The skill bans "surface + orange" palettes as an AI tell; RydCo's real brand is surface + brand, so the brand wins.
   - The skill dislikes device frames; you asked for `PhoneFrame`, so we use it.
   - The skill wants a busier motion layer; motion stays at your level 4.
   - The skill's "sentence with a blank" email form needs a backend; it becomes a link to the waitlist or a mailto.

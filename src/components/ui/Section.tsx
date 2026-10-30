@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 
-type Ground = "cream" | "tint" | "apricot" | "cocoa";
+type Ground = "surface" | "panel" | "brand" | "ink";
 
 const grounds: Record<Ground, string> = {
-  cream: "bg-cream text-cocoa",
-  tint: "bg-apricot-tint text-cocoa",
-  apricot: "bg-apricot text-cocoa",
-  cocoa: "on-cocoa bg-cocoa text-cream",
+  surface: "bg-surface text-ink",
+  panel: "bg-panel text-ink",
+  brand: "bg-brand text-ink",
+  ink: "on-ink bg-ink text-surface",
 };
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
   children: ReactNode;
 };
 
-export function Section({ ground = "cream", id, labelledBy, className = "", inner = "", children }: Props) {
+export function Section({ ground = "surface", id, labelledBy, className = "", inner = "", children }: Props) {
   return (
     <section id={id} aria-labelledby={labelledBy} className={`${grounds[ground]} py-24 lg:py-40 ${className}`}>
       <div className={`wrap ${inner}`}>{children}</div>

@@ -5,9 +5,9 @@ import { site } from "@/config/site";
 
 export function Footer() {
   return (
-    <footer className="on-cocoa bg-cocoa text-cream">
+    <footer className="on-ink bg-ink text-surface">
       <div className="wrap pt-24 pb-10 lg:pt-32">
-        <Lockup on="cocoa" title="RydCo" className="w-full max-w-[880px]" />
+        <Lockup on="ink" title="RydCo" className="w-full max-w-[880px]" />
         <p className="mt-8 font-display text-[clamp(24px,2.6vw,36px)] leading-tight font-bold">
           Your commute, <span className="whitespace-nowrap">in good company.</span>
         </p>
@@ -16,7 +16,7 @@ export function Footer() {
           <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 md:col-span-8">
             {footerNav.map((group) => (
               <div key={group.title}>
-                <h2 className="font-display text-[18px] font-bold text-apricot">{group.title}</h2>
+                <h2 className="font-display text-[18px] font-bold text-brand">{group.title}</h2>
                 <ul className="mt-3 grid gap-1">
                   {group.links.map((l) => (
                     <li key={l.label}>
@@ -30,7 +30,7 @@ export function Footer() {
             ))}
           </nav>
           <div className="md:col-span-4">
-            <h2 className="font-display text-[18px] font-bold text-apricot">Say hello</h2>
+            <h2 className="font-display text-[18px] font-bold text-brand">Say hello</h2>
             <ul className="mt-3 grid gap-1 text-[16px]">
               <li>
                 <a href={`mailto:${site.email}`} className="inline-block py-1.5 underline underline-offset-4">

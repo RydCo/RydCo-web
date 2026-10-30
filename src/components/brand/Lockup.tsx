@@ -3,7 +3,7 @@ import { toneOn } from "./tones";
 import { Wordmark } from "./Wordmark";
 
 // The static logo: wordmark, underline and car, with the line's tail curling in from the left.
-export function Lockup({ on = "cream", className = "", title }: { on?: keyof typeof toneOn; className?: string; title?: string }) {
+export function Lockup({ on = "surface", className = "", title }: { on?: keyof typeof toneOn; className?: string; title?: string }) {
   const tone = toneOn[on];
   return (
     <svg
@@ -20,7 +20,7 @@ export function Lockup({ on = "cream", className = "", title }: { on?: keyof typ
         strokeLinejoin="round"
       />
       <Wordmark tone={tone} x={60} y={150} size={150} length={440} />
-      <Car tone={tone} transform="translate(520 216) scale(2.6)" scale={2.6} />
+      <Car tone={tone} transform="translate(520 216) scale(2.6)" />
     </svg>
   );
 }

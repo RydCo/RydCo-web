@@ -8,7 +8,7 @@ export function HeroSection() {
   const cta = riderCta();
   return (
     <PageHero
-      ground="tint"
+      ground="panel"
       title={
         <>
           Know who you&rsquo;re <span className="whitespace-nowrap">riding with.</span>
@@ -20,7 +20,7 @@ export function HeroSection() {
           <Button href={cta.href} external={cta.external}>
             {cta.label}
           </Button>
-          <Button href="#checks" variant="cream">
+          <Button href="#checks" variant="surface">
             See the checks
           </Button>
         </>

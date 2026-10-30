@@ -1,0 +1,17 @@
+/* Movements more than one animation uses. Draw-line needs pathLength={1} on the path and stroke-dasharray: 1 1. */
+@keyframes pop-in {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

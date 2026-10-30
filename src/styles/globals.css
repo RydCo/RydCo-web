@@ -1,9 +1,11 @@
 @import "tailwindcss" source("../");
 
-/* Tokens, then base styles, then utilities, then one file per animation. The order is deliberate. */
+/* The theme, then base styles, then utilities, then one file per animation. The order is deliberate. */
+@import "./theme.generated.css";
 @import "./tokens.css";
 @import "./base.css";
 @import "./utilities.css";
+@import "./motion/keyframes.css";
 @import "./motion/who-for.css";
 @import "./motion/hero-route.css";
 @import "./motion/reveal.css";

@@ -12,7 +12,7 @@
     }
     .rail::before {
       z-index: -1;
-      background-color: var(--color-apricot-tint);
+      background-color: var(--color-panel);
     }
     .rail::after {
       content: "";
@@ -23,7 +23,7 @@
       left: 9px;
       width: 4px;
       border-radius: 9999px;
-      background-color: var(--color-cocoa);
+      background-color: var(--color-ink);
       transform-origin: top;
       animation: rail-fill linear both;
       animation-timeline: --rail;
@@ -44,9 +44,9 @@
 }
 @keyframes rail-stop {
   from {
-    background-color: var(--color-apricot-tint);
+    background-color: var(--color-panel);
   }
   to {
-    background-color: var(--color-cocoa);
+    background-color: var(--color-ink);
   }
 }
