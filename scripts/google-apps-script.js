@@ -1,7 +1,7 @@
 /**
  * RydCo website forms → Google Sheet + email.
  *
- * This runs inside Google, not on the website. Setup (about 10 minutes, see README → "Connect the forms"):
+ * This runs inside Google, not on the website. Setup (about 10 minutes):
  *   1. In the rydcoapp@gmail.com Google Drive, create a Google Sheet called "RydCo sign-ups".
  *   2. In the sheet: Extensions → Apps Script. Replace the code there with this whole file. Save.
  *   3. Deploy → New deployment → type "Web app". Execute as: Me. Who has access: Anyone. Deploy, and allow access.

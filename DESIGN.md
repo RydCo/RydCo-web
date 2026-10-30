@@ -173,7 +173,7 @@ drawing. Entrances become instant. Crossfades become cuts.
 | `TripCard` | The BlaBlaCar-pattern trip summary: driver first name, rating, specific badges, pickup → drop-off with the route mark, times, seats left, Rs per seat. Used only as a clearly labelled example. |
 | `Badge` | Trust-green pill with a tick for checks that really happen ("Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"). Neutral tint pill for everything else. |
 | `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number and ride / drive / both. |
-| `DriverForm`, `ContactForm` | Driver sign-up and the contact form (topic picker, preselected from `?topic=`). All three forms post to a Google Sheet (see README) and fall back to a pre-filled email until it is connected. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, cream pill fields on a tint panel. |
+| `DriverForm`, `ContactForm` | Driver sign-up and the contact form (topic picker, preselected from `?topic=`). All three forms post to a Google Sheet (see `scripts/google-apps-script.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, cream pill fields on a tint panel. |
 
 ---
 
