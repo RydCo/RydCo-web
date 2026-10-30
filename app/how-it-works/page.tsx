@@ -9,6 +9,7 @@ import {
   TripLiveScreen,
   WelcomeScreen,
 } from "@/components/AppScreens";
+import { AppTour } from "@/components/AppTour";
 import { Button } from "@/components/Button";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { PageHero } from "@/components/PageHero";
@@ -69,6 +70,14 @@ const steps: { title: string; text: string; screen: ReactNode; label: string }[]
   },
 ];
 
+// The hero's tour: the heart of the flow on one phone, before the step-by-step below.
+const tour = [
+  { title: "Find a ride", screen: <ResultsScreen /> },
+  { title: "Request a seat", screen: <RequestScreen /> },
+  { title: "Ride together", screen: <TripLiveScreen /> },
+  { title: "Settle up", screen: <SettleScreen /> },
+];
+
 const questions = [
   {
     q: "Is RydCo a taxi?",
@@ -127,26 +136,30 @@ export default function HowItWorks() {
             </Button>
           </>
         }
+        // On phones each step below already has its screen, so the tour is for wider screens only.
+        aside={<AppTour slides={tour} />}
+        asideClassName="hidden lg:block"
       />
 
       <section aria-label="The steps" className="bg-cream pb-24 lg:pb-40">
         <div className="wrap">
-          <ol className="relative before:absolute before:top-3 before:bottom-3 before:left-[9px] before:w-[4px] before:rounded-full before:bg-cocoa">
+          <ol className="rail relative before:absolute before:top-3 before:bottom-3 before:left-[9px] before:w-[4px] before:rounded-full before:bg-cocoa">
             {steps.map((s, i) => (
               <li key={s.title} className="relative grid gap-10 pb-20 pl-12 last:pb-0 md:pl-16 lg:grid-cols-12 lg:items-center lg:gap-10 lg:pb-28">
                 <div className="relative lg:col-span-6" {...reveal(0)}>
                   {/* The stop sits level with the step's heading, on the rail at the li's left edge. */}
                   <span
                     aria-hidden="true"
-                    className={`absolute top-1 -left-12 h-[22px] w-[22px] rounded-full md:-left-16 md:top-2 lg:top-4 ${i === steps.length - 1 ? "border-[5px] border-cocoa bg-cream" : "bg-cocoa"}`}
+                    className={`rail-stop absolute top-1 -left-12 h-[22px] w-[22px] rounded-full md:-left-16 md:top-2 lg:top-4 ${i === steps.length - 1 ? "border-[5px] border-cocoa bg-cream" : "bg-cocoa"}`}
                   />
                   <h2 className="t-h2">{s.title}</h2>
                   <p className="mt-5 max-w-[46ch]">{s.text}</p>
                 </div>
                 <div className="lg:col-span-5 lg:col-start-8" {...reveal(1)}>
-                  <PhoneFrame label={s.label} className="max-w-[280px] lg:mx-0 lg:max-w-[300px]">
-                    {s.screen}
-                  </PhoneFrame>
+                  {/* The cap sits on a wrapper: PhoneFrame's own max-w-full would win over a max-w passed to it. */}
+                  <div className="mx-auto max-w-[280px] lg:mx-0 lg:max-w-[300px]">
+                    <PhoneFrame label={s.label}>{s.screen}</PhoneFrame>
+                  </div>
                 </div>
               </li>
             ))}
