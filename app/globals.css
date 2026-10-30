@@ -243,6 +243,59 @@
   }
 }
 
+/* How it works rail (app/how-it-works/page.tsx): as you read down, the line beside the steps fills to the middle of the
+   screen and each stop fills as the line reaches it. Tied to scrolling, so it needs scroll-driven animations; without
+   them, or with reduced motion, the rail is drawn in full as before. Both lines sit under the stops (z-index -1
+   inside the isolated list). */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rail {
+      isolation: isolate;
+      view-timeline-name: --rail;
+      view-timeline-axis: block;
+      view-timeline-inset: 50% 49%;
+    }
+    .rail::before {
+      z-index: -1;
+      background-color: var(--color-apricot-tint);
+    }
+    .rail::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0.75rem;
+      bottom: 0.75rem;
+      left: 9px;
+      width: 4px;
+      border-radius: 9999px;
+      background-color: var(--color-cocoa);
+      transform-origin: top;
+      animation: rail-fill linear both;
+      animation-timeline: --rail;
+    }
+    .rail-stop {
+      animation: rail-stop linear both;
+      animation-timeline: view(block 50% 49%);
+    }
+  }
+}
+@keyframes rail-fill {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+@keyframes rail-stop {
+  from {
+    background-color: var(--color-apricot-tint);
+  }
+  to {
+    background-color: var(--color-cocoa);
+  }
+}
+
 /* App tour (components/AppTour.tsx): the active dot fills while its screen shows; when it's full the tour moves on.
    Held while the tour is paused or off screen, and while the phone is pointed at. */
 .tour-fill {
