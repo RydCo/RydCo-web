@@ -148,10 +148,14 @@ One loud moment, everything else quiet.
 - Hover, press and focus feedback on every button, link and card: about 150ms, transform and colour only.
 - "Who it's for" list: pointing at or focusing a row swaps the phone preview beside it (240ms crossfade, pure CSS
   with `:has()`). On phones the rows show without previews.
+- "Many into one" (home, How RydCo works): the motif's second, quieter telling. Once half of it is on screen it plays
+  once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
+  car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
+  observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
 - No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished logo lockup (line, underline, car, wordmark) with no
-drawing. Entrances become instant. Crossfades become cuts.
+drawing. "Many into one" shows its finished picture. Entrances become instant. Crossfades become cuts.
 
 ---
 
