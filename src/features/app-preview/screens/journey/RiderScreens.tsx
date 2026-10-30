@@ -2,7 +2,7 @@ import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
 import { Badge } from "@/components/ui/Badge";
 import { Tick } from "@/components/ui/icons";
-import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, MapBackdrop, MapLabel, Pin, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Windows } from "./SkySheet";
+import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, MapLabel, Pin, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Windows } from "./SkySheet";
 
 // One ride as a rider, in the app's order: Ayesha finds a seat with Hamza, rides, and pays him. Text and example
 // details are the app's own (app-mocks/index (1).html), leaving out its sample ratings and trip counts, which could be
@@ -10,7 +10,7 @@ import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, MapBackdrop, MapLabe
 
 export function FindRideScreen() {
   return (
-    <SkySheet step="Trips · Find" foot={<Primary>Find rides</Primary>}>
+    <SkySheet step="Trips · Find" foot={<Primary tap="late">Find rides</Primary>}>
       <Heading lead="Share a seat on someone's daily commute.">Find a ride</Heading>
       <Ends fromLabel="Pickup" from="DHA Phase 5" toLabel="Drop-off" to="Arfa Tech Park" />
       <Card className="grid gap-2 p-2.5">
@@ -29,9 +29,9 @@ export function FindRideScreen() {
   );
 }
 
-function RideOption({ initials, name, share, meet, meetAt, walk, drop, dropAt, seats }: { initials: string; name: string; share: string; meet: string; meetAt: string; walk: string; drop: string; dropAt: string; seats: string }) {
+function RideOption({ initials, name, share, meet, meetAt, walk, drop, dropAt, seats, tap }: { initials: string; name: string; share: string; meet: string; meetAt: string; walk: string; drop: string; dropAt: string; seats: string; tap?: "late" }) {
   return (
-    <Card className="grid gap-2 p-2.5">
+    <Card tap={tap} className="grid gap-2 p-2.5">
       <div className="flex items-center gap-2">
         <Avatar>{initials}</Avatar>
         <span className="min-w-0 flex-1 leading-tight">
@@ -73,7 +73,7 @@ export function RideResultsScreen() {
         <b className="font-display text-[15px]">3 rides</b>
         <span className="text-[11.5px] text-ink-soft">Sorted by pickup</span>
       </p>
-      <RideOption initials="HR" name="Hamza" seats="2 seats left" share="Rs 245" meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
+      <RideOption tap="late" initials="HR" name="Hamza" seats="2 seats left" share="Rs 245" meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
       <RideOption initials="SI" name="Sana" seats="1 seat left" share="Rs 264" meetAt="07:44" meet="Model Town Link Rd" walk="6 min walk" dropAt="08:12" drop="Arfa Tower gate" />
     </SkySheet>
   );
@@ -88,7 +88,7 @@ const plan = [
 
 export function RideDetailScreen() {
   return (
-    <SkySheet step="Trips · Ride" foot={<Primary>Request seat · Rs 245</Primary>}>
+    <SkySheet step="Trips · Ride" foot={<Primary tap="late">Request seat · Rs 245</Primary>}>
       <RouteCard height={92} from="Meet" to="Drop" />
       <div className="flex items-center gap-2">
         <Avatar>HR</Avatar>
@@ -124,12 +124,11 @@ export function RequestAcceptedScreen() {
   const route = "M228 226 C228 204 200 206 176 198 C150 190 146 174 122 168 C96 162 72 170 62 142";
   return (
     <>
-      <MapBackdrop />
       <svg viewBox="0 0 280 340" aria-hidden="true" className="absolute inset-x-0 -top-[41px] h-auto w-full">
         <path d={route} className="fill-none stroke-screen" strokeWidth="9" strokeLinecap="round" />
-        <path d={route} pathLength={1} className="journey-draw fill-none stroke-accent-strong" strokeWidth="4.5" strokeLinecap="round" />
+        <path data-route d={route} pathLength={1} strokeDasharray="1 1" className="fill-none stroke-accent-strong" strokeWidth="4.5" strokeLinecap="round" />
         <circle cx="228" cy="226" r="6" className="fill-screen stroke-ink" strokeWidth="3" />
-        <g className="journey-fade">
+        <g data-fade>
           <Pin x={62} y={142} />
           <Car tone={toneOn.brand} transform="translate(148 184) scale(0.9)" />
         </g>
@@ -141,7 +140,7 @@ export function RequestAcceptedScreen() {
         </MapLabel>
       </svg>
 
-      <div className="journey-note absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
+      <div data-note className="absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
         <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-[10px] action font-display text-[15px] font-extrabold">
           R
         </span>
@@ -173,7 +172,7 @@ export function RequestAcceptedScreen() {
           </p>
           <p className="mt-1 text-ink-soft">Toyota Corolla · White · LEB-21-4417</p>
         </Card>
-        <Primary>View trip</Primary>
+        <Primary tap="late">View trip</Primary>
       </div>
     </>
   );
@@ -185,8 +184,8 @@ function Plate() {
 
 export function OnTheWayScreen() {
   return (
-    <SkySheet step="Today · Start" foot={<Primary>Open live trip</Primary>}>
-      <RouteCard height={112} from="Your meet point" car={<Car tone={toneOn.brand} transform="translate(96 70) scale(0.85)" />} />
+    <SkySheet step="Today · Start" foot={<Primary tap="late">Open live trip</Primary>}>
+      <RouteCard height={112} from="Your meet point" drive={[10, 34]} />
       <Heading
         lead={
           <>
@@ -219,8 +218,8 @@ export function OnTheWayScreen() {
 
 export function LiveTripScreen() {
   return (
-    <SkySheet step="Live trip" foot={<Secondary>Trip finished</Secondary>}>
-      <LiveMap height={140} carX={150} carY={66} eta="ETA 08:06" />
+    <SkySheet step="Live trip" foot={<Secondary tap="late">Trip finished</Secondary>}>
+      <LiveMap height={140} drive={[42, 74]} eta="ETA 08:06" />
       <Card className="p-2.5 text-[12px] leading-tight">
         <div className="flex items-start justify-between gap-2">
           <span>
@@ -251,7 +250,7 @@ export function SettleTripScreen() {
       step="Settle trip"
       foot={
         <>
-          <Primary>I sent the payment</Primary>
+          <Primary tap="late">I sent the payment</Primary>
           <Secondary>I paid cash</Secondary>
         </>
       }

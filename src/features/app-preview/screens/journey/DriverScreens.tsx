@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
-import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Windows } from "./SkySheet";
+import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Swap, Windows } from "./SkySheet";
 
 // The same ride from the driver's seat, in the app's order: Hamza publishes it, takes Ayesha and Bilal, drives, and
 // confirms their payments. Text is the app's own (app-mocks/index (1).html), with its sample requests swapped for these
@@ -8,7 +8,7 @@ import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, Primary, RouteCard, 
 
 export function OfferRideScreen() {
   return (
-    <SkySheet step="Trips · Offer" foot={<Primary>Publish ride</Primary>}>
+    <SkySheet step="Trips · Offer" foot={<Primary tap="late">Publish ride</Primary>}>
       <Heading lead="Publish your commute and share the cost.">Offer a ride</Heading>
       <Ends fromLabel="Start" from="DHA Phase 5" toLabel="Drop-off" to="Arfa Tech Park" />
       <Card className="grid gap-2 p-2.5">
@@ -29,7 +29,7 @@ export function OfferRideScreen() {
 
 export function RidePublishedScreen() {
   return (
-    <SkySheet step="Trips · Offer" foot={<Primary>View my trips</Primary>}>
+    <SkySheet step="Trips · Offer" foot={<Primary tap="late">View my trips</Primary>}>
       <RouteCard height={130} />
       <span className="text-[11px]">
         <Badge>Live</Badge>
@@ -77,7 +77,7 @@ function RiderRequest({ initials, name, adds, pickupAt, pickup, children }: { in
 export function RideRequestsScreen() {
   return (
     <SkySheet step="Trips · Requests">
-      <Heading lead="07:30–07:50 · DHA Ph 5 → Arfa · 2 of 3 seats left">Ride requests</Heading>
+      <Heading lead="07:30–07:50 · DHA Ph 5 → Arfa Tech Park">Ride requests</Heading>
       <RiderRequest initials="AM" name="Ayesha" adds="+3 min" pickupAt="07:38" pickup="Khayaban-e-Jinnah stop">
         <p className="flex items-center gap-2 text-[11px]">
           <Badge>Confirmed</Badge>
@@ -85,10 +85,20 @@ export function RideRequestsScreen() {
         </p>
       </RiderRequest>
       <RiderRequest initials="BA" name="Bilal" adds="+4 min" pickupAt="07:33" pickup="Sector FF gate">
-        <div className="grid grid-cols-2 gap-1.5">
-          <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Decline</Secondary>
-          <Primary>Accept</Primary>
-        </div>
+        <Swap
+          before={
+            <div className="grid grid-cols-2 gap-1.5">
+              <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Decline</Secondary>
+              <Primary tap="early">Accept</Primary>
+            </div>
+          }
+          after={
+            <p className="flex items-center gap-2 text-[11px]">
+              <Badge>Confirmed</Badge>
+              <span className="text-ink-soft">Added to your stops</span>
+            </p>
+          }
+        />
       </RiderRequest>
     </SkySheet>
   );
@@ -101,7 +111,7 @@ const riders = [
 
 export function TodaysRideScreen() {
   return (
-    <SkySheet step="Today · Start" foot={<Primary>Start trip</Primary>}>
+    <SkySheet step="Today · Start" foot={<Primary tap="late">Start trip</Primary>}>
       <span className="text-[11px]">
         <Badge>Start window open</Badge>
       </span>
@@ -128,14 +138,16 @@ export function TodaysRideScreen() {
 export function DriverLiveTripScreen() {
   return (
     <SkySheet step="Live trip" foot={<Secondary>Complete trip</Secondary>}>
-      <LiveMap height={118} carX={88} carY={72} eta="ETA 08:06" />
+      <LiveMap height={118} drive={[14, 30]} eta="ETA 08:06" />
       <Card className="flex items-center justify-between gap-2 p-2.5 text-[12px] leading-tight">
         <span className="min-w-0">
           <span className="text-[11px] text-ink-soft tabular-nums">Next · 07:38</span>
           <b className="block font-display text-[14px]">Pick up Ayesha</b>
           <span className="text-ink-soft">Khayaban-e-Jinnah stop</span>
         </span>
-        <span className="grid h-8 flex-none place-items-center rounded-full action px-3 text-[11.5px] font-semibold">Picked up</span>
+        <span data-tap="early" className="grid h-8 flex-none place-items-center rounded-full action px-3 text-[11.5px] font-semibold">
+          Picked up
+        </span>
       </Card>
       <Card className="divide-y divide-line">
         {[
@@ -146,7 +158,7 @@ export function DriverLiveTripScreen() {
             <Avatar>{r.initials}</Avatar>
             <b className="min-w-0 flex-1 text-[12.5px]">{r.name}</b>
             <span className="text-right">
-              <b className="block">{r.state}</b>
+              {r.name === "Ayesha" ? <Swap before={<b className="block">{r.state}</b>} after={<b className="block">In car</b>} /> : <b className="block">{r.state}</b>}
               <span className="text-[10.5px] text-ink-soft tabular-nums">{r.share} · locked</span>
             </span>
           </div>
@@ -175,10 +187,20 @@ export function ConfirmPaymentsScreen() {
         <p>
           <b>Ayesha says she paid Rs 180</b> · JazzCash
         </p>
-        <div className="grid grid-cols-2 gap-1.5">
-          <Primary>I received it</Primary>
-          <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Not received</Secondary>
-        </div>
+        <Swap
+          before={
+            <div className="grid grid-cols-2 gap-1.5">
+              <Primary tap="early">I received it</Primary>
+              <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Not received</Secondary>
+            </div>
+          }
+          after={
+            <p className="flex items-center gap-2 text-[11px]">
+              <Badge>Settled</Badge>
+              <span className="text-ink-soft">Received Rs 180 by JazzCash</span>
+            </p>
+          }
+        />
       </Card>
       <Card className="grid gap-2 p-2.5 text-[12px] leading-tight">
         <div className="flex items-center gap-2">

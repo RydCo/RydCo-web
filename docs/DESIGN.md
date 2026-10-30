@@ -166,11 +166,12 @@ One loud moment, everything else quiet.
 - The line enters from the right edge of the brand field, passes behind the phone, loops round the pilot label and
   underlines it, as the logo's line underlines the wordmark. The car rides its tip and parks at the end. The label is
   visible from the first paint.
-- Hero phone: leans back in space and rises in once (0.9s), then loops two rides as an app tour, 2s a screen with a
-  150ms change between them: one ride as a rider (Find a ride to Settle trip), then the same trip as its driver (Offer a
-  ride to Confirm payments). 13 screens rebuilt from the app mock in its order and used nowhere else on the site
-  (`src/features/app-preview/screens/journey`). A route draws and the "accepted" notification drops in as their screens
-  come up. No captions or arrows, only a pause button under the phone (WCAG 2.2.2).
+- Hero phone: leans back in space and rises in once (0.9s), with a looping motion graphic on its screen, rendered to
+  video (see `docs/ARCHITECTURE.md`). One ride as a rider (Find a ride to Settle trip), then the same trip as its driver
+  (Offer a ride to Confirm payments): 13 screens rebuilt from the app mock in its order and used nowhere else on the site,
+  2s each with a 200ms push between them. The map holds still, each screen's content rises in, a finger taps what's
+  next, routes draw and the car drives them. Nothing sits under the phone. It plays only while on screen and pauses
+  while pointed at. There's no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
@@ -198,7 +199,8 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
+- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing video is the hero
+  phone's silent motion graphic.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
 finished screen, with no drawing. "Many into one", the safety board, the rail and the Sent route show their finished state, the band's car
@@ -241,7 +243,7 @@ Crossfades become cuts.
 1. **Hero:** brand field, full width, in two columns. Left: h1 "Your commute, in good company.", one line saying what
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
    to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
-   one ride as a rider and then as its driver (`AppTour` with the `journey` screens, in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
+   one ride as a rider and then as its driver (`MotionVideo`, rendered from the `journey` screens in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
    the columns stack, with the phone after the check.
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a

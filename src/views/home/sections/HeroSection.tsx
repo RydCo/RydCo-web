@@ -1,8 +1,8 @@
 import { HeroRoute } from "@/components/brand/HeroRoute";
 import { Button } from "@/components/ui/Button";
+import { MotionVideo } from "@/components/ui/MotionVideo";
 import { site } from "@/config/site";
-import { AppTour } from "@/features/app-preview/AppTour";
-import { twoRides } from "@/features/app-preview/screens/journey/journey";
+import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
 
 export function HeroSection() {
@@ -25,12 +25,14 @@ export function HeroSection() {
               />
             </div>
           </div>
-          <div className="relative z-10">
-            <AppTour slides={twoRides} seconds={2} bare label="One ride in the RydCo app as a rider and then as its driver, with example names and prices" phoneClassName="hero-phone" />
+          <div className="hero-phone relative z-10">
+            <PhoneFrame label="One ride in the RydCo app as a rider and then as its driver, with example names and prices">
+              <MotionVideo name="two-rides" className="absolute inset-0 z-20 h-full w-full object-cover" />
+            </PhoneFrame>
           </div>
         </div>
-        {/* The line runs up behind the phone, above its pause button. */}
-        <div className="mt-10 lg:-mt-[100px] xl:-mt-[140px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[70px]">
+        {/* The line runs up behind the phone. */}
+        <div className="mt-10 lg:-mt-[44px] xl:-mt-[84px]">
           <HeroRoute label={`Starting with a pilot in ${site.city}`} />
         </div>
       </div>
