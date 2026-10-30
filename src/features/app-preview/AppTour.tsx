@@ -5,11 +5,11 @@ import { Chevron } from "@/components/ui/icons";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { PhoneFrame } from "./PhoneFrame";
 
-// One phone that steps through the app's real screens on its own. The active marker fills while its screen shows and
-// the tour moves on when it's full (CSS in styles/motion/app-tour.css). It pauses while the phone is pointed at,
-// while it's off screen, and with the pause button. With reduced motion it starts paused and screens swap without
-// sliding. `long` is for tours with too many screens for dots: a thin progress bar with back and next buttons, and
-// only the screens next to the current one in the page.
+// One phone that steps through the app's real screens on its own. A marker fills while its screen shows and the tour
+// moves on when it's full (CSS in styles/motion/app-tour.css). It pauses while the phone is pointed at, while it's off
+// screen, and with the pause button. With reduced motion it starts paused and screens swap without sliding.
+// `long` is for tours with too many screens for dots: back and next buttons, the marker kept out of sight as the
+// timer, and only the screens next to the current one in the page.
 
 type Slide = { title: string; screen: ReactNode };
 
@@ -103,14 +103,10 @@ export function AppTour({
 
       {long ? (
         <div className="mx-auto mt-6 max-w-[380px]">
-          <div aria-hidden="true" className="flex gap-[3px]">
-            {slides.map((s, i) => (
-              <span key={s.title} className={`relative h-1 flex-1 overflow-hidden rounded-full ${i < index ? "bg-ink" : "bg-line"}`}>
-                {i === index && fill}
-              </span>
-            ))}
-          </div>
-          <div className="mt-1 flex items-center">
+          <span aria-hidden="true" className="relative block h-0 overflow-hidden">
+            {fill}
+          </span>
+          <div className="flex items-center">
             <button type="button" onClick={() => step(-1)} aria-label="Previous screen" className={iconButton}>
               <Chevron className="h-5 w-5 rotate-90" />
             </button>

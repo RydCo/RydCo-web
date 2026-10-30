@@ -5,6 +5,11 @@
   background-color: var(--color-brand);
   background-image: linear-gradient(180deg, var(--color-surface), var(--color-brand));
 }
+/* First screens: rises from the page colour into brand and melts back, so there's no hard edge above the next section. */
+@utility field-hero {
+  background-color: var(--color-surface);
+  background-image: linear-gradient(180deg, var(--color-surface), var(--color-brand) 60%, var(--color-surface));
+}
 /* Soft sections: a gentle step down into panel. */
 @utility field-panel {
   background-color: var(--color-panel);

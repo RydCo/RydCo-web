@@ -7,7 +7,7 @@ import { HeroRouteCheck } from "@/features/commute/HeroRouteCheck";
 
 export function HeroSection() {
   return (
-    <section aria-labelledby="hero-title" className="overflow-x-clip field-brand text-ink">
+    <section aria-labelledby="hero-title" className="overflow-x-clip field-hero text-ink">
       <div className="wrap pt-12 pb-10 md:pt-16 lg:pt-8">
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start lg:gap-12">
           <div className="relative z-20 lg:pt-8 xl:pt-[72px]">
@@ -30,7 +30,7 @@ export function HeroSection() {
           </div>
         </div>
         {/* The line runs up behind the phone, above the tour's controls. */}
-        <div className="mt-10 lg:-mt-[136px] xl:-mt-[176px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[106px]">
+        <div className="mt-10 lg:-mt-[128px] xl:-mt-[168px] [@media(min-width:80rem)_and_(max-height:860px)]:-mt-[98px]">
           <HeroRoute label={`Starting with a pilot in ${site.city}`} />
         </div>
       </div>

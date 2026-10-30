@@ -79,7 +79,8 @@ on those. The same fix would help the app.
 Defined once in `src/styles/gradients.css`, with every stop a theme colour.
 
 - `action`: every primary button and selected state.
-- `field-brand`: hero and big colour blocks, from surface into brand.
+- `field-hero`: first screens (the home hero and the light page heroes), rising from surface into brand and melting back into surface, with no hard edge above the next section.
+- `field-brand`: big colour blocks, from surface into brand.
 - `field-panel`: soft sections.
 - `field-ink`: dark sections and the footer.
 - `text-sun`: orange headline words, display size only.
@@ -168,8 +169,8 @@ One loud moment, everything else quiet.
 - Hero phone: leans back in space and rises in once (0.9s), then steps through a rider's whole journey as an app tour
   (see below), 2.2s a screen: from the splash and sign-up to paying the driver, 15 screens rebuilt from the app mock in
   its order and used nowhere else on the site (`src/features/app-preview/screens/journey`). Each acts out its one
-  moment when it comes up: a route draws, the code's digits fill in, the "accepted" notification drops in. The tour
-  has a thin progress bar with back, next and pause buttons, since 15 dots wouldn't fit.
+  moment when it comes up: the splash's sun rises, a route draws, the code's digits fill in, the "accepted"
+  notification drops in. The tour has back, next and pause buttons, since 15 dots wouldn't fit.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.

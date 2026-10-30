@@ -30,6 +30,9 @@
   .hero-phone {
     animation: hero-phone-in 0.9s var(--ease-out-soft) both;
   }
+  [aria-hidden="false"] .journey-sun {
+    animation: journey-sun-rise 1s var(--ease-out-soft) both;
+  }
   [aria-hidden="false"] .journey-draw {
     animation: draw-line 0.8s var(--ease-out-soft) 0.2s both;
   }
@@ -47,6 +50,11 @@
   from {
     opacity: 0;
     translate: 0 28px;
+  }
+}
+@keyframes journey-sun-rise {
+  from {
+    translate: 0 130px;
   }
 }
 @keyframes journey-fade-in {

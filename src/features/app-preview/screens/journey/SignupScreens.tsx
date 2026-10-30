@@ -12,6 +12,16 @@ export function SplashScreen() {
     <>
       <MapBackdrop />
       <svg viewBox="0 0 390 790" preserveAspectRatio="xMidYMid slice" aria-hidden="true" className="absolute inset-x-0 -top-[41px] h-[calc(100%+41px)] w-full">
+        {/* The sun comes up from behind the hills. */}
+        <clipPath id="journey-sky">
+          <rect width="390" height="402" />
+        </clipPath>
+        <g clipPath="url(#journey-sky)">
+          <g className="journey-sun">
+            <circle cx="195" cy="300" r="96" className="fill-none stroke-accent" strokeWidth="1.5" opacity=".4" />
+            <circle cx="195" cy="300" r="62" className="fill-accent" />
+          </g>
+        </g>
         <path d="M-10 404 C90 380 300 380 400 404 L400 844 L-10 844Z" className="fill-surface" opacity=".7" />
         <path d="M-10 470 C120 430 260 436 400 470 L400 844 L-10 844Z" className="fill-brand" opacity=".6" />
         <path d="M-20 418 C80 392 300 392 410 420" className="fill-none stroke-screen" strokeWidth="16" strokeLinecap="round" />
