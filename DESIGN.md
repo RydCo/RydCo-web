@@ -148,10 +148,14 @@ One loud moment, everything else quiet.
 - Hover, press and focus feedback on every button, link and card: about 150ms, transform and colour only.
 - "Who it's for" list: pointing at or focusing a row swaps the phone preview beside it (240ms crossfade, pure CSS
   with `:has()`). On phones the rows show without previews.
+- "Many into one" (home, How RydCo works): the motif's second, quieter telling. Once half of it is on screen it plays
+  once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
+  car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
+  observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
 - No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished logo lockup (line, underline, car, wordmark) with no
-drawing. Entrances become instant. Crossfades become cuts.
+drawing. "Many into one" shows its finished picture. Entrances become instant. Crossfades become cuts.
 
 ---
 
@@ -176,7 +180,8 @@ drawing. Entrances become instant. Crossfades become cuts.
 | `RouteLine` | The SVG motif. Modes: `hero` (animated signature), `lockup` (static logo for the footer and OG image), `band` (full-width crossing), `mark` (small pickup-to-drop-off dot-and-line). |
 | `TripCard` | The BlaBlaCar-pattern trip summary: driver first name, rating, specific badges, pickup → drop-off with the route mark, times, seats left, Rs per seat. Used only as a clearly labelled example. |
 | `Badge` | Trust-green pill with a tick for checks that really happen ("Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"). Neutral tint pill for everything else. |
-| `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number and ride / drive / both. |
+| `HeroRouteCheck` | The live thing (§2) as the hero's main action: "I start in" and "I'm headed to" in one cream pill joined by the route (start dot → line → car; on phones the line runs down the left), the main button, and the "Covered / Not covered yet" answer underneath. The chosen route is shared with `WaitlistForm` (`lib/commute.ts`), and the button scrolls to the waitlist with the cursor in the name field. |
+| `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number and ride / drive / both. A route picked in the hero is already filled in. |
 | `DriverForm`, `ContactForm` | Driver sign-up and the contact form (topic picker, preselected from `?topic=`). All three forms post to a Google Sheet (see `scripts/google-apps-script.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, cream pill fields on a tint panel. |
 
 ---
@@ -185,7 +190,8 @@ drawing. Entrances become instant. Crossfades become cuts.
 
 ### Home (riders first)
 1. **Hero:** apricot field, full width. The route line draws and ends under the wordmark. h1 "Your commute, in good company."
-   One line saying what RydCo is, a primary action (waitlist or app), a secondary "Offer a ride" link to Drivers.
+   One line saying what RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app)
+   and a secondary "Driving to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb.
 2. **What it is:** one statement on cream: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).
@@ -287,14 +293,16 @@ drawing. Entrances become instant. Crossfades become cuts.
 ### Uber (`uber.design.md`) — clarity and structure only
 - **Took:** short, direct, declarative sentences; the order "problem → what we do → how it works → act"; the business-pitch
   structure for the Organizations page (pain points named, a plain explanation, one clear contact action); pricing shown as an
-  explanation, not a pricing table; touch targets of 44px or more.
+  explanation, not a pricing table; touch targets of 44px or more; the trip planner as the hero, and the idea of the
+  pickup/dropoff rail, drawn in RydCo's own motif (cocoa dot, route line, car).
 - **Left:** black-and-white monochrome, black nav and footer bars, UberMove, square-ish black buttons, grey input fills,
-  its pickup/dropoff rail styling and its photography style.
+  its exact rail styling and its photography style.
 
 ### Airbnb (`airbnb.design.md`) — warmth only
 - **Took:** rounded, friendly components (pills, generous radius), soft spacing, flat cards with no outlines, trust signals
-  placed right next to the thing they describe, photo-led sections where a real picture exists.
-- **Left:** #FF385C and all its reds and greys, Cereal font, the search-bar hero, listing grids, hearts and wishlist patterns, logo.
+  placed right next to the thing they describe, photo-led sections where a real picture exists; the segmented search pill
+  (two segments and a button in one rounded bar) as the shape of the hero's route check, without its shadow.
+- **Left:** #FF385C and all its reds and greys, Cereal font, the drop shadows, listing grids, hearts and wishlist patterns, logo.
 
 ### design-taste-frontend skill (direction "One motif", seed 1864242604)
 - **Took:** the one-motif idea (the route line), "Many into one" for How it works, the board of enlarged app elements for Safety,

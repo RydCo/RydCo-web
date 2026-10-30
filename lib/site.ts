@@ -122,3 +122,12 @@ export const pilot = {
     { name: "Liberty Market", covered: true },
   ],
 };
+
+// The last choice in every area picker, for commutes outside the pilot list.
+export const otherArea = "Another area";
+
+export function coverage(from: string, to: string) {
+  const picked = Boolean(from && to);
+  const covered = Boolean(pilot.starts.find((p) => p.name === from)?.covered && pilot.destinations.find((p) => p.name === to)?.covered);
+  return { picked, covered };
+}

@@ -7,11 +7,12 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 import { ManyIntoOne } from "@/components/ManyIntoOne";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { HeroRoute, RouteBand } from "@/components/RouteLine";
+import { HeroRouteCheck } from "@/components/RouteCheck";
 import { SafetyBoard } from "@/components/SafetyBoard";
 import { Section, reveal } from "@/components/Section";
 import { exampleTrip, TripCard } from "@/components/TripCard";
 import { WhoFor } from "@/components/WhoFor";
-import { pilot, riderCta, site } from "@/lib/site";
+import { pilot, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: "RydCo · Your commute, in good company" },
@@ -27,30 +28,30 @@ const audiences = [
 ];
 
 export default function Home() {
-  const cta = riderCta();
   const live = Boolean(site.playStoreUrl);
 
   return (
     <>
       <section aria-labelledby="hero-title" className="overflow-x-clip bg-apricot text-cocoa">
-        <div className="wrap pt-12 pb-12 md:pt-16 lg:pt-20 lg:pb-16">
+        <div className="wrap pt-12 pb-12 md:pt-16 lg:pt-14 lg:pb-16">
           <h1 id="hero-title" className="t-display">
             Your commute, <span className="whitespace-nowrap">in good company.</span>
           </h1>
-          <div className="mt-7 grid gap-7 md:mt-9 md:grid-cols-12 md:items-end">
-            <p className="max-w-[36ch] text-[19px] md:col-span-6 md:text-[21px]">
+          <div className="mt-7 grid gap-7 md:mt-9 lg:grid-cols-12 lg:items-start lg:gap-10">
+            <p className="max-w-[36ch] text-[19px] md:text-[21px] lg:col-span-4 lg:pt-2">
               RydCo matches you with people in Lahore who drive your way every day. Share the car and split the fuel cost.
             </p>
-            <div className="flex flex-wrap gap-3 md:col-span-6 md:justify-end">
-              <Button href={cta.href} external={cta.external} variant="onApricot">
-                {cta.label}
-              </Button>
-              <Button href="/drivers/" variant="cream">
-                Offer a ride
-              </Button>
+            <div className="lg:col-span-8">
+              <HeroRouteCheck
+                aside={
+                  <Button href="/drivers/" variant="ghost">
+                    Driving to work? Offer a ride
+                  </Button>
+                }
+              />
             </div>
           </div>
-          <div className="relative mt-10 md:mt-8">
+          <div className="relative mt-8 md:mt-6 lg:mt-2">
             <div className="md:max-w-[980px]">
               <HeroRoute />
             </div>
