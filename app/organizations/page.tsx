@@ -5,7 +5,7 @@ import { Button } from "@/components/Button";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { RouteBand, RouteConverge } from "@/components/RouteLine";
 import { Section, reveal } from "@/components/Section";
-import { partnerEnquiry, pilot, pilotEnquiry, site, team } from "@/lib/site";
+import { partnerEnquiry, pilot, pilotEnquiry, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "For organizations and partners",
@@ -223,25 +223,6 @@ export default function Organizations() {
         </div>
       </Section>
 
-      <Section ground="tint" labelledBy="team-title">
-        <h2 id="team-title" className="t-h2" {...reveal(0)}>
-          The team
-        </h2>
-        <p className="mt-5 max-w-[46ch]" {...reveal(1)}>
-          Four people building RydCo from the first web version to the app.
-        </p>
-        <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
-          {team.map((name, i) => (
-            <li key={name} {...reveal(2 + i)}>
-              <span aria-hidden="true" className="grid h-24 w-24 place-items-center rounded-full bg-apricot font-display text-[32px] font-extrabold text-cocoa md:h-28 md:w-28">
-                {initials(name)}
-              </span>
-              <p className="t-title mt-5">{name}</p>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
       <Section ground="apricot" labelledBy="partner-title">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-8">
@@ -264,14 +245,6 @@ export default function Organizations() {
       </Section>
     </>
   );
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2);
 }
 
 function listOf(items: string[]) {

@@ -203,7 +203,8 @@ drawing. Entrances become instant. Crossfades become cuts.
   does about each, one line per problem → how a pilot works with them (an `<ol>` of 4 steps) → what we need from them →
   "Talk to us about a pilot" (mailto with subject filled in).
 - (b) **For sponsors and partners:** the daily-commute problem in Pakistan (with sources, or no numbers at all) → what
-  RydCo is doing → the Lahore pilot (only real facts) → the team → "Partner with us" (mailto).
+  RydCo is doing → the Lahore pilot (only real facts) → "Partner with us" (contact form). The team section is left
+  out for now, at the founders' request.
 
 ### Safety · Drivers · How it works · Contact · Privacy · Terms
 - **Safety:** each check named exactly as the app names it, and what it does and doesn't mean (taken from the app's "Why?" sheets).
