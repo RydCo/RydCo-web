@@ -30,7 +30,7 @@ The route line is RydCo's logo: a ink line with round ends that travels, turns, 
 underline of the wordmark, with the car parked at its end. A daily commute is a line you draw again every morning,
 and carpooling means two lines becoming one. So the line is the only motif, used at four scales:
 
-1. **Huge:** the hero. The line draws itself across an brand field and ends under the wordmark (the signature moment).
+1. **Large:** the hero. The line draws itself across the brand field, passes behind the phone and ends under "Starting with a pilot in Lahore" (the signature moment).
 2. **Section scale:** one full-width band where the line crosses the page once, between the rider half and the
    "who it's for" half of the homepage. It also drives the "How it works" diagram, where scattered dots join into one line.
 3. **Component scale:** every button is a pill (a short piece of road with round ends). Image and screen crops use
@@ -79,7 +79,8 @@ on those. The same fix would help the app.
 Defined once in `src/styles/gradients.css`, with every stop a theme colour.
 
 - `action`: every primary button and selected state.
-- `field-brand`: hero and big colour blocks, from surface into brand.
+- `field-hero`: first screens (the home hero and the light page heroes), rising from surface into brand and melting back into surface, with no hard edge above the next section.
+- `field-brand`: big colour blocks, from surface into brand.
 - `field-panel`: soft sections.
 - `field-ink`: dark sections and the footer.
 - `text-sun`: orange headline words, display size only.
@@ -162,9 +163,14 @@ Five sizes, no more:
 One loud moment, everything else quiet.
 
 **The signature: the route line (homepage hero only).**
-- The ink line enters from the right edge of the brand field, sweeps across, and turns into the underline under the
-  wordmark. The car rides its tip and parks at the end. The wordmark itself is visible from the first paint, so it
-  never delays the page's largest paint.
+- The line enters from the right edge of the brand field, passes behind the phone, loops round the pilot label and
+  underlines it, as the logo's line underlines the wordmark. The car rides its tip and parks at the end. The label is
+  visible from the first paint.
+- Hero phone: leans back in space and rises in once (0.9s), then loops two rides as an app tour, 2s a screen with a
+  150ms change between them: one ride as a rider (Find a ride to Settle trip), then the same trip as its driver (Offer a
+  ride to Confirm payments). 13 screens rebuilt from the app mock in its order and used nowhere else on the site
+  (`src/features/app-preview/screens/journey`). A route draws and the "accepted" notification drops in as their screens
+  come up. No captions or arrows, only a pause button under the phone (WCAG 2.2.2).
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
@@ -184,8 +190,7 @@ One loud moment, everything else quiet.
 - Safety board (home): each tile marked `play` acts its feature out once when half of it is on screen (same
   `data-play` observer): the four driver checks go from pending to trust green one by one, the women-only switch
   slides on, the five stars pop in, "Sharing live" sends out one ring.
-- App tour (How it works hero, wide screens): one phone steps through Find a ride, Request a seat, Ride together and
-  Settle up every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
+- App tour (How it works hero, wide screens): one phone steps through the app's screens every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
   with its pause button (WCAG 2.2.2); dots jump to a screen.
 - How it works rail: tied to scrolling (scroll-driven CSS). The line fills down to the middle of the screen and each
   stop fills as it's reached. Without scroll-driven animations the rail is drawn in full.
@@ -195,8 +200,8 @@ One loud moment, everything else quiet.
   (about 1s).
 - No parallax, cursor effects, auto-playing video, scroll-jacking or looping background motion.
 
-**`prefers-reduced-motion: reduce`:** the hero shows the finished logo lockup (line, underline, car, wordmark) with no
-drawing. "Many into one", the safety board, the rail and the Sent route show their finished state, the band's car
+**`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
+finished screen, with no drawing. "Many into one", the safety board, the rail and the Sent route show their finished state, the band's car
 stays parked, and the app tour starts paused (its screens swap without sliding). Entrances become instant.
 Crossfades become cuts.
 
@@ -233,9 +238,11 @@ Crossfades become cuts.
 ## 9. Page plans
 
 ### Home (riders first)
-1. **Hero:** brand field, full width. The route line draws and ends under the wordmark. h1 "Your commute, in good company."
-   One line saying what RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app)
-   and a secondary "Driving to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb.
+1. **Hero:** brand field, full width, in two columns. Left: h1 "Your commute, in good company.", one line saying what
+   RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
+   to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
+   one ride as a rider and then as its driver (`AppTour` with the `journey` screens, in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
+   the columns stack, with the phone after the check.
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).

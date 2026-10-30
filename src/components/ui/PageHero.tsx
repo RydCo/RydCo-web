@@ -3,9 +3,9 @@ import type { ReactNode } from "react";
 type Ground = "brand" | "ink" | "panel" | "surface";
 
 const grounds: Record<Ground, string> = {
-  brand: "field-brand text-ink",
+  brand: "field-hero text-ink",
   ink: "on-ink field-ink text-surface",
-  panel: "field-panel text-ink",
+  panel: "field-hero text-ink",
   surface: "bg-surface text-ink",
 };
 

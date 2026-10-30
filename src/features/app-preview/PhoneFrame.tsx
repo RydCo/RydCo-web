@@ -18,8 +18,9 @@ export function PhoneFrame({ children, label, className = "" }: { children: Reac
 
 function StatusBar() {
   return (
-    <div aria-hidden="true" className="flex flex-none items-center justify-between px-6 pt-4 pb-2 text-[12.5px] font-semibold tabular-nums">
+    <div aria-hidden="true" className="relative z-10 flex flex-none items-center justify-between px-6 pt-4 pb-2 text-[12.5px] font-semibold tabular-nums">
       <span>9:41</span>
+      <span className="absolute top-[11px] left-1/2 h-[22px] w-[72px] -translate-x-1/2 rounded-full bg-ink-deep" />
       <span className="flex items-center gap-1.5">
         <svg viewBox="0 0 18 12" className="h-3 w-[18px] fill-ink">
           <rect x="0" y="8" width="3" height="4" rx="1" />

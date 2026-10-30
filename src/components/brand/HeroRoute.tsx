@@ -1,25 +1,26 @@
 import { Car } from "./Car";
 import { toneOn } from "./tones";
-import { Wordmark } from "./Wordmark";
 
+// The signature line at hero scale. It runs in from the right, passes behind the phone, loops round the label and
+// underlines it, the way the logo's line underlines the wordmark. The start sits far past the edge for wide screens.
 const hero = {
   desktop: {
-    viewBox: "0 0 1200 440",
-    d: "M1580 70 C1200 30 560 36 240 110 C40 150 -30 408 170 408 L780 408",
-    stroke: 16,
-    word: { x: 170, y: 320, size: 200, length: 590 },
-    car: { x: 780, y: 408, scale: 3.4 },
+    viewBox: "0 0 1200 150",
+    d: "M2300 14 C1400 -10 700 6 190 34 C40 44 -12 118 60 118 L410 118",
+    stroke: 7,
+    label: { x: 56, y: 98, size: 22 },
+    car: { x: 410, y: 118, scale: 1.5 },
   },
   mobile: {
-    viewBox: "0 0 360 260",
-    d: "M470 40 C330 14 150 18 80 52 C18 82 -4 216 36 216 L316 216",
-    stroke: 8,
-    word: { x: 36, y: 176, size: 92, length: 272 },
-    car: { x: 316, y: 216, scale: 1.6 },
+    viewBox: "0 0 360 110",
+    d: "M700 10 C420 -6 200 4 90 16 C14 24 -6 84 40 84 L312 84",
+    stroke: 5,
+    label: { x: 28, y: 68, size: 17 },
+    car: { x: 312, y: 84, scale: 1.1 },
   },
 };
 
-function HeroSvg({ g, className }: { g: (typeof hero)["desktop"]; className: string }) {
+function HeroSvg({ g, label, className }: { g: (typeof hero)["desktop"]; label: string; className: string }) {
   const tone = toneOn.brand;
   return (
     <svg viewBox={g.viewBox} className={`block h-auto w-full overflow-visible ${className}`} aria-hidden="true" data-route-hero="">
@@ -34,17 +35,20 @@ function HeroSvg({ g, className }: { g: (typeof hero)["desktop"]; className: str
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <Wordmark tone={tone} {...g.word} />
+      <text x={g.label.x} y={g.label.y} fontSize={g.label.size} className={`${tone.ink} font-semibold`}>
+        {label}
+      </text>
       <Car tone={tone} transform={`translate(${g.car.x} ${g.car.y}) scale(${g.car.scale})`} scale={g.car.scale} live />
     </svg>
   );
 }
 
-export function HeroRoute() {
+export function HeroRoute({ label }: { label: string }) {
   return (
     <>
-      <HeroSvg g={hero.desktop} className="hidden md:block" />
-      <HeroSvg g={hero.mobile} className="md:hidden" />
+      <p className="sr-only">{label}</p>
+      <HeroSvg g={hero.desktop} label={label} className="hidden md:block" />
+      <HeroSvg g={hero.mobile} label={label} className="md:hidden" />
     </>
   );
 }
