@@ -64,9 +64,6 @@ export const pilotEnquiry = contactLink("company");
 export const partnerEnquiry = contactLink("partner");
 export const safetyEnquiry = contactLink("safety");
 
-// Roles are left out on purpose for now. [FILL] Add photos and roles when ready.
-export const team = ["Tehreem Tahir", "Manal Bukhari", "Ezza Abdullah", "Ahmad Butt"];
-
 export const nav = [
   { label: "How it works", href: "/how-it-works/" },
   { label: "Safety", href: "/safety/" },
