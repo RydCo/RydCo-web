@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     ".agents/**",
     ".taste-skill/**",
     "design-reference/**",
+    // Runs inside Google Apps Script, not on the site.
+    "scripts/google-apps-script.js",
   ]),
 ]);
 

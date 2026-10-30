@@ -6,7 +6,7 @@ import { Arrow, Button } from "@/components/Button";
 import { PageHero } from "@/components/PageHero";
 import { PhoneFrame } from "@/components/PhoneFrame";
 import { Section, reveal } from "@/components/Section";
-import { riderCta, safetyEnquiry, site } from "@/lib/site";
+import { riderCta, safetyEnquiry } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Safety",
@@ -228,7 +228,7 @@ export default function Safety() {
           </div>
           <div className="lg:col-span-4 lg:justify-self-end" {...reveal(2)}>
             <Button href={safetyEnquiry} variant="apricot">
-              Email {site.email}
+              Send us a message
             </Button>
           </div>
         </div>

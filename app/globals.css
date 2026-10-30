@@ -46,6 +46,10 @@
   .on-cocoa :focus-visible {
     outline-color: var(--color-cream);
   }
+  /* A light panel inside a cocoa section goes back to the cocoa outline. */
+  .on-cocoa .on-light :focus-visible {
+    outline-color: var(--color-cocoa);
+  }
   ::selection {
     background: var(--color-cocoa);
     color: var(--color-cream);
@@ -132,6 +136,24 @@
   .who-dot,
   .who-line {
     transition: none;
+  }
+}
+
+/* Hero route line: held undrawn until the head script starts drawing it (components/RouteLine.tsx).
+   If the script never takes over, the finished logo appears after 4 seconds. */
+.route-pending [data-route-path] {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 1;
+  animation: route-fallback 0s 4s forwards;
+}
+.route-pending [data-route-car] {
+  opacity: 0;
+  animation: route-fallback 0s 4s forwards;
+}
+@keyframes route-fallback {
+  to {
+    stroke-dashoffset: 0;
+    opacity: 1;
   }
 }
 
