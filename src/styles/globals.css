@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../");
 
 /* Tokens, then base styles, then utilities, then one file per animation. The order is deliberate. */
 @import "./tokens.css";
