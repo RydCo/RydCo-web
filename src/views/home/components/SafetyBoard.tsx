@@ -9,7 +9,7 @@ import { playAt, reveal } from "@/lib/reveal";
 //
 // Tiles marked `play` act their feature out once (CSS in styles/motion/safety-board.css): the checks turn green one by one,
 // the women-only switch flips on, the stars fill, and "Sharing live" pulses. They load, and stay with reduced motion, in
-// their finished state. SafetyDeck turns this board into a deck of cards and plays each as it arrives. Where it can't run,
+// their finished state. SafetyDeck turns this board into a deck of cards and plays each every time it arrives. Where it can't run,
 // this is the layout, and each plays when half of it is on screen.
 
 type TileProps = {
@@ -85,17 +85,17 @@ export function SafetyBoard() {
 
       <Tile ground="brand" step={4} big={1.9} title="Numbers stay hidden" line="Chat opens once a seat is confirmed." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-1">
         <div className="absolute top-4 -right-10 grid justify-items-end gap-2 text-[13px] sm:text-[18px]">
-          <p className="rounded-[22px] rounded-tr-[8px] bg-surface py-2.5 pr-14 pl-4 font-semibold whitespace-nowrap sm:py-3 sm:pl-5">I&rsquo;m at the gate</p>
-          <p className="mr-14 rounded-full bg-ink px-4 py-1.5 text-[0.85em] whitespace-nowrap text-surface tabular-nums">0300 ••• ••••</p>
+          <p className="sb-bubble rounded-[22px] rounded-tr-[8px] bg-surface py-2.5 pr-14 pl-4 font-semibold whitespace-nowrap sm:py-3 sm:pl-5">I&rsquo;m at the gate</p>
+          <p className="sb-bubble mr-14 rounded-full bg-ink px-4 py-1.5 text-[0.85em] whitespace-nowrap text-surface tabular-nums">0300 ••• ••••</p>
         </div>
       </Tile>
 
       <Tile ground="surface" step={5} big={2.1} title="Report anytime" line="Every trip has a report button." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-3">
-        <span className="absolute top-5 -right-10 rounded-full bg-ink py-2.5 pr-14 pl-5 text-[15px] font-semibold whitespace-nowrap text-surface sm:py-3 sm:pr-16 sm:pl-6 sm:text-[22px]">Report</span>
+        <span className="sb-report absolute top-5 -right-10 rounded-full bg-ink py-2.5 pr-14 pl-5 text-[15px] font-semibold whitespace-nowrap text-surface sm:py-3 sm:pr-16 sm:pl-6 sm:text-[22px]">Report</span>
       </Tile>
 
       <Tile ground="panel" step={6} big={1.9} title="SOS on every trip" line="Sends your trusted contact your live location by SMS." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-5">
-        <span className="absolute -top-6 -right-6 grid h-[100px] w-[100px] place-items-center rounded-full bg-sos font-display text-[22px] font-extrabold text-on-sos sm:-top-8 sm:-right-8 sm:h-[150px] sm:w-[150px] sm:text-[30px]">
+        <span className="sb-sos absolute -top-6 -right-6 grid h-[100px] w-[100px] place-items-center rounded-full bg-sos font-display text-[22px] font-extrabold text-on-sos sm:-top-8 sm:-right-8 sm:h-[150px] sm:w-[150px] sm:text-[30px]">
           <span className="-translate-x-2 translate-y-1.5 sm:-translate-x-2.5 sm:translate-y-2">SOS</span>
         </span>
       </Tile>

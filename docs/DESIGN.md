@@ -170,8 +170,7 @@ One loud moment, everything else quiet.
   video (see `docs/ARCHITECTURE.md`). One ride as a rider (Find a ride to Settle trip), then the same trip as its driver
   (Offer a ride to Confirm payments): 13 screens rebuilt from the app mock in its order and used nowhere else on the site,
   2s each with a 200ms push between them. The map holds still, each screen's content rises in, a finger taps what's
-  next, routes draw and the car drives them. Nothing sits under the phone. It plays only while on screen and pauses
-  while pointed at. There's no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2.
+  next, routes draw and the car drives them. Nothing sits under the phone. It plays only while on screen. There's no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
   car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
@@ -189,9 +188,10 @@ One loud moment, everything else quiet.
   car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
   observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
 - Safety deck (home): the safety board becomes a deck of cards that moves on by itself, looping: one card large in the
-  middle, its neighbours fanned out behind it in 3D, a new card every 3.5s with a 0.8s glide. Each card acts its feature
-  out once as it first arrives: the four driver checks go from pending to trust green one by one, the women-only switch
-  slides on, the five stars pop in, "Sharing live" sends out one ring. It waits while off screen or holding keyboard
+  middle, its neighbours fanned out behind it in 3D, a new card every 2.4s with a 0.6s springy glide. Every card acts its
+  feature out each time it arrives: the four driver checks go from pending to trust green one by one, the women-only
+  switch slides on, the five stars pop in, "Sharing live" sends out one ring, the chat bubbles pop in, Report gets
+  pressed, SOS pulses. Its picture slides in, its words rise, and it floats gently while it's being read. It waits while off screen or holding keyboard
   focus. It doesn't wait for the mouse: the section nearly fills the screen, so that would stop it on most visits. There's
   no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2. With reduced motion it stays the board.
 - App tour (How it works hero, wide screens): one phone steps through the app's screens every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
