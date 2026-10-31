@@ -1,0 +1,152 @@
+/* The safety section as a deck of cards (views/home/components/SafetyDeck.tsx). This only applies with JavaScript and without
+   reduced motion: otherwise it's the board as laid out in SafetyBoard. Positions here are where a card rests. The script
+   sets where each one goes, and these transitions carry it there. */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-deck]:not(.deck-off) {
+    --deck-w: min(520px, 42vw);
+    --deck-h: min(480px, 66svh);
+    --deck-x: 67%;
+    --deck-y: 50%;
+    height: calc(var(--deck-h) + 11rem);
+    overflow: hidden;
+  }
+  .js section:has([data-deck]:not(.deck-off)) {
+    padding-block: 0;
+  }
+  .js [data-deck]:not(.deck-off) > .wrap,
+  .js [data-deck]:not(.deck-off) [data-deck-board] {
+    height: 100%;
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-board] {
+    display: block;
+    position: relative;
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-head] {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 29%;
+    translate: 0 -50%;
+    gap: 1.5rem;
+    padding: 0;
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-card] {
+    position: absolute;
+    top: var(--deck-y);
+    left: var(--deck-x);
+    width: var(--deck-w);
+    height: var(--deck-h);
+    margin: calc(var(--deck-h) / -2) 0 0 calc(var(--deck-w) / -2);
+    padding: 1.75rem;
+    box-shadow: 0 30px 60px -24px color-mix(in srgb, black 55%, transparent);
+    /* A little past where it's going, then back: a spring, not a slide. */
+    transition:
+      transform 0.6s cubic-bezier(0.3, 1.32, 0.5, 1),
+      opacity 0.35s ease,
+      visibility 0.35s;
+    will-change: transform;
+  }
+
+  /* What a card does each time it arrives at the front. It floats while it's read, and is back in place when it leaves. */
+  .js [data-deck]:not(.deck-off) .deck-front {
+    animation: deck-float 1.8s ease-in-out 0.5s both;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front [data-deck-picture] {
+    animation: deck-picture-in 0.55s cubic-bezier(0.3, 1.3, 0.5, 1);
+  }
+  .js [data-deck]:not(.deck-off) .deck-front h3 {
+    animation: deck-rise 0.45s var(--ease-out-soft) 0.14s both;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front h3 + p {
+    animation: deck-rise 0.45s var(--ease-out-soft) 0.2s both;
+  }
+  /* The cards with no animation of their own in the board. */
+  .js [data-deck]:not(.deck-off) [data-deck-card]:not(.is-playing) .sb-bubble {
+    opacity: 0;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front .sb-bubble {
+    transform-origin: top right;
+    animation: pop-in 0.4s cubic-bezier(0.3, 1.5, 0.5, 1) 0.35s both;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front .sb-bubble + .sb-bubble {
+    animation-delay: 0.85s;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front .sb-report {
+    animation: deck-press 0.5s ease 0.85s both;
+  }
+  .js [data-deck]:not(.deck-off) .deck-front .sb-sos::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 4px solid var(--color-sos);
+    animation: sb-ring 0.95s var(--ease-out-soft) 0.45s 2 both;
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-picture] {
+    transform-origin: top right;
+    scale: var(--big, 1);
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-card] h3 {
+    font-size: 26px;
+  }
+  .js [data-deck]:not(.deck-off) [data-deck-card] h3 + p {
+    font-size: 18px;
+  }
+
+  /* Phones and small tablets: the heading on top, the deck under it. */
+  @media (width < 64rem) {
+    .js [data-deck]:not(.deck-off) {
+      --deck-w: min(86vw, 460px);
+      --deck-h: 420px;
+      --deck-x: 50%;
+      --deck-y: calc(236px + var(--deck-h) / 2);
+      height: calc(var(--deck-h) + 292px);
+    }
+    .js [data-deck]:not(.deck-off) [data-deck-head] {
+      top: 56px;
+      width: 100%;
+      translate: none;
+      gap: 0.5rem;
+    }
+    .js [data-deck]:not(.deck-off) [data-deck-card] {
+      padding: 1.25rem;
+    }
+    .js [data-deck]:not(.deck-off) [data-deck-picture] {
+      scale: var(--big-phone, 1);
+    }
+    .js [data-deck]:not(.deck-off) [data-deck-card] h3 {
+      font-size: 20px;
+    }
+    .js [data-deck]:not(.deck-off) [data-deck-card] h3 + p {
+      font-size: 15px;
+    }
+  }
+}
+@keyframes deck-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+@keyframes deck-picture-in {
+  from {
+    translate: 36px 0;
+  }
+}
+@keyframes deck-rise {
+  from {
+    translate: 0 14px;
+  }
+}
+@keyframes deck-press {
+  0%,
+  100% {
+    scale: 1;
+  }
+  45% {
+    scale: 0.9;
+  }
+}

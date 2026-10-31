@@ -3,8 +3,8 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-// A silent, looping motion graphic from public/motion (rendered by `npm run motion`). It plays while it's on screen and
-// not pointed at. Reduced motion or no JavaScript: its poster stays, and nothing moves.
+// A silent, looping motion graphic from public/motion (rendered by `npm run motion`). It plays while it's on screen.
+// Reduced motion or no JavaScript: its poster stays, and nothing moves.
 export function MotionVideo({ name, className = "" }: { name: string; className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
@@ -33,10 +33,6 @@ export function MotionVideo({ name, className = "" }: { name: string; className?
       preload="metadata"
       poster={`/motion/${name}-poster.jpg`}
       aria-hidden="true"
-      onMouseEnter={(e) => e.currentTarget.pause()}
-      onMouseLeave={(e) => {
-        if (!reduced) e.currentTarget.play().catch(() => {});
-      }}
       className={className}
     >
       <source src={`/motion/${name}.webm`} type="video/webm" />
