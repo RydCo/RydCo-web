@@ -3,9 +3,9 @@
 import { useEffect, useRef, type ReactNode } from "react";
 
 // Turns the safety board into a deck of cards that moves on by itself: one card large in the middle, its neighbours fanned
-// out behind it, looping. Each card's own animation plays as it first arrives. It waits while it's off screen, pointed at,
-// or has keyboard focus. The cards are the board's own, so with reduced motion the section simply stays the board
-// (styles/motion/safety-deck.css).
+// out behind it, looping. Each card's own animation plays as it first arrives. It waits while it's off screen or has
+// keyboard focus, but not for the mouse: the section nearly fills the screen, so the mouse is almost always over it. The
+// cards are the board's own, so with reduced motion the section simply stays the board (styles/motion/safety-deck.css).
 
 const hold = 3500;
 
@@ -81,11 +81,10 @@ export function SafetyDeck({ children }: { children: ReactNode }) {
 
     let timer = 0;
     let onScreen = false;
-    let pointedAt = false;
     let focused = false;
     const keepTime = () => {
       window.clearInterval(timer);
-      if (!onScreen || pointedAt || focused) return;
+      if (!onScreen || focused) return;
       timer = window.setInterval(() => {
         index = (index + 1) % cards.length;
         arrange();
@@ -101,17 +100,6 @@ export function SafetyDeck({ children }: { children: ReactNode }) {
       },
       { threshold: 0.4 },
     );
-    // Touch screens report a pointer entering on a tap, and never leaving.
-    const enter = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-      pointedAt = true;
-      keepTime();
-    };
-    const leave = (e: PointerEvent) => {
-      if (e.pointerType !== "mouse") return;
-      pointedAt = false;
-      keepTime();
-    };
     const focusIn = () => {
       focused = true;
       keepTime();
@@ -123,16 +111,12 @@ export function SafetyDeck({ children }: { children: ReactNode }) {
 
     measure();
     watch.observe(root);
-    root.addEventListener("pointerenter", enter);
-    root.addEventListener("pointerleave", leave);
     root.addEventListener("focusin", focusIn);
     root.addEventListener("focusout", focusOut);
     window.addEventListener("resize", measure);
     return () => {
       window.clearInterval(timer);
       watch.disconnect();
-      root.removeEventListener("pointerenter", enter);
-      root.removeEventListener("pointerleave", leave);
       root.removeEventListener("focusin", focusIn);
       root.removeEventListener("focusout", focusOut);
       window.removeEventListener("resize", measure);

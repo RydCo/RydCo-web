@@ -191,8 +191,9 @@ One loud moment, everything else quiet.
 - Safety deck (home): the safety board becomes a deck of cards that moves on by itself, looping: one card large in the
   middle, its neighbours fanned out behind it in 3D, a new card every 3.5s with a 0.8s glide. Each card acts its feature
   out once as it first arrives: the four driver checks go from pending to trust green one by one, the women-only switch
-  slides on, the five stars pop in, "Sharing live" sends out one ring. It waits while off screen, pointed at or holding
-  keyboard focus. There's no pause button, at the owner's request. With reduced motion it stays the board.
+  slides on, the five stars pop in, "Sharing live" sends out one ring. It waits while off screen or holding keyboard
+  focus. It doesn't wait for the mouse: the section nearly fills the screen, so that would stop it on most visits. There's
+  no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2. With reduced motion it stays the board.
 - App tour (How it works hero, wide screens): one phone steps through the app's screens every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
   with its pause button (WCAG 2.2.2); dots jump to a screen.
 - How it works rail: tied to scrolling (scroll-driven CSS). The line fills down to the middle of the screen and each
