@@ -188,9 +188,12 @@ One loud moment, everything else quiet.
   once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
   car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
   observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
-- Safety board (home): each tile marked `play` acts its feature out once when half of it is on screen (same
-  `data-play` observer): the four driver checks go from pending to trust green one by one, the women-only switch
-  slides on, the five stars pop in, "Sharing live" sends out one ring.
+- Safety deck (home): the safety board becomes a pinned deck that scrolling moves through, tied to the scroll: one card
+  large in the middle, its neighbours fanned out behind it in 3D. Between cards a chrome star (a small WebGL shader in the
+  theme's colours, with a dotted rim and a white sparkle) grows over everything, the cards swap behind it, and a
+  star-shaped hole opens to show the next. Each card then acts its feature out once: the four driver checks go from
+  pending to trust green one by one, the women-only switch slides on, the five stars pop in, "Sharing live" sends out one
+  ring. With reduced motion, or without WebGL2, it stays the board.
 - App tour (How it works hero, wide screens): one phone steps through the app's screens every 3.6s with a 500ms slide. The active dot fills as a progress bar. Pauses on hover, off screen and
   with its pause button (WCAG 2.2.2); dots jump to a screen.
 - How it works rail: tied to scrolling (scroll-driven CSS). The line fills down to the middle of the screen and each
