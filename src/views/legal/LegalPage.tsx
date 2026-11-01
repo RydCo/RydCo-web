@@ -3,7 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 
 export type LegalSection = { id: string; title: string; body: ReactNode };
 
-// Placeholder structure for the legal pages. Everything here is a draft until a lawyer has reviewed it.
+// The legal pages. Everything here is a draft until a lawyer has reviewed it.
 export function LegalPage({ title, lead, sections }: { title: string; lead: string; sections: LegalSection[] }) {
   return (
     <>
@@ -14,9 +14,10 @@ export function LegalPage({ title, lead, sections }: { title: string; lead: stri
             <div className="on-ink rounded-surface field-ink p-7 text-surface lg:sticky lg:top-32">
               <p className="font-display text-[22px] leading-tight font-bold">Draft, to be reviewed by a lawyer</p>
               <p className="mt-3 text-[16px]">
-                This page shows the structure we plan to use. It is not final and is not legal advice. Items marked [FILL] still need a decision.
+                A qualified lawyer in Pakistan hasn&rsquo;t reviewed this yet. It is not final and is not legal advice, and the time limits in it may change before the app
+                opens.
               </p>
-              <p className="mt-4 text-[16px]">Last updated: [FILL date]</p>
+              <p className="mt-4 text-[16px]">Draft 1, last updated 1 November 2026</p>
             </div>
             <nav aria-label="On this page" className="mt-8 hidden lg:block">
               <ol className="grid gap-1">
