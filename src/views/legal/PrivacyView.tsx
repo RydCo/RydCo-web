@@ -265,8 +265,8 @@ export function PrivacyView() {
           body: (
             <>
               <p>
-                When you join the waitlist, sign up to drive or send a message here, we receive what you type: your name, mobile number, email if you give one, the
-                areas you choose, and your message.
+                When you join the waitlist, sign up to drive or send a message here, we receive what you type: your name, mobile number, email, the areas you
+                choose, and your message.
               </p>
               <p>
                 It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to us. We use it only to reply to you, to tell you when RydCo opens on

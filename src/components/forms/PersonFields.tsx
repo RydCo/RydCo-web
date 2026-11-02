@@ -32,13 +32,14 @@ export function EmailField({ id, value, onChange, error, hint }: Props & { hint?
       name="email"
       type="email"
       inputMode="email"
-      label="Email (optional)"
+      label="Email"
       autoComplete="email"
       placeholder="name@example.com"
       hint={hint}
       value={value}
       onChange={onChange}
       error={error}
+      required
     />
   );
 }

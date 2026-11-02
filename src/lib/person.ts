@@ -5,8 +5,9 @@ export const nameError = (name: string) => (name.trim() ? undefined : "Add your 
 
 export const phoneError = (phone: string) => (normalizePhone(phone) ? undefined : "Enter a Pakistani mobile number, like 0300-1234567.");
 
-// Email is optional, so an empty one is fine. A filled-in one must look like an address.
-export const emailError = (email: string) =>
-  !email.trim() || /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$/.test(email.trim()) ? undefined : "Enter an email like name@example.com, or leave it empty.";
+export const emailError = (email: string) => {
+  if (!email.trim()) return "Add your email.";
+  return /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$/.test(email.trim()) ? undefined : "Enter an email like name@example.com.";
+};
 
 export const firstName = (name: string) => name.trim().split(" ")[0];

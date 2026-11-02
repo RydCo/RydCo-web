@@ -48,8 +48,7 @@ export function WaitlistForm() {
     return (
       <Sent title={`You're on the list, ${firstName(name)}.`}>
         <p>
-          We&rsquo;ll message you on {normalizePhone(phone)}
-          {email.trim() ? ` and email ${email.trim()}` : ""} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
+          We&rsquo;ll message you on {normalizePhone(phone)} and email {email.trim()} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
         </p>
       </Sent>
     );
