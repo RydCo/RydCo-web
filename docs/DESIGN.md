@@ -192,9 +192,9 @@ One loud moment, everything else quiet.
   readable throughout), and each chip ("2 seats left", "Rs 180", "Licence checked") falls onto the page as the glint
   reaches it: towards you, so it never crosses the line above. It squashes as it lands and sends out one ring. About 2s
   in all. Below, the example trip card stands up out of the page in 3D (1.2s spring), its route draws, the price drops
-  in the same way, the four checks turn green one by one and the note about a second rider is marked. The three key
-  phrases beside it are marked one after another with a tan highlighter band behind the lower half of the words (not a
-  line under them, which would read as a link), and the band stays as part of the finished picture. If the hero launch
+  in the same way and the four checks turn green one by one. Beside it, the glint passes through the three key phrases
+  one after another ("a share of the fuel, not a fare", "everyone's share goes down", "never handles your money"), in
+  the deeper orange since body text needs more contrast, and leaves nothing marked. If the hero launch
   lands the page here, it all waits until the night starts lifting. Pure CSS started by the observer (`data-play`); with
   reduced motion or without JavaScript it's all simply there.
 - Safety deck (home): the safety board becomes a deck of cards that moves on by itself, looping: one card large in the

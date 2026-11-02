@@ -56,11 +56,7 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
           {trip.seatsLeft} {trip.seatsLeft === 1 ? "seat" : "seats"} left
         </p>
       </div>
-      {trip.shareNote && (
-        <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>
-          <span data-trip-note>{trip.shareNote}</span>
-        </p>
-      )}
+      {trip.shareNote && <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>{trip.shareNote}</p>}
 
       {!compact && (
         <div data-trip-badges className="mt-6 flex flex-wrap gap-2">

@@ -5,9 +5,10 @@ import { exampleTrip, TripCard } from "@/features/trips/TripCard";
 import { playAt, reveal } from "@/lib/reveal";
 
 // Each part acts itself out once, when half of it is on screen (styles/motion/what-it-is.css). The heading's words drop
-// into place, an orange glint reads along the sentence, and each chip falls onto the page as the glint reaches it, with a ring
-// as it lands. The example trip stands up in 3D, its route draws, the price drops in and its checks turn green, and the
-// key phrases beside it are marked one by one. With reduced motion, or before the page's script runs, it's all just there.
+// into place, an orange glint reads along the sentence, and each chip falls onto the page as the glint reaches it, with a
+// ring as it lands. The example trip stands up in 3D, its route draws, the price drops in and its checks turn green, and
+// the glint passes through the key phrases beside it one after another. With reduced motion, or before the page's script
+// runs, it's all just there.
 
 const heading = "A seat on your way to work.";
 
@@ -35,6 +36,8 @@ const sentence: Part[] = [
 const readFrom = 420;
 const perWord = 38;
 const fallLead = 320;
+// Beside the card, the glint takes each key phrase in turn, a little slower since the phrases are short.
+const phraseWord = 70;
 
 export function WhatItIsSection() {
   return (
@@ -65,14 +68,14 @@ export function WhatItIsSection() {
           <h3 className="t-h2">What does a seat cost?</h3>
           <div className="mt-6 grid gap-4">
             <p>
-              You pay <mark className="wi-mark" style={playAt(250)}>a share of the fuel, not a fare</mark>. RydCo works it out from the distance, the car and
-              the fuel price, and locks it when the driver publishes the ride.
+              You pay <Glint from={250}>a share of the fuel, not a fare</Glint>. RydCo works it out from the distance, the car and the fuel price, and
+              locks it when the driver publishes the ride.
             </p>
             <p>
-              When another rider joins, <mark className="wi-mark" style={playAt(800)}>everyone&rsquo;s share goes down</mark>.
+              When another rider joins, <Glint from={900}>everyone’s share goes down</Glint>.
             </p>
             <p>
-              Pay the driver directly by cash, JazzCash, NayaPay or bank transfer. RydCo <mark className="wi-mark" style={playAt(1350)}>never handles your money</mark>.
+              Pay the driver directly by cash, JazzCash, NayaPay or bank transfer. RydCo <Glint from={1550}>never handles your money</Glint>.
             </p>
           </div>
         </div>
@@ -105,6 +108,23 @@ function Sentence() {
       </Chip>,
     ];
   });
+}
+
+// A key phrase for the glint to pass through, word by word. Body text is small, so it glints in the deeper orange.
+function Glint({ children, from }: { children: string; from: number }) {
+  return (
+    <span style={{ "--glint": "var(--color-accent-deep)" } as CSSProperties}>
+      {children.split(/(s+)/).map((token, i) =>
+        token.trim() ? (
+          <span key={i} className="wi-word" style={playAt(from + (i / 2) * phraseWord)}>
+            {token}
+          </span>
+        ) : (
+          token
+        ),
+      )}
+    </span>
+  );
 }
 
 function Chip({ children, className = "", style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
