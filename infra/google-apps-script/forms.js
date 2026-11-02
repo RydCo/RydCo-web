@@ -7,15 +7,15 @@
  *   3. Deploy → New deployment → type "Web app". Execute as: Me. Who has access: Anyone. Deploy, and allow access.
  *   4. Copy the Web app URL (ends in /exec), put it in formEndpoint in src/config/site.ts, then redeploy.
  *
- * Each form gets its own tab (waitlist, driver, contact), created on the first submission.
+ * Each form gets its own tab (waitlist, contact), created on the first submission. Drivers sign up on the waitlist too.
+ * The old "driver" tab, from when drivers had a form of their own, is left as it was.
  * After editing this file later, use Deploy → Manage deployments → Edit → New version, so the URL stays the same.
  */
 
 const NOTIFY = "rydcoapp@gmail.com";
 
 const FORMS = {
-  waitlist: { title: "Waitlist", fields: ["name", "phone", "email", "role", "from", "to", "covered"] },
-  driver: { title: "Driver sign-up", fields: ["name", "phone", "car", "from", "to", "leave"] },
+  waitlist: { title: "Waitlist", fields: ["name", "phone", "email", "role", "from", "to", "covered", "car", "leave"] },
   contact: { title: "Message", fields: ["topic", "name", "reply", "organization", "message"] },
 };
 
@@ -56,7 +56,8 @@ function doPost(e) {
   const reply = [p.reply, p.email].find((v) => /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$/.test(v || ""));
   MailApp.sendEmail({
     to: NOTIFY,
-    subject: `RydCo ${form.title}: ${clean(p.name) || "new"}`,
+    // The role in the subject ("Waitlist (Drive)"), so drivers to call stand out in the inbox.
+    subject: `RydCo ${form.title}${p.role ? ` (${clean(p.role)})` : ""}: ${clean(p.name) || "new"}`,
     body: `${lines}\n\nFrom ${clean(p.page) || "the website"}`,
     replyTo: reply,
   });

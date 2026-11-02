@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
 import { driverCta } from "@/config/cta";
 import { site } from "@/config/site";
-import { DriverForm } from "@/features/driver-signup/DriverForm";
+import { WaitlistForm } from "@/features/waitlist/WaitlistForm";
 import { reveal } from "@/lib/reveal";
 
 export function SignupSection() {
@@ -29,7 +29,7 @@ export function SignupSection() {
             </Button>
           ) : (
             <div className="on-light rounded-surface bg-panel p-6 text-ink md:p-8">
-              <DriverForm />
+              <WaitlistForm startAs="drive" />
             </div>
           )}
         </div>
