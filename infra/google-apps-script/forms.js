@@ -14,7 +14,7 @@
 const NOTIFY = "rydcoapp@gmail.com";
 
 const FORMS = {
-  waitlist: { title: "Waitlist", fields: ["name", "phone", "role", "from", "to", "covered"] },
+  waitlist: { title: "Waitlist", fields: ["name", "phone", "email", "role", "from", "to", "covered"] },
   driver: { title: "Driver sign-up", fields: ["name", "phone", "car", "from", "to", "leave"] },
   contact: { title: "Message", fields: ["topic", "name", "reply", "organization", "message"] },
 };
@@ -36,17 +36,24 @@ function doPost(e) {
   try {
     const book = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = book.getSheetByName(kind) || book.insertSheet(kind);
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Received", ...form.fields, "Page"]);
+    // Rows are written by column name, so a field added later (like the waitlist's email) gets a new column at the end
+    // and the rows already in the sheet stay in line.
+    const header = sheet.getLastRow() === 0 ? [] : sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0].map(String);
+    const missing = ["Received", ...form.fields, "Page"].filter((name) => !header.includes(name));
+    if (missing.length) {
+      sheet.getRange(1, header.length + 1, 1, missing.length).setValues([missing]);
+      header.push(...missing);
       sheet.setFrozenRows(1);
     }
-    sheet.appendRow([new Date(), ...values, clean(p.page)]);
+    const row = { Received: new Date(), Page: clean(p.page) };
+    form.fields.forEach((f, i) => (row[f] = values[i]));
+    sheet.appendRow(header.map((name) => (name in row ? row[name] : "")));
   } finally {
     lock.releaseLock();
   }
 
   const lines = form.fields.map((f, i) => `${f}: ${values[i] || "-"}`).join("\n");
-  const reply = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.reply || "") ? p.reply : undefined;
+  const reply = [p.reply, p.email].find((v) => /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$/.test(v || ""));
   MailApp.sendEmail({
     to: NOTIFY,
     subject: `RydCo ${form.title}: ${clean(p.name) || "new"}`,
