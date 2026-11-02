@@ -265,12 +265,13 @@ export function PrivacyView() {
           body: (
             <>
               <p>
-                When you join the waitlist, sign up to drive or send a message here, we receive what you type: your name, mobile number or email, the areas you
-                choose, and your message.
+                When you join the waitlist, sign up to drive or send a message here, we receive what you type: your name, mobile number, email if you give one, the
+                areas you choose, and your message.
               </p>
               <p>
-                It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to us. We use it only to reply to you and to tell you when RydCo opens
-                on your route. Ask us at any time to delete it. Otherwise we delete it 12 months after our last contact with you.
+                It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to us. We use it only to reply to you, to tell you when RydCo opens on
+                your route, and to send you a link to sign up. If you don&rsquo;t want these messages, reply to tell us and we&rsquo;ll stop. Ask us at any time to
+                delete your details. Otherwise we delete them 12 months after our last contact with you.
               </p>
               <p>This website doesn&rsquo;t use advertising or analytics cookies. Our host keeps basic technical logs so the site can run securely.</p>
             </>

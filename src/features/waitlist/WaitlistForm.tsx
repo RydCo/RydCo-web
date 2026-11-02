@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import { Choice } from "@/components/forms/Choice";
 import { FormActions } from "@/components/forms/FormActions";
 import { Honeypot } from "@/components/forms/Honeypot";
-import { NameField, PhoneField } from "@/components/forms/PersonFields";
+import { EmailField, NameField, PhoneField } from "@/components/forms/PersonFields";
 import { Sent } from "@/components/forms/Sent";
 import { Button } from "@/components/ui/Button";
 import { riderCta } from "@/config/cta";
@@ -14,10 +14,10 @@ import { setCommute, useCommute } from "@/features/commute/commute-store";
 import { coverage } from "@/features/commute/coverage";
 import { CoverageAnswer } from "@/features/commute/CoverageAnswer";
 import { useSendForm } from "@/hooks/use-send-form";
-import { firstName, nameError, phoneError } from "@/lib/person";
+import { emailError, firstName, nameError, phoneError } from "@/lib/person";
 import { normalizePhone } from "@/lib/phone";
 
-const labels = { name: "Name", phone: "Phone", role: "I want to", from: "I start in", to: "I'm headed to" };
+const labels = { name: "Name", phone: "Phone", email: "Email", role: "I want to", from: "I start in", to: "I'm headed to" };
 const roles = { ride: "Ride", drive: "Drive", both: "Ride and drive" } as const;
 
 // The app's "Check your commute?" step joined to the waitlist sign-up. The route is shared with the hero's
@@ -27,9 +27,10 @@ export function WaitlistForm() {
   const { from, to } = useCommute();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState<keyof typeof roles>("ride");
   const [trap, setTrap] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; email?: string }>({});
   const { state, send } = useSendForm("waitlist", labels);
 
   const { picked, covered } = coverage(from, to);
@@ -37,17 +38,18 @@ export function WaitlistForm() {
 
   function submit(e: { preventDefault(): void }) {
     e.preventDefault();
-    const next = { name: nameError(name), phone: phoneError(phone) };
+    const next = { name: nameError(name), phone: phoneError(phone), email: emailError(email) };
     setErrors(next);
-    if (next.name || next.phone) return;
-    send({ name: name.trim(), phone: normalizePhone(phone)!, role: roles[role], from, to, covered: picked ? String(covered) : "", website: trap });
+    if (next.name || next.phone || next.email) return;
+    send({ name: name.trim(), phone: normalizePhone(phone)!, email: email.trim(), role: roles[role], from, to, covered: picked ? String(covered) : "", website: trap });
   }
 
   if (state === "sent") {
     return (
       <Sent title={`You're on the list, ${firstName(name)}.`}>
         <p>
-          We&rsquo;ll message you on {normalizePhone(phone)} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
+          We&rsquo;ll message you on {normalizePhone(phone)}
+          {email.trim() ? ` and email ${email.trim()}` : ""} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
         </p>
       </Sent>
     );
@@ -75,6 +77,9 @@ export function WaitlistForm() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <NameField id={id} value={name} onChange={setName} error={errors.name} />
             <PhoneField id={id} value={phone} onChange={setPhone} error={errors.phone} />
+            <div className="sm:col-span-2">
+              <EmailField id={id} value={email} onChange={setEmail} error={errors.email} hint="We'll email your sign-up link when the app opens." />
+            </div>
           </div>
           <div className="mt-5">
             <Choice
@@ -90,7 +95,7 @@ export function WaitlistForm() {
             />
           </div>
           <Honeypot value={trap} onChange={setTrap} />
-          <FormActions state={state} label="Join the waitlist" note="We only use your number to tell you about RydCo." />
+          <FormActions state={state} label="Join the waitlist" note="We only use your details to tell you about RydCo." />
         </>
       )}
     </form>
