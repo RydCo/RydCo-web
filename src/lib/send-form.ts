@@ -1,15 +1,14 @@
 import { site } from "@/config/site";
 import { mailto } from "@/lib/mailto";
 
-// The site's forms (waitlist, driver sign-up, contact) post to a Google Apps Script web app that adds a row
-// to RydCo's Google Sheet and emails rydcoapp@gmail.com. See infra/google-apps-script/forms.js.
+// The site's forms (the waitlist, for riders and drivers, and contact) post to a Google Apps Script web app that adds
+// a row to RydCo's Google Sheet and emails rydcoapp@gmail.com. See infra/google-apps-script/forms.js.
 // If site.formEndpoint is null, submitting opens an email with the same details instead.
 
-export type FormKind = "waitlist" | "driver" | "contact";
+export type FormKind = "waitlist" | "contact";
 
 const subjects: Record<FormKind, string> = {
   waitlist: "Join the RydCo waitlist",
-  driver: "I want to drive with RydCo",
   contact: "A message from the RydCo website",
 };
 

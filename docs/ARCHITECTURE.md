@@ -20,7 +20,7 @@ rydco-web/
 │   │   ├── drivers/  safety/  organizations/  how-it-works/  contact/  legal/
 │   ├── features/            What the site does, used on more than one page
 │   │   ├── commute/             Route check, coverage answer, the shared chosen route
-│   │   ├── waitlist/  driver-signup/  contact/    The three forms
+│   │   ├── waitlist/  contact/  The two forms: sign-up (riders and drivers) and contact
 │   │   ├── app-preview/         Phone frame, app tour, the rebuilt app screens, motion graphics scenes
 │   │   └── trips/               The trip card
 │   ├── components/          Shared parts that know nothing about RydCo's features
