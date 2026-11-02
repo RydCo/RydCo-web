@@ -6,6 +6,10 @@ move, see [DESIGN.md](DESIGN.md).
 The site is a static Next.js export (`output: "export"`): no server, no database. Pages are built ahead of time, and
 the forms post to a Google Apps Script.
 
+`vercel.json` sets the security headers on every page. The Content-Security-Policy only lets the site load its own
+files and send forms to Google Apps Script (`script.google.com`, which redirects to `script.googleusercontent.com`).
+Adding anything from another site (a font, analytics, an embed) means adding its address there too, or it is blocked.
+
 ## Layout
 
 ```text
