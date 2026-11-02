@@ -21,5 +21,5 @@ export const site = {
   // The Google Apps Script web app that stores form submissions (setup steps: infra/google-apps-script/forms.js).
   // NEXT_PUBLIC_FORM_ENDPOINT on the host overrides it. Set this to null and forms open a pre-filled email instead.
   formEndpoint: (process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
-    "https://script.google.com/macros/s/AKfycby8TSQMwPv6Xc9nktMRtbVF-0TUOosnVbNQN4hbgOxIfn8ReEClj5k_NqaaZ2O5sCc/exec") as string | null,
+    "https://script.google.com/macros/s/AKfycby_3pE0DJs0HgZqnKJDvFVrKbcLF7DrZVxq3TXLnsqkqYjjH2bnyQGtQvCxLAPTwEM/exec") as string | null,
 };
