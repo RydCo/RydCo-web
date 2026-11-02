@@ -1,6 +1,7 @@
 import { Fragment, type CSSProperties, type ReactNode } from "react";
 import { Tick } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
+import { Tilt } from "@/components/ui/Tilt";
 import { exampleTrip, TripCard } from "@/features/trips/TripCard";
 import { playAt, reveal } from "@/lib/reveal";
 
@@ -9,15 +10,19 @@ import { playAt, reveal } from "@/lib/reveal";
 // ring as it lands. The example trip stands up in 3D, its route draws, the price drops in and its checks turn green, and
 // the glint passes through the key phrases beside it one after another. With reduced motion, or before the page's script
 // runs, it's all just there.
+//
+// With a mouse, each chip springs up when pointed at and points at its part of the card: "Rs 180" shows the card's price
+// once a second rider joins, "2 seats left" its seats, "Licence checked" its licence check. The card tilts towards the
+// mouse and lifts off the page, its checks rising above it.
 
 const heading = "A seat on your way to work.";
 
-type Part = string | { chip: ReactNode; className: string; ring: string };
+type Part = string | { chip: ReactNode; className: string; ring: string; points: "seats" | "price" | "licence" };
 const sentence: Part[] = [
   "Someone near you already drives your route every morning. RydCo gives you their spare seat ",
-  { chip: "2 seats left", className: "bg-panel", ring: "var(--color-accent)" },
+  { chip: "2 seats left", className: "bg-panel", ring: "var(--color-accent)", points: "seats" },
   ", a fair share of the fuel cost ",
-  { chip: "Rs 180", className: "bg-ink text-surface", ring: "var(--color-ink)" },
+  { chip: "Rs 180", className: "bg-ink text-surface", ring: "var(--color-ink)", points: "price" },
   ", and a driver we have checked ",
   {
     chip: (
@@ -27,6 +32,7 @@ const sentence: Part[] = [
     ),
     className: "gap-[0.35em] bg-trust text-on-trust",
     ring: "var(--color-trust)",
+    points: "licence",
   },
   ".",
 ];
@@ -61,7 +67,9 @@ export function WhatItIsSection() {
       <div className="mt-20 grid items-center gap-12 lg:mt-32 lg:grid-cols-12 lg:gap-10">
         <div className="wi-stage lg:col-span-6" data-play>
           <div className="wi-card">
-            <TripCard trip={exampleTrip} label="Example" />
+            <Tilt className="rounded-surface">
+              <TripCard trip={exampleTrip} label="Example" />
+            </Tilt>
           </div>
         </div>
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(1)} data-play>
@@ -103,7 +111,7 @@ function Sentence() {
     const lands = readFrom + word * perWord;
     word += 2;
     return [
-      <Chip key={i} className={`wi-chip ${part.className}`} style={{ ...playAt(lands - fallLead), "--ring": part.ring } as CSSProperties}>
+      <Chip key={i} className={`wi-chip wi-points-${part.points} ${part.className}`} style={{ ...playAt(lands - fallLead), "--ring": part.ring } as CSSProperties}>
         {part.chip}
       </Chip>,
     ];

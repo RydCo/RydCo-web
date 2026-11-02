@@ -1,0 +1,6 @@
+/* The mouse tilt (components/ui/Tilt.tsx). The script sets --rx and --ry in degrees and --lift from 0 to 1; without it
+   (touch, reduced motion, no JavaScript) they stay unset and this is a plain box. */
+.tilt {
+  transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg)) translateZ(calc(var(--lift, 0) * 18px));
+  transform-style: preserve-3d;
+}

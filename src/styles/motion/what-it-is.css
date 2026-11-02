@@ -16,6 +16,68 @@
 }
 .wi-card {
   transform-origin: 50% 100%;
+  perspective: 1100px;
+}
+
+/* The card sits on the page with a soft shadow. With a mouse it tilts and lifts (components/ui/Tilt.tsx): the shadow
+   grows and moves away from the side that dips, and the checks rise above the card, so they shift against it as it
+   turns. */
+.wi-card .tilt {
+  box-shadow: calc(var(--ry, 0) * -1.4px) calc(14px + var(--rx, 0) * 1.4px + var(--lift, 0) * 18px) calc(34px + var(--lift, 0) * 30px) -16px
+    color-mix(in srgb, var(--color-ink) 30%, transparent);
+}
+.wi-card .tilt [data-ui],
+.wi-card .tilt [data-trip-badges] {
+  transform-style: preserve-3d;
+}
+.wi-card .tilt [data-trip-badges] > * {
+  translate: 0 0 calc(var(--lift, 0) * 26px);
+}
+/* The two-rider price waits just above the one-rider price, for "Rs 180" to call it down (below). */
+.wi-card [data-trip-pooled] {
+  translate: 0 -0.45em;
+}
+
+/* With a mouse, each chip springs up when pointed at, and points at its part of the card. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .wi-chip,
+  .wi-card [data-trip-seats],
+  .wi-card [data-check] {
+    transition:
+      transform 450ms cubic-bezier(0.3, 1.8, 0.5, 1),
+      color 200ms ease,
+      box-shadow 250ms ease;
+  }
+  .wi-chip:hover {
+    transform: scale(1.06);
+  }
+  .wi-card [data-trip-seats] {
+    transform-origin: 100% 50%;
+  }
+  .wi-card [data-trip-solo],
+  .wi-card [data-trip-pooled] {
+    transition:
+      opacity 240ms ease,
+      translate 480ms cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  section:has(.wi-points-price:hover) .wi-card [data-trip-solo] {
+    opacity: 0;
+    translate: 0 0.45em;
+  }
+  section:has(.wi-points-price:hover) .wi-card [data-trip-pooled] {
+    opacity: 1;
+    translate: 0 0;
+  }
+  section:has(.wi-points-seats:hover) .wi-card [data-trip-seats] {
+    transform: scale(1.1);
+    color: var(--color-accent-deep);
+  }
+  section:has(.wi-points-licence:hover) .wi-card [data-check="Licence checked"] {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 0 2px var(--color-screen),
+      0 0 0 4px var(--color-trust);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

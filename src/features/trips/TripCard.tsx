@@ -12,6 +12,8 @@ export type Trip = {
   toTime: string;
   seatsLeft: number;
   share: string;
+  // The share once a second rider joins. A page can show it in place of the share (styles/motion/what-it-is.css).
+  pooledShare?: string;
   shareNote?: string;
   days?: string;
   badges: string[];
@@ -48,11 +50,22 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
       <div className={`flex flex-wrap items-end justify-between gap-x-4 gap-y-2 ${compact ? "mt-3" : "mt-6"}`}>
         <p>
           <span data-trip-share className={`font-display font-extrabold tracking-tight ${compact ? "text-[22px]" : "text-[40px] leading-none"}`}>
-            {trip.share}
+            {trip.pooledShare ? (
+              <span className="inline-grid">
+                <span data-trip-solo className="[grid-area:1/1]">
+                  {trip.share}
+                </span>
+                <span data-trip-pooled aria-hidden="true" className="opacity-0 [grid-area:1/1]">
+                  {trip.pooledShare}
+                </span>
+              </span>
+            ) : (
+              trip.share
+            )}
           </span>
           <span className="text-ink-soft"> per seat</span>
         </p>
-        <p className="font-semibold">
+        <p data-trip-seats className="font-semibold">
           {trip.seatsLeft} {trip.seatsLeft === 1 ? "seat" : "seats"} left
         </p>
       </div>
@@ -61,7 +74,9 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
       {!compact && (
         <div data-trip-badges className="mt-6 flex flex-wrap gap-2">
           {trip.badges.map((b) => (
-            <Badge key={b}>{b}</Badge>
+            <Badge key={b} check={b}>
+              {b}
+            </Badge>
           ))}
           {trip.days && <Badge tone="neutral">{trip.days}</Badge>}
         </div>
@@ -90,6 +105,7 @@ export const exampleTrip: Trip = {
   toTime: "8:20",
   seatsLeft: 2,
   share: "Rs 245",
+  pooledShare: "Rs 180",
   shareNote: "Rs 180 each if a second rider joins.",
   days: "Mon to Fri",
   badges: ["Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"],
