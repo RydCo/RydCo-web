@@ -1,7 +1,8 @@
 import { Badge } from "@/components/ui/Badge";
 import { ExampleTag } from "@/components/ui/ExampleTag";
 
-// The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat.
+// The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat. The data-trip-*
+// attributes let a page animate its parts (styles/motion/what-it-is.css); they change nothing on their own.
 export type Trip = {
   driver: string;
   car: string;
@@ -37,6 +38,7 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
       </div>
 
       <ol
+        data-trip-route
         className={`relative before:absolute before:bg-ink ${compact ? "mt-3 space-y-2 pl-5 before:top-[7px] before:bottom-[7px] before:left-[5px] before:w-[2px]" : "mt-6 space-y-4 pl-7 before:top-[9px] before:bottom-[9px] before:left-[7px] before:w-[3px]"}`}
       >
         <Stop place={trip.from} time={trip.fromTime} marker={`bg-ink ${compact ? "top-[3px] -left-5 h-3 w-3" : "top-[4px] -left-7 h-[17px] w-[17px]"}`} />
@@ -45,17 +47,23 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
 
       <div className={`flex flex-wrap items-end justify-between gap-x-4 gap-y-2 ${compact ? "mt-3" : "mt-6"}`}>
         <p>
-          <span className={`font-display font-extrabold tracking-tight ${compact ? "text-[22px]" : "text-[40px] leading-none"}`}>{trip.share}</span>
+          <span data-trip-share className={`font-display font-extrabold tracking-tight ${compact ? "text-[22px]" : "text-[40px] leading-none"}`}>
+            {trip.share}
+          </span>
           <span className="text-ink-soft"> per seat</span>
         </p>
         <p className="font-semibold">
           {trip.seatsLeft} {trip.seatsLeft === 1 ? "seat" : "seats"} left
         </p>
       </div>
-      {trip.shareNote && <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>{trip.shareNote}</p>}
+      {trip.shareNote && (
+        <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>
+          <span data-trip-note>{trip.shareNote}</span>
+        </p>
+      )}
 
       {!compact && (
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div data-trip-badges className="mt-6 flex flex-wrap gap-2">
           {trip.badges.map((b) => (
             <Badge key={b}>{b}</Badge>
           ))}

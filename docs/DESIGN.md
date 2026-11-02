@@ -187,6 +187,16 @@ One loud moment, everything else quiet.
   once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
   car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
   observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
+- What it is (home): each part plays once, when half of it is on screen. The heading's words drop into place one after
+  another with a small spring. A glint of accent orange reads along the sentence beside it, word by word (the words stay
+  readable throughout), and each chip ("2 seats left", "Rs 180", "Licence checked") falls onto the page as the glint
+  reaches it: towards you, so it never crosses the line above. It squashes as it lands and sends out one ring. About 2s
+  in all. Below, the example trip card stands up out of the page in 3D (1.2s spring), its route draws, the price drops
+  in the same way, the four checks turn green one by one and the note about a second rider is marked. The three key
+  phrases beside it are marked one after another with a tan highlighter band behind the lower half of the words (not a
+  line under them, which would read as a link), and the band stays as part of the finished picture. If the hero launch
+  lands the page here, it all waits until the night starts lifting. Pure CSS started by the observer (`data-play`); with
+  reduced motion or without JavaScript it's all simply there.
 - Safety deck (home): the safety board becomes a deck of cards that moves on by itself, looping: one card large in the
   middle, its neighbours fanned out behind it in 3D, a new card every 2.4s with a 0.6s springy glide. Every card acts its
   feature out each time it arrives: the four driver checks go from pending to trust green one by one, the women-only

@@ -17,6 +17,13 @@
     animation: reveal-fallback 0s 2.5s forwards;
   }
 }
+/* While the home hero's launch covers the page (views/home/components/HeroLaunch.tsx), the section it lands on may
+   already count as seen. Its drawings wait, and start as the night lifts off them. */
+.launching [data-play] *,
+.launching [data-play] *::before,
+.launching [data-play] *::after {
+  animation-play-state: paused !important;
+}
 @keyframes reveal-fallback {
   to {
     opacity: 1;
