@@ -15,6 +15,12 @@ const next = `${JSON.stringify(config, null, 2)}\n`;
 if (next === current) console.log("Security headers up to date.");
 else if (process.argv.includes("--check")) {
   console.error("vercel.json is out of step with src/config/security.mjs. Run `pnpm headers` and commit vercel.json.");
+  // Where they part, quoted, so a failed build log shows what's different (a stray \r included).
+  const have = current.split("\n");
+  const want = next.split("\n");
+  let line = 0;
+  while (line < Math.max(have.length, want.length) && have[line] === want[line]) line++;
+  console.error(`First difference, line ${line + 1}:\n  vercel.json: ${JSON.stringify(have[line])}\n  expected:    ${JSON.stringify(want[line])}`);
   process.exit(1);
 } else {
   writeFileSync(file, next);
