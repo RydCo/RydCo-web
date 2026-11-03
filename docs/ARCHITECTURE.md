@@ -10,9 +10,6 @@ the forms post to a Google Apps Script.
 files and send forms to Google Apps Script (`script.google.com`, which redirects to `script.googleusercontent.com`).
 Adding anything from another site (a font, analytics, an embed) means adding its address there too, or it is blocked.
 
-The one runtime library besides React and Next.js is three.js, for the hero launch's 3D car. It's a dynamic `import()`
-in `views/home/components/HeroLaunch.tsx`, so the build puts it in its own chunk (about 140KB gzipped) that no page asks
-for up front. The home page fetches it only after someone interacts, and only where it can run well.
 
 ## Layout
 
