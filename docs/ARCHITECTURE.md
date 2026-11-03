@@ -38,7 +38,8 @@ rydco-web/
 │   │   ├── layout/              Navbar and its shrinking bar, mobile menu, footer, reveal observer
 │   │   └── brand/               Logo, route line, car, hero animation
 │   ├── config/              Facts that change, each in one place: theme and easing, tagline, site details, pilot areas,
-│   │                        checks, payment methods, trip rules, calls to action, links, navigation
+│   │                        checks, payment methods, trip rules, the worked example's prices, calls to action, links,
+│   │                        navigation
 │   ├── hooks/               Shared React hooks
 │   ├── lib/                 Plain helpers: sending forms, phone numbers, mailto
 │   └── styles/              Generated theme, base styles, utilities, one file per animation

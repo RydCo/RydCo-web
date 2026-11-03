@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/Badge";
 import { ExampleTag } from "@/components/ui/ExampleTag";
 import { allChecks } from "@/config/checks";
+import { seatsLeft, workedExample } from "@/config/worked-example";
 
 // The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat. The data-trip-*
 // attributes let a page animate its parts (styles/motion/what-it-is.css); they change nothing on their own.
@@ -13,9 +14,9 @@ export type Trip = {
   toTime: string;
   seatsLeft: number;
   share: string;
-  // The share once a second rider joins. A page can show it in place of the share (styles/motion/what-it-is.css).
+  // The share once a second rider joins, said under the price. A page can also show it in place of the share
+  // (styles/motion/what-it-is.css).
   pooledShare?: string;
-  shareNote?: string;
   days?: string;
   badges: string[];
 };
@@ -67,10 +68,10 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
           <span className="text-ink-soft"> per seat</span>
         </p>
         <p data-trip-seats className="font-semibold">
-          {trip.seatsLeft} {trip.seatsLeft === 1 ? "seat" : "seats"} left
+          {seatsLeft(trip.seatsLeft)}
         </p>
       </div>
-      {trip.shareNote && <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>{trip.shareNote}</p>}
+      {trip.pooledShare && <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>{trip.pooledShare} each if a second rider joins.</p>}
 
       {!compact && (
         <div data-trip-badges className="mt-6 flex flex-wrap gap-2">
@@ -96,18 +97,17 @@ function Stop({ place, time, marker }: { place: string; time: string; marker: st
   );
 }
 
-// Example numbers from the app's worked example (10 km, Honda City). [FILL] Confirm before launch.
+// The worked example as a trip card.
 export const exampleTrip: Trip = {
   driver: "Hamza",
-  car: "Honda City · Sedan",
+  car: `${workedExample.car} · Sedan`,
   from: "Model Town, Akbar Chowk",
   fromTime: "7:40",
   to: "Arfa Software Technology Park",
   toTime: "8:20",
   seatsLeft: 2,
-  share: "Rs 245",
-  pooledShare: "Rs 180",
-  shareNote: "Rs 180 each if a second rider joins.",
+  share: workedExample.solo,
+  pooledShare: workedExample.pooled,
   days: "Mon to Fri",
   badges: allChecks.map((c) => c.badge),
 };

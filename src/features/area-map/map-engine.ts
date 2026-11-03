@@ -1,9 +1,13 @@
-import maplibregl from "maplibre-gl";
+import { AttributionControl, Map as MapLibreMap, setWorkerUrl } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 // After MapLibre's own styles, so the site's look wins over them.
 import "./area-map.css";
 import type { Point } from "@/config/pilot";
 import { loadStyle } from "./map-style";
+
+// MapLibre does its heavy work in a worker it ships as its own file. The bundler copies that file out and gives its
+// address here, because the library would otherwise look for it beside whichever chunk it ended up in.
+setWorkerUrl(new URL("maplibre-gl/dist/maplibre-gl-worker.mjs", import.meta.url).href);
 
 // Lahore and its edges, as [west, south] and [east, north]: the map can't be dragged away from the city.
 const lahore: [[number, number], [number, number]] = [
@@ -23,7 +27,7 @@ export async function createMap(
   zoom: number,
   on: { ready: () => void; moving: () => void; moved: (at: Point) => void },
 ) {
-  const map = new maplibregl.Map({
+  const map = new MapLibreMap({
     container: el,
     style: await loadStyle(),
     center: [at[1], at[0]],
@@ -39,7 +43,7 @@ export async function createMap(
   // The map's credit, which its licence requires, as an (i) button that opens it, as the OpenStreetMap attribution
   // guideline allows. MapLibre opens a compact credit the first time it fills in, from the style or from a source;
   // it is closed then, once, so it starts as just the button.
-  map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
+  map.addControl(new AttributionControl({ compact: true }), "bottom-left");
   const attribution = el.querySelector(".maplibregl-ctrl-attrib")!;
   credit.append(attribution);
   const startClosed = () => {

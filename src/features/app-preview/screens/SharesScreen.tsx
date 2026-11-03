@@ -1,5 +1,6 @@
 import { paymentMethods } from "@/config/payments";
 import { Header, Bot, Body, PrimaryButton } from "./parts";
+import { workedExample } from "@/config/worked-example";
 
 export function SharesScreen() {
   return (
@@ -8,10 +9,10 @@ export function SharesScreen() {
       <Body>
         <Bot strong>Riders&rsquo; shares</Bot>
         <div className="rounded-[20px] bg-screen p-4">
-          <p className="text-ink-soft">Worked out for you, 10 km.</p>
-          <p className="mt-2 font-display text-[30px] leading-none font-extrabold tracking-tight">Rs 245</p>
+          <p className="text-ink-soft">Worked out for you, {workedExample.km} km.</p>
+          <p className="mt-2 font-display text-[30px] leading-none font-extrabold tracking-tight">{workedExample.solo}</p>
           <p className="mt-1">with one rider</p>
-          <p className="mt-3 font-display text-[22px] leading-none font-extrabold tracking-tight">Rs 180 each</p>
+          <p className="mt-3 font-display text-[22px] leading-none font-extrabold tracking-tight">{workedExample.pooled} each</p>
           <p className="mt-1">with two riders</p>
           <p className="mt-3 text-[11.5px] text-ink-soft">Fuel price locked when you publish.</p>
         </div>

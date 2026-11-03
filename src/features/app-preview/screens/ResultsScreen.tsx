@@ -1,5 +1,6 @@
 import { TripCard } from "@/features/trips/TripCard";
 import { Header, Bot, Body } from "./parts";
+import { workedExample } from "@/config/worked-example";
 
 export function ResultsScreen() {
   return (
@@ -14,14 +15,14 @@ export function ResultsScreen() {
           compact
           trip={{
             driver: "Hamza",
-            car: "Honda City",
+            car: workedExample.car,
             from: "Akbar Chowk",
             fromTime: "7:40",
             to: "Arfa Tower gate",
             toTime: "8:20",
             seatsLeft: 2,
-            share: "Rs 245",
-            shareNote: "Rs 180 if a 2nd rider joins",
+            share: workedExample.solo,
+            pooledShare: workedExample.pooled,
             badges: [],
           }}
         />
