@@ -13,7 +13,7 @@ export function HeroSection() {
           Know who you&rsquo;re <span className="whitespace-nowrap">riding with.</span>
         </>
       }
-      lead="Every driver is reviewed before they can offer a ride, and every trip comes with tools that keep you and your family in the loop."
+      lead="Every driver is checked, and every trip has tools that keep your family in the loop."
       actions={
         <>
           <Button href={cta.href} external={cta.external}>

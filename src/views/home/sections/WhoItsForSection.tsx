@@ -18,8 +18,8 @@ const audiences = [
 export function WhoItsForSection() {
   return (
     <Section labelledBy="who-title">
-      <SectionHeading id="who-title" title="Who RydCo is for" lead="One car and a few people going the same way. Here&rsquo;s where you fit." />
-      <div className="mt-10 lg:mt-14" {...reveal(2)}>
+      <SectionHeading id="who-title" title="Who RydCo is for" />
+      <div className="mt-10 lg:mt-14" {...reveal(1)}>
         <WhoFor
           rows={audiences}
           previews={[

@@ -1,19 +1,9 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { TickItem } from "@/components/ui/TickItem";
 import { site } from "@/config/site";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { LahoreScreen } from "@/features/app-preview/screens/LahoreScreen";
 import { reveal } from "@/lib/reveal";
-
-const pilotFeatures = [
-  "Sign up with a phone number",
-  "Driver checks: CNIC, live selfie, licence and vehicle, reviewed within 24 hours",
-  "Women-only rides",
-  "Trip sharing with a trusted contact, and SOS on every trip",
-  "Phone numbers stay hidden; chat opens once a seat is confirmed",
-  "Fuel share worked out by the app, paid to the driver directly",
-];
 
 export function LahorePilotSection() {
   return (
@@ -26,14 +16,6 @@ export function LahorePilotSection() {
         </div>
         <div className="order-1 lg:order-2 lg:col-span-7">
           <SectionHeading id="pilot-title" title="The Lahore pilot" lead={<>RydCo starts with weekday commutes across {site.city}, so we can get matching and safety right before we grow.</>} />
-          <h3 className="t-title mt-10" {...reveal(2)}>
-            In the app
-          </h3>
-          <ul className="mt-4 grid gap-3" {...reveal(3)}>
-            {pilotFeatures.map((f) => (
-              <TickItem key={f}>{f}</TickItem>
-            ))}
-          </ul>
         </div>
       </div>
     </Section>

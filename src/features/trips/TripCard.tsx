@@ -2,8 +2,9 @@ import { Badge } from "@/components/ui/Badge";
 import { ExampleTag } from "@/components/ui/ExampleTag";
 import { allChecks } from "@/config/checks";
 
-// The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat.
-type Trip = {
+// The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat. The data-trip-*
+// attributes let a page animate its parts (styles/motion/what-it-is.css); they change nothing on their own.
+export type Trip = {
   driver: string;
   car: string;
   from: string;
@@ -12,6 +13,8 @@ type Trip = {
   toTime: string;
   seatsLeft: number;
   share: string;
+  // The share once a second rider joins. A page can show it in place of the share (styles/motion/what-it-is.css).
+  pooledShare?: string;
   shareNote?: string;
   days?: string;
   badges: string[];
@@ -38,6 +41,7 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
       </div>
 
       <ol
+        data-trip-route
         className={`relative before:absolute before:bg-ink ${compact ? "mt-3 space-y-2 pl-5 before:top-[7px] before:bottom-[7px] before:left-[5px] before:w-[2px]" : "mt-6 space-y-4 pl-7 before:top-[9px] before:bottom-[9px] before:left-[7px] before:w-[3px]"}`}
       >
         <Stop place={trip.from} time={trip.fromTime} marker={`bg-ink ${compact ? "top-[3px] -left-5 h-3 w-3" : "top-[4px] -left-7 h-[17px] w-[17px]"}`} />
@@ -46,19 +50,34 @@ export function TripCard({ trip, compact = false, label }: { trip: Trip; compact
 
       <div className={`flex flex-wrap items-end justify-between gap-x-4 gap-y-2 ${compact ? "mt-3" : "mt-6"}`}>
         <p>
-          <span className={`font-display font-extrabold tracking-tight ${compact ? "text-[22px]" : "text-[40px] leading-none"}`}>{trip.share}</span>
+          <span data-trip-share className={`font-display font-extrabold tracking-tight ${compact ? "text-[22px]" : "text-[40px] leading-none"}`}>
+            {trip.pooledShare ? (
+              <span className="inline-grid">
+                <span data-trip-solo className="[grid-area:1/1]">
+                  {trip.share}
+                </span>
+                <span data-trip-pooled aria-hidden="true" className="opacity-0 [grid-area:1/1]">
+                  {trip.pooledShare}
+                </span>
+              </span>
+            ) : (
+              trip.share
+            )}
+          </span>
           <span className="text-ink-soft"> per seat</span>
         </p>
-        <p className="font-semibold">
+        <p data-trip-seats className="font-semibold">
           {trip.seatsLeft} {trip.seatsLeft === 1 ? "seat" : "seats"} left
         </p>
       </div>
       {trip.shareNote && <p className={`text-ink-soft ${compact ? "mt-1" : "mt-2"}`}>{trip.shareNote}</p>}
 
       {!compact && (
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div data-trip-badges className="mt-6 flex flex-wrap gap-2">
           {trip.badges.map((b) => (
-            <Badge key={b}>{b}</Badge>
+            <Badge key={b} check={b}>
+              {b}
+            </Badge>
           ))}
           {trip.days && <Badge tone="neutral">{trip.days}</Badge>}
         </div>
@@ -87,6 +106,7 @@ export const exampleTrip: Trip = {
   toTime: "8:20",
   seatsLeft: 2,
   share: "Rs 245",
+  pooledShare: "Rs 180",
   shareNote: "Rs 180 each if a second rider joins.",
   days: "Mon to Fri",
   badges: allChecks.map((c) => c.badge),

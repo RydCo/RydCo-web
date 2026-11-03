@@ -17,4 +17,4 @@ export const fairnessRules = [
 
 export const riderCancelAnswer = `More than ${free} minutes before: free. Within ${free} minutes: still free, but it adds a late-cancel strike. After the trip has started there is a cancel fee to the driver, and you can book again once it's paid.`;
 
-export const pickupWaitRule = `At each pickup, a ${wait}-minute wait timer runs before you can mark a no-show.`;
+export const pickupWaitRule = `Wait ${wait} minutes at a pickup, then mark a no-show. The rider owes their full share.`;

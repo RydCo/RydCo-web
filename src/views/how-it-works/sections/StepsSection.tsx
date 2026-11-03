@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Section } from "@/components/ui/Section";
 import { railStop } from "@/components/ui/StepTimeline";
-import { paymentMethodsInWords } from "@/config/payments";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { LahoreScreen } from "@/features/app-preview/screens/LahoreScreen";
 import { PhoneScreen } from "@/features/app-preview/screens/PhoneScreen";
@@ -16,43 +15,43 @@ import { reveal } from "@/lib/reveal";
 const steps: { title: string; text: string; screen: ReactNode; label: string }[] = [
   {
     title: "Choose how you travel",
-    text: "Pick “I want a ride”. Riders only need a phone number. Choosing doesn't create an account, and you can add driving later.",
+    text: "Pick “I want a ride”. Riders only need a phone number, and you can add driving later.",
     screen: <WelcomeScreen />,
     label: "Choosing a role in the RydCo app",
   },
   {
     title: "Add your commute",
-    text: "The pilot runs across all of Lahore. Tell the app where you start and where you're headed.",
+    text: "The pilot runs across all of Lahore. Add where you start and where you're headed.",
     screen: <LahoreScreen />,
     label: "The RydCo app's map of commutes across Lahore",
   },
   {
     title: "Sign up with your number",
-    text: "Enter your mobile number, accept the Terms and Privacy Policy, and type the 6-digit code we send by SMS. Then add your name, a photo and the area you start from.",
+    text: "Your mobile number and a code by SMS, then your name, a photo and where you start.",
     screen: <PhoneScreen />,
     label: "Signing up with a mobile number in the RydCo app",
   },
   {
     title: "Find a ride",
-    text: "Enter where you start, where you're headed and when, for one date or your weekdays. Turn on women-only rides if you want. Each match shows the meeting point, the walk, pickup and drop-off times, seats left and your share.",
+    text: "Where you start, where you're headed and when. Turn on women-only rides if you want.",
     screen: <ResultsScreen />,
     label: "Ride results in the RydCo app",
   },
   {
     title: "Request a seat",
-    text: "Ask for one date or your repeating commute. You see when to leave home and when you'll arrive. The driver replies by a set time, and no seat is held until they confirm.",
+    text: "For one date or your whole week. No seat is held until the driver confirms.",
     screen: <RequestScreen />,
     label: "A pending seat request in the RydCo app",
   },
   {
     title: "Ride together",
-    text: "Walk to the meeting point and meet your driver. Share your live trip with family, and use SOS if you ever need it. Your share is locked once the trip starts.",
+    text: "Meet your driver at the pickup point. Share your trip live, and use SOS if you ever need it.",
     screen: <TripLiveScreen />,
     label: "A trip in progress in the RydCo app",
   },
   {
     title: "Settle up",
-    text: `Pay your share to the driver by ${paymentMethodsInWords}, tap “I sent the payment”, and rate the trip. RydCo never handles the money.`,
+    text: "Pay your share to the driver directly, tap “I sent the payment”, and rate the trip.",
     screen: <SettleScreen />,
     label: "Settling up after a trip in the RydCo app",
   },

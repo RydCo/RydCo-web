@@ -12,11 +12,10 @@ export function ShareSection() {
           <SectionHeading id="share-title" title="How the share is worked out" />
           <div className="mt-8 grid gap-5" {...reveal(1)}>
             <p>
-              RydCo works out a fair share of the fuel from the distance, your car&rsquo;s class and the fuel price. The fuel is split between everyone in the
-              car, you included, plus a small pickup fee for each stop.
+              The fuel is split between everyone in the car, you included, from the distance, your car&rsquo;s class and the fuel price, plus a small fee for
+              each pickup.
             </p>
-            <p>The fuel price is locked when you publish, so later price changes don&rsquo;t touch rides you&rsquo;ve already offered.</p>
-            <p>When a second rider joins, everyone&rsquo;s share goes down. It never goes above what a rider saw when they requested.</p>
+            <p>The fuel price is locked when you publish. When a second rider joins, everyone&rsquo;s share goes down.</p>
           </div>
         </div>
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(2)}>

@@ -1,0 +1,263 @@
+/* The home page's "What it is" section (views/home/sections/WhatItIsSection.tsx). Each [data-play] part plays once, when
+   half of it is on screen. The page loads with the finished picture and only holds it back once the observer runs
+   (.reveal-ready), so without JavaScript or with reduced motion everything is simply there. */
+
+/* Part of the finished picture, so outside the motion query: the boxes that move. */
+.wi-fall,
+.wi-card [data-trip-share] {
+  display: inline-block;
+}
+.wi-chip,
+.wi-card [data-trip-share] {
+  transform-origin: 50% 60%;
+}
+.wi-stage {
+  perspective: 1400px;
+}
+.wi-card {
+  transform-origin: 50% 100%;
+  perspective: 1100px;
+}
+/* Each chip's ring takes the colour of what it stands for. */
+.wi-points-seats {
+  --ring: var(--color-accent);
+}
+.wi-points-price {
+  --ring: var(--color-ink);
+}
+.wi-points-licence {
+  --ring: var(--color-trust);
+}
+/* Body text is small, so key phrases there glint in the deeper orange (see --glint below). */
+.wi-glint-deep {
+  --glint: var(--color-accent-deep);
+}
+
+/* The card sits on the page with a soft shadow. With a mouse it tilts and lifts (components/ui/Tilt.tsx): the shadow
+   grows and moves away from the side that dips, and the checks rise above the card, so they shift against it as it
+   turns. */
+.wi-card .tilt {
+  box-shadow: calc(var(--ry, 0) * -1.4px) calc(14px + var(--rx, 0) * 1.4px + var(--lift, 0) * 18px) calc(34px + var(--lift, 0) * 30px) -16px
+    color-mix(in srgb, var(--color-ink) 30%, transparent);
+}
+.wi-card .tilt [data-trip-badges] {
+  transform-style: preserve-3d;
+}
+.wi-card .tilt [data-trip-badges] > * {
+  translate: 0 0 calc(var(--lift, 0) * 26px);
+}
+/* The two-rider price waits just above the one-rider price, for "Rs 180" to call it down (below). */
+.wi-card [data-trip-pooled] {
+  translate: 0 -0.45em;
+}
+
+/* With a mouse, each chip springs up when pointed at, and points at its part of the card. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .wi-chip,
+  .wi-card [data-trip-seats],
+  .wi-card [data-check] {
+    transition:
+      transform 450ms cubic-bezier(0.3, 1.8, 0.5, 1),
+      color 200ms ease,
+      box-shadow 250ms ease;
+  }
+  .wi-chip:hover {
+    transform: scale(1.06);
+  }
+  .wi-card [data-trip-seats] {
+    transform-origin: 100% 50%;
+  }
+  .wi-card [data-trip-solo],
+  .wi-card [data-trip-pooled] {
+    transition:
+      opacity 240ms ease,
+      translate 480ms cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  section:has(.wi-points-price:hover) .wi-card [data-trip-solo] {
+    opacity: 0;
+    translate: 0 0.45em;
+  }
+  section:has(.wi-points-price:hover) .wi-card [data-trip-pooled] {
+    opacity: 1;
+    translate: 0 0;
+  }
+  section:has(.wi-points-seats:hover) .wi-card [data-trip-seats] {
+    transform: scale(1.1);
+    color: var(--color-accent-deep);
+  }
+  section:has(.wi-points-licence:hover) .wi-card [data-check="Licence checked"] {
+    transform: scale(1.1);
+    box-shadow:
+      0 0 0 2px var(--color-screen),
+      0 0 0 4px var(--color-trust);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Before: the heading's words and the chips are out of sight, and the card lies back. The words the glint reads along
+     are always there at full strength, so they can be read at any moment. */
+  .reveal-ready [data-play] .wi-fall,
+  .reveal-ready [data-play] .wi-chip,
+  .reveal-ready [data-play] .wi-card,
+  .reveal-ready [data-play] .wi-card [data-trip-share] {
+    opacity: 0;
+  }
+  .reveal-ready [data-play] .wi-card [data-trip-route]::before {
+    scale: 1 0;
+    transform-origin: top;
+  }
+  .reveal-ready [data-play] .wi-card [data-trip-route] li > span:first-child,
+  .reveal-ready [data-play] .wi-card [data-trip-badges] > .bg-trust > svg {
+    scale: 0;
+  }
+  .reveal-ready [data-play] .wi-card [data-trip-badges] > .bg-trust {
+    background-color: var(--color-ink-soft);
+    color: var(--color-surface);
+  }
+
+  /* The heading: each word drops into place with a little spring. */
+  .reveal-ready [data-play].is-playing .wi-word {
+    animation: wi-glint 520ms ease var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .wi-fall {
+    animation: wi-fall 650ms cubic-bezier(0.3, 1.45, 0.5, 1) var(--d) both;
+  }
+
+  /* The chips fall onto the page as the glint reaches them, towards you rather than down the page, so they never cross
+     the line above. Each squashes as it lands and sends out one ring. */
+  .reveal-ready [data-play].is-playing .wi-chip {
+    animation: wi-drop 640ms var(--d) both;
+  }
+  .reveal-ready [data-play].is-playing .wi-chip::after {
+    content: "";
+    position: absolute;
+    inset: -0.32em;
+    border-radius: 999px;
+    border: 0.16em solid var(--ring);
+    opacity: 0;
+    pointer-events: none;
+    animation: wi-ring 700ms var(--ease-out-soft) calc(var(--d) + 300ms) both;
+  }
+
+  /* The trip card stands up out of the page, its route draws, the price drops in, and the checks turn green one by one. */
+  .reveal-ready [data-play].is-playing .wi-card {
+    animation: wi-stand 1200ms cubic-bezier(0.3, 0.9, 0.3, 1.06) both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-route]::before {
+    animation: wi-route 500ms var(--ease-out-soft) 450ms both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-route] li:first-child > span:first-child {
+    animation: pop-in 360ms cubic-bezier(0.3, 1.6, 0.5, 1) 400ms both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-route] li:last-child > span:first-child {
+    animation: pop-in 360ms cubic-bezier(0.3, 1.6, 0.5, 1) 880ms both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-share] {
+    --tilt: -6deg;
+    animation: wi-drop 640ms 700ms both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-badges] > .bg-trust {
+    animation: sb-verify 380ms var(--ease-out-soft) var(--check) both;
+  }
+  .reveal-ready [data-play].is-playing .wi-card [data-trip-badges] > .bg-trust > svg {
+    animation: pop-in 360ms var(--ease-out-soft) calc(var(--check) + 120ms) both;
+  }
+  .wi-card [data-trip-badges] > :nth-child(1) {
+    --check: 1000ms;
+  }
+  .wi-card [data-trip-badges] > :nth-child(2) {
+    --check: 1200ms;
+  }
+  .wi-card [data-trip-badges] > :nth-child(3) {
+    --check: 1400ms;
+  }
+  .wi-card [data-trip-badges] > :nth-child(4) {
+    --check: 1600ms;
+  }
+}
+
+/* The glint: accent orange passing through a word. On the page that's 3.2:1, enough for the large sentence. Body text
+   is smaller and needs 4.5:1, so there it glints in the deeper orange (--glint), which is 5.7:1. */
+@keyframes wi-glint {
+  0%,
+  100% {
+    color: inherit;
+  }
+  35% {
+    color: var(--glint, var(--color-accent));
+  }
+}
+@keyframes wi-fall {
+  from {
+    opacity: 0;
+    translate: 0 -0.8em;
+    rotate: var(--tilt, 0deg);
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    rotate: 0deg;
+  }
+}
+/* A fall towards the page under gravity: big and speeding up, a squash as it lands, one small rebound, then still. */
+@keyframes wi-drop {
+  0% {
+    opacity: 0;
+    scale: 2.3;
+    rotate: var(--tilt, -10deg);
+    animation-timing-function: cubic-bezier(0.55, 0, 0.9, 0.45);
+  }
+  20% {
+    opacity: 1;
+  }
+  50% {
+    scale: 1.12 0.8;
+    rotate: 0deg;
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1);
+  }
+  70% {
+    scale: 0.95 1.06;
+  }
+  86% {
+    scale: 1.02 0.98;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+@keyframes wi-ring {
+  0% {
+    opacity: 0.9;
+    scale: 0.9;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.45;
+  }
+}
+@keyframes wi-stand {
+  from {
+    opacity: 0;
+    transform: rotateX(48deg) translateY(90px) scale(0.88);
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes wi-route {
+  from {
+    scale: 1 0;
+  }
+  to {
+    scale: 1 1;
+  }
+}

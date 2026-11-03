@@ -25,14 +25,6 @@ const questions = [
     a: "Yes. Request a repeating commute and the driver confirms the dates that work. You can skip a single date or cancel all future dates.",
   },
   {
-    q: "Who can see my phone number?",
-    a: "No one. You chat in the app once your seat is confirmed, and the driver's payment details appear only after that.",
-  },
-  {
-    q: "Do I have to add a trusted contact?",
-    a: "No, it's optional. You can add one later, and share any trip with them live.",
-  },
-  {
     q: "Where does RydCo work?",
     a: "Anywhere in Lahore during the pilot. More cities come after it.",
   },

@@ -61,7 +61,7 @@ export function SafetyBoard() {
         </div>
       </li>
 
-      <Tile ground="panel" step={1} play title="Every driver is checked" line="CNIC, a live selfie, licence and car, all reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
+      <Tile ground="panel" step={1} play title="Every driver is checked" line="Reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
         <div className="absolute top-5 right-5 grid justify-items-end gap-2.5 text-[18px] sm:top-6 sm:right-6 sm:gap-3 sm:text-[28px] lg:text-[32px]">
           {driverChecks.map((c, i) => (
             <Badge key={c.name} className={`sb-check ${checkStagger[i % checkStagger.length]}`} style={playAt(250 + i * 350)}>

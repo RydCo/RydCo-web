@@ -8,27 +8,27 @@ import { reveal } from "@/lib/reveal";
 const tripTools = [
   {
     title: "Share your trip",
-    text: "Add a trusted contact, like a family member, and send them your live trip.",
+    text: "Send your live trip to someone you trust.",
   },
   {
     title: "SOS on every trip",
-    text: "One button alerts your trusted contact by SMS with your live location and the vehicle. It is the only alert RydCo ever sends by SMS.",
+    text: "One button sends your trusted contact your live location by SMS.",
   },
   {
     title: "Women-only rides",
-    text: "Choose to ride only with women. It is based on how people describe themselves, and we never show it as verified.",
+    text: "Ride only with women. Based on how people describe themselves, never shown as verified.",
   },
   {
     title: "Numbers stay hidden",
-    text: "Nobody sees your phone number. Chat in the app opens only once a seat is confirmed.",
-  },
-  {
-    title: "Request, don't book",
-    text: "Drivers accept or decline every request, and no seat is held until they confirm. You always know who is coming.",
+    text: "Chat in the app opens only once a seat is confirmed.",
   },
   {
     title: "Report anytime",
-    text: "Every trip has a report button, and riders rate their driver after each ride.",
+    text: "Every trip has a report button.",
+  },
+  {
+    title: "Rate every trip",
+    text: "Riders rate their driver after each ride.",
   },
 ];
 

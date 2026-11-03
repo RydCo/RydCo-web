@@ -13,6 +13,7 @@ lets the site load its own files, send forms to Google Apps Script (`script.goog
 headers, so anything the live site would block is blocked locally too. `pnpm build` stops if `vercel.json` is out of
 step. Adding anything from another site (a font, analytics, an embed) means adding its address in `security.mjs`.
 
+
 ## Layout
 
 ```text

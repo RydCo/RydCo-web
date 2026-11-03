@@ -202,6 +202,20 @@ One loud moment, everything else quiet.
   once, about 2.2s: the homes appear, each solo route draws to the meeting point, the shared line draws out, and the
   car drives off with its three riders trailing behind, ending on the still picture. Pure CSS started by the same
   observer (`data-play`); the page loads with the finished picture and only holds it back once the observer runs.
+- What it is (home): each part plays once, when half of it is on screen. The heading's words drop into place one after
+  another with a small spring. A glint of accent orange reads along the sentence beside it, word by word (the words stay
+  readable throughout), and each chip (the site's `Badge` at its inline size: "2 seats left", "Rs 180", "Licence checked") falls onto the page as the glint
+  reaches it: towards you, so it never crosses the line above. It squashes as it lands and sends out one ring. About 2s
+  in all. Below, the example trip card stands up out of the page in 3D (1.2s spring), its route draws, the price drops
+  in the same way and the four checks turn green one by one. Beside it, the glint passes through the three key phrases
+  one after another ("a share of the fuel, not a fare", "everyone's share goes down", "never handles your money"), in
+  the deeper orange since body text needs more contrast, and leaves nothing marked. Pure CSS started by the observer (`data-play`); with
+  reduced motion or without JavaScript it's all simply there.
+  With a mouse (never on touch, never with reduced motion): pointing at a chip springs it up to 1.06 and points at its
+  part of the card. "Rs 180" drops the card's price from Rs 245 to Rs 180, "2 seats left" pops its seat count (1.1x) in the
+  deeper orange, "Licence checked" rings its licence check. The card tilts towards the mouse on a spring (up to 8deg)
+  and lifts off the page, its soft shadow growing and moving away from the side that dips, while its checks rise above
+  it so they shift against it as it turns (`components/ui/Tilt.tsx`, a small spring, no animation library).
 - Safety deck (home): the safety board becomes a deck of cards that moves on by itself, looping: one card large in the
   middle, its neighbours fanned out behind it in 3D, a new card every 2.4s with a 0.6s springy glide. Every card acts its
   feature out each time it arrives: the four driver checks go from pending to trust green one by one, the women-only
@@ -217,7 +231,8 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing video is the hero
+- No parallax, other cursor effects (the example trip card's tilt above is the one, at the owner's request), other
+  scroll-jacking or looping background motion. The only auto-playing video is the hero
   phone's silent motion graphic.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
@@ -310,6 +325,9 @@ Crossfades become cuts.
 
 - Warm, simple, friendly English. Short sentences. One idea at a time, like the app.
 - Headings 6 words or fewer where possible. One supporting line.
+- Say each fact in full once, on its own page: the driver checks and trip tools on Safety, the share and payment on
+  Drivers, the steps on How it works. Elsewhere, a headline or one short line. A phone mock-up already shows its
+  screen's detail, so the words beside it say only what matters. If a heading says it, skip the supporting line.
 - No buzzwords: no "revolutionize", "seamless", "solutions", "empower", "next-gen" or "ecosystem".
 - Copy bank (from the app): "Assalam o alaikum. I'm RydCo." · "Ride together, save together." (the tagline, from the pitch deck) · "Lahore pilot" ·
   "Request, don't book." · "Numbers stay hidden." · "Split the cost." · "Report anytime." · "Riders pay you directly."

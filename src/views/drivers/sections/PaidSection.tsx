@@ -8,7 +8,7 @@ export function PaidSection() {
     <Section ground="brand" labelledBy="paid-title">
       <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
         <div className="lg:col-span-6">
-          <SectionHeading id="paid-title" title="Riders pay you directly" lead="RydCo suggests the share but never handles the money. After each trip the rider pays you and taps &ldquo;I sent the payment&rdquo;. You confirm you received it, and the trip is settled." />
+          <SectionHeading id="paid-title" title="Riders pay you directly" lead="RydCo never handles the money. Riders pay you after each trip, and you confirm you received it." />
         </div>
         <ul className="flex flex-wrap gap-3 lg:col-span-5 lg:col-start-8" {...reveal(2)}>
           {paymentMethods.map((m) => (

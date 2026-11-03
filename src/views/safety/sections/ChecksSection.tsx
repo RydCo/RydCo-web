@@ -8,7 +8,7 @@ import { reveal } from "@/lib/reveal";
 export function ChecksSection() {
   return (
     <Section id="checks" labelledBy="checks-title">
-      <SectionHeading layout="split" id="checks-title" title="Before anyone drives" lead="Drivers need Punjab-issued documents, and every check must pass. Our target is to review an application within 24 hours. Until then, they can&rsquo;t publish a single ride." />
+      <SectionHeading layout="split" id="checks-title" title="Before anyone drives" lead="Every check must pass before a driver can publish a ride." />
       <ul className="mt-14 grid gap-2">
         {driverChecks.map((c, i) => (
           <Card as="li" key={c.name} className="grid gap-4 md:grid-cols-12 md:gap-8" {...reveal(2 + i)}>
