@@ -1,8 +1,5 @@
 /* The area map's look over MapLibre's own styles. The light map is warmed toward the site's neutrals so the pin and
    the card read first, and the credit takes the site's type and colours. */
-.area-map .maplibregl-map {
-  font: inherit;
-}
 .area-map .maplibregl-canvas {
   filter: sepia(0.22) saturate(1.1);
 }

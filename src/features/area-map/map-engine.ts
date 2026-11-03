@@ -37,17 +37,18 @@ export async function createMap(
     attributionControl: false,
   });
   // The map's credit, which its licence requires, as an (i) button that opens it, as the OpenStreetMap attribution
-  // guideline allows. MapLibre opens a compact credit the first time it fills in; it is closed then, once, so it
-  // starts as just the button.
+  // guideline allows. MapLibre opens a compact credit the first time it fills in, from the style or from a source;
+  // it is closed then, once, so it starts as just the button.
   map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
   const attribution = el.querySelector(".maplibregl-ctrl-attrib")!;
   credit.append(attribution);
   const startClosed = () => {
     if (!attribution.classList.contains("maplibregl-compact-show")) return;
     attribution.classList.remove("maplibregl-compact-show");
-    map.off("styledata", startClosed);
+    map.off("styledata", startClosed).off("sourcedata", startClosed);
   };
   map.on("styledata", startClosed);
+  map.on("sourcedata", startClosed);
   map.touchZoomRotate.disableRotation();
   map.keyboard.disableRotation();
   map.once("style.load", on.ready);
