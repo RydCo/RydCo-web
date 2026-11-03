@@ -18,6 +18,20 @@
   transform-origin: 50% 100%;
   perspective: 1100px;
 }
+/* Each chip's ring takes the colour of what it stands for. */
+.wi-points-seats {
+  --ring: var(--color-accent);
+}
+.wi-points-price {
+  --ring: var(--color-ink);
+}
+.wi-points-licence {
+  --ring: var(--color-trust);
+}
+/* Body text is small, so key phrases there glint in the deeper orange (see --glint below). */
+.wi-glint-deep {
+  --glint: var(--color-accent-deep);
+}
 
 /* The card sits on the page with a soft shadow. With a mouse it tilts and lifts (components/ui/Tilt.tsx): the shadow
    grows and moves away from the side that dips, and the checks rise above the card, so they shift against it as it
@@ -26,7 +40,6 @@
   box-shadow: calc(var(--ry, 0) * -1.4px) calc(14px + var(--rx, 0) * 1.4px + var(--lift, 0) * 18px) calc(34px + var(--lift, 0) * 30px) -16px
     color-mix(in srgb, var(--color-ink) 30%, transparent);
 }
-.wi-card .tilt [data-ui],
 .wi-card .tilt [data-trip-badges] {
   transform-style: preserve-3d;
 }

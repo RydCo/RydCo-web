@@ -10,7 +10,7 @@ export const contactTopics = [
 
 export type ContactTopic = (typeof contactTopics)[number]["id"];
 
-export const contactLink = (topic: ContactTopic) => `/contact/?topic=${topic}#message`;
+const contactLink = (topic: ContactTopic) => `/contact/?topic=${topic}#message`;
 export const pilotEnquiry = contactLink("company");
 export const partnerEnquiry = contactLink("partner");
 export const safetyEnquiry = contactLink("safety");

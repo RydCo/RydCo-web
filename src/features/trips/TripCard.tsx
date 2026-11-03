@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/Badge";
 import { ExampleTag } from "@/components/ui/ExampleTag";
+import { allChecks } from "@/config/checks";
 
 // The carpool trip pattern: who drives, pickup to drop-off on the route mark, seats left, share per seat. The data-trip-*
 // attributes let a page animate its parts (styles/motion/what-it-is.css); they change nothing on their own.
@@ -22,7 +23,7 @@ export type Trip = {
 export function TripCard({ trip, compact = false, label }: { trip: Trip; compact?: boolean; label?: string }) {
   const initials = trip.driver.slice(0, 1);
   return (
-    <div data-ui className={`relative bg-screen text-ink ${compact ? "rounded-[18px] p-3 text-[12.5px]" : "rounded-surface p-6 text-[16px] md:p-8"}`}>
+    <div className={`relative bg-screen text-ink ${compact ? "rounded-[18px] p-3 text-[12.5px]" : "rounded-surface p-6 text-[16px] md:p-8"}`}>
       {label && (
         <ExampleTag>{label}</ExampleTag>
       )}
@@ -108,5 +109,5 @@ export const exampleTrip: Trip = {
   pooledShare: "Rs 180",
   shareNote: "Rs 180 each if a second rider joins.",
   days: "Mon to Fri",
-  badges: ["Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"],
+  badges: allChecks.map((c) => c.badge),
 };

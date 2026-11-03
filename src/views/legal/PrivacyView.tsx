@@ -1,8 +1,9 @@
 import { site } from "@/config/site";
+import { mailto } from "@/lib/mailto";
 import { LegalPage } from "@/views/legal/LegalPage";
 
 const mail = (
-  <a href={`mailto:${site.email}`} className="font-semibold underline underline-offset-4">
+  <a href={mailto()} className="font-semibold underline underline-offset-4">
     {site.email}
   </a>
 );
@@ -18,13 +19,17 @@ export function PrivacyView() {
           title: "Who we are",
           body: (
             <>
-              {/* [FILL] Registered company name and address, once RydCo is registered. */}
+              {/* [FILL] Once RydCo is registered, name the company and its address: "and “us” mean <company>, <address>, the business…". */}
               <p>
                 RydCo is a carpooling service for adult commuters, starting with a pilot in Lahore, Pakistan. In this policy, &ldquo;RydCo&rdquo;,
-                &ldquo;we&rdquo; and &ldquo;us&rdquo; mean the business that runs the RydCo app and this website. Its registered name and address will be
-                added here before the app opens.
+                &ldquo;we&rdquo; and &ldquo;us&rdquo; mean the business that runs the RydCo app and this
+                website. We decide how your data is used, and we are responsible for it.
               </p>
               <p>You can reach us about your data at {mail}.</p>
+              <p>
+                The app hasn&rsquo;t opened yet. Today, this website collects only what you type into its forms, explained under &ldquo;This website&rsquo;s
+                forms&rdquo; below. The rest of this policy describes what the app will collect and do once it opens.
+              </p>
             </>
           ),
         },
@@ -33,7 +38,7 @@ export function PrivacyView() {
           title: "What we collect",
           body: (
             <>
-              <p>From every user:</p>
+              <p>In the app, from every user:</p>
               <ul>
                 <li>Your mobile number, which we confirm with a code sent by SMS.</li>
                 <li>Your name, date of birth and profile photo.</li>
@@ -89,6 +94,13 @@ export function PrivacyView() {
                 <li>To answer you when you contact support.</li>
                 <li>To keep RydCo secure, to keep a record of what you accepted, and to meet our legal duties.</li>
               </ul>
+              <p>We use your data only when one of these applies:</p>
+              <ul>
+                <li>You agreed to it, as with the website forms, driver checks, location and a trusted contact. You can withdraw that consent.</li>
+                <li>We need it to provide RydCo under our terms, such as matching you and showing your trip to the people on it.</li>
+                <li>The law requires it.</li>
+                <li>We need it to keep people safe and to stop fraud and misuse, in ways you would reasonably expect.</li>
+              </ul>
               <p>We don&rsquo;t sell your data, we don&rsquo;t use it for advertising, and we don&rsquo;t send promotional notifications during this pilot.</p>
             </>
           ),
@@ -105,7 +117,12 @@ export function PrivacyView() {
               <ul>
                 <li>A vetted provider compares your live selfie with your CNIC photo, for this check only. It isn&rsquo;t used for anything else.</li>
                 <li>After three failed tries, a person helps you, so the automated result is never the only word.</li>
-                <li>Our reviewers read your CNIC, and check your licence and registration on the Punjab government&rsquo;s DLIMS and MTMIS systems.</li>
+                <li>
+                  Our reviewers compare your CNIC with the details you enter. This is a document review, not a NADRA check, and we don&rsquo;t access NADRA&rsquo;s
+                  records.
+                </li>
+                <li>Our reviewers check your driving licence on the Punjab government&rsquo;s DLIMS system, and your vehicle registration on its MTMIS system.</li>
+                <li>We use your CNIC only for these checks. We never ask you to hand over the card itself.</li>
                 <li>We turn your CNIC number into a protected key, so we can spot a second account without showing the number to other users.</li>
               </ul>
               <p>If you say no, or withdraw your consent, driver verification stops. You can still ride if you are otherwise eligible.</p>
@@ -136,12 +153,17 @@ export function PrivacyView() {
             <>
               <p>We share only what each one needs, and we require our providers to use it only to work for us:</p>
               <ul>
-                {/* [FILL] The selfie provider's name, once chosen. */}
-                <li>A vetted provider that runs the live selfie check. We will name it here and on the consent screen before driver checks open.</li>
-                <li>An SMS provider, for sign-in codes and SOS alerts. We are trialling SendPK.</li>
-                <li>Supabase, which handles sign-in.</li>
-                <li>Hosting and storage providers, including Vercel for this website and Google for its forms.</li>
+                {/* [FILL] Once chosen, name the selfie provider and its country: "…the live selfie check: <provider>, <country>." */}
+                <li>
+                  A vetted provider that runs the live selfie check. We will name it, and where it handles data, here and on the consent
+                  screen before driver checks open.
+                </li>
+                <li>A Pakistani SMS provider, for sign-in codes and SOS alerts. We are trialling SendPK.</li>
+                <li>Supabase, which hosts the app&rsquo;s database and handles sign-in.</li>
+                <li>Google, for maps and route times in the app, for app notifications, and for this website&rsquo;s forms.</li>
+                <li>Vercel, which hosts this website.</li>
               </ul>
+              <p>We don&rsquo;t give your data to anyone else to use for their own purposes.</p>
               <p>
                 <strong>Authorities.</strong> We give data to police, investigators, courts or regulators only when the law requires it, such as a court warrant
                 or a written notice under the Prevention of Electronic Crimes Act 2016. We check that the demand is valid, give only what it covers, and tell
@@ -162,10 +184,22 @@ export function PrivacyView() {
           id: "abroad",
           title: "Data outside Pakistan",
           body: (
-            <p>
-              Some of our providers may store or process data on servers outside Pakistan, where the rules can differ. We send only what they need, and we will
-              choose providers that commit to protecting it. Using RydCo means you understand this may happen.
-            </p>
+            <>
+              {/* [FILL] Before the app opens, name the Supabase region (the backend plans Dubai, UAE, or Singapore): "…are on servers in <region>." */}
+              <p>Most of the providers above store or process data outside Pakistan, where the rules can differ from Pakistan&rsquo;s:</p>
+              <ul>
+                <li>The app&rsquo;s database and sign-in, with Supabase, are on servers outside Pakistan. We will name the country here before the app opens.</li>
+                <li>
+                  This website&rsquo;s form entries go to Google, which stores them in a Google Sheet and a Gmail inbox in RydCo&rsquo;s Google account. Google
+                  can store this data in its data centres in the United States and other countries.
+                </li>
+                <li>Vercel, a US company, serves this website from data centres in several countries, usually the one nearest you.</li>
+              </ul>
+              <p>
+                We send each provider only what it needs, and we choose providers that publish commitments to keep data secure. Pakistan
+                doesn&rsquo;t yet have a law that sets rules for sending personal data abroad. If one comes into force, we will follow it and update this policy.
+              </p>
+            </>
           ),
         },
         {
@@ -198,6 +232,9 @@ export function PrivacyView() {
                 </li>
                 <li>
                   <strong>Connection logs:</strong> 1 year.
+                </li>
+                <li>
+                  <strong>Website form entries and the emails they send us:</strong> 12 months after our last contact with you, or sooner if you ask.
                 </li>
                 <li>
                   <strong>Records of what you accepted:</strong> while you have an account, then 3 years.
@@ -249,31 +286,57 @@ export function PrivacyView() {
           title: "Keeping it safe",
           body: (
             <p>
-              We limit access to people who need it for their work, and we use technical and organisational safeguards to protect your data. No system is
-              completely secure. If a breach is likely to harm you, we will tell you as soon as we reasonably can, and tell you what you can do.
+              We limit access to people who need it for their work, and we use technical and organisational safeguards to protect your data, such as encrypted
+              connections. No system is completely secure. If a breach is likely to harm you, we will tell you as soon as we reasonably can, and tell you what you
+              can do.
             </p>
           ),
         },
         {
           id: "age",
           title: "Under 18s",
-          body: <p>RydCo is only for people aged 18 or over. If we learn that an account belongs to someone younger, we will close it and delete their data, apart from anything we must keep under this policy.</p>,
+          body: (
+            <p>
+              RydCo is only for people aged 18 or over, and so are this website&rsquo;s forms. If we learn that an account or a form entry belongs to someone
+              younger, we will close the account and delete their data, apart from anything we must keep under this policy.
+            </p>
+          ),
         },
         {
           id: "website",
           title: "This website's forms",
           body: (
             <>
+              <p>When you join the waitlist, we receive:</p>
+              <ul>
+                <li>Your name, mobile number and email.</li>
+                <li>Whether you want to ride, drive or both, and the areas you start in and head to.</li>
+                <li>If you want to drive, your car and when you usually leave, if you fill them in.</li>
+              </ul>
               <p>
-                When you join the waitlist or send a message here, we receive what you type: your name, mobile number, email, the areas you choose, your
-                car and when you usually leave if you want to drive, and your message.
+                When you send a message, we receive the topic, your name, the email or phone number you give for our reply, your organisation if you add one,
+                and your message. With both forms, we also record the time and which page of this website you sent it from.
               </p>
               <p>
-                It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to us. We use it only to reply to you, to tell you when RydCo opens on
-                your route, and to send you a link to sign up. If you don&rsquo;t want these messages, reply to tell us and we&rsquo;ll stop. Ask us at any time to
-                delete your details. Otherwise we delete them 12 months after our last contact with you.
+                Your browser sends the form straight to Google. It is stored in a Google Sheet in RydCo&rsquo;s Google account and emailed to our Gmail inbox.
+                If the form can&rsquo;t be sent that way, your email app opens with the same details instead, and nothing is sent until you send that email.
               </p>
-              <p>This website doesn&rsquo;t use advertising or analytics cookies. Our host keeps basic technical logs so the site can run securely.</p>
+              <p>
+                We use it only to reply to you, to tell you when RydCo opens, to send you a link to sign up and, if you want to drive, to call or
+                message you about getting set up. You give your consent by sending the form. If you don&rsquo;t want these messages, tell us and we&rsquo;ll stop.
+                Ask us at any time to see, correct or delete your details. Otherwise we delete them 12 months after our last contact with you.
+              </p>
+              <p>
+                This website doesn&rsquo;t set cookies, doesn&rsquo;t store anything in your browser, and doesn&rsquo;t use analytics or advertising tools. Its
+                fonts and images come from our own host, not from other companies, apart from the map described below. Vercel, our host, keeps basic technical logs, such as your IP address,
+                browser and the pages requested, so the site can run securely. Google receives the same kind of technical details when you send a form.
+              </p>
+              <p>
+                If you open the map to find your area, it loads from OpenFreeMap, a free map service built on OpenStreetMap, which receives the same kind of
+                technical details. The map&rsquo;s position stays in your browser: only the name of the area you choose goes into the form. If you tap
+                &ldquo;Go to my location&rdquo;, your browser asks first, and your location is used only to move the map. It isn&rsquo;t sent to us or kept.
+              </p>
+              <p>Links to Instagram take you to a site that has its own privacy policy.</p>
             </>
           ),
         },
@@ -284,10 +347,12 @@ export function PrivacyView() {
             <>
               <p>Please write to {mail} first, and we will try to put it right.</p>
               <p>
-                Pakistan has not yet passed a general data protection law, and has no general data protection regulator. Your privacy is still protected by the
-                Constitution of Pakistan and the Prevention of Electronic Crimes Act 2016, and by the promises in this policy. If you think someone has misused your
-                identity information, you can complain to the National Cyber Crime Investigation Agency. We will update this policy if a new law applies.
+                As of this policy&rsquo;s date, Pakistan&rsquo;s Personal Data Protection Bill hasn&rsquo;t become law, and there is no general data protection
+                regulator. Your privacy is still protected by the Constitution of Pakistan, by the Prevention of Electronic Crimes Act 2016 as amended, and by the
+                promises in this policy. If you think someone has misused your identity information, you can complain to the National Cyber Crime Investigation
+                Agency. When a data protection law comes into force, we will follow it and update this policy.
               </p>
+              <p>This policy is governed by the laws of Pakistan.</p>
             </>
           ),
         },
@@ -296,8 +361,8 @@ export function PrivacyView() {
           title: "Changes to this policy",
           body: (
             <p>
-              Each version has a date, and you can read the versions you accepted in the app. When we make an important change, the app shows you what changed and asks
-              you to accept the new version before you book or publish new rides. If you don&rsquo;t accept, you can still read our policies, contact support, sign out or
+              Each version has a date, shown on this page, and you can read the versions you accepted in the app. If we change how we use your website form details,
+              we will email you before the change applies. When we make an important change, the app shows you what changed and asks you to accept the new version before you book or publish new rides. If you don&rsquo;t accept, you can still read our policies, contact support, sign out or
               close your account. We never block the trip and safety tools you need on a trip already under way.
             </p>
           ),

@@ -8,70 +8,59 @@ import { EmailField, NameField, PhoneField } from "@/components/forms/PersonFiel
 import { Sent } from "@/components/forms/Sent";
 import { TextField } from "@/components/forms/TextField";
 import { Button } from "@/components/ui/Button";
-import { riderCta } from "@/config/cta";
-import { site } from "@/config/site";
-import { AreaField } from "@/features/commute/AreaField";
-import { setCommute, useCommute } from "@/features/commute/commute-store";
-import { coverage } from "@/features/commute/coverage";
-import { CoverageAnswer } from "@/features/commute/CoverageAnswer";
+import { appLive, riderCta, waitlistLabel } from "@/config/cta";
+import { commuteEnds } from "@/config/pilot";
+import { useCommute } from "@/features/commute/commute-store";
+import { RoutePicker } from "@/features/commute/RoutePicker";
+import { useForm } from "@/hooks/use-form";
 import { useSendForm } from "@/hooks/use-send-form";
 import { emailError, firstName, nameError, phoneError } from "@/lib/person";
 import { normalizePhone } from "@/lib/phone";
 
-const labels = { name: "Name", phone: "Phone", email: "Email", role: "I want to", from: "I start in", to: "I'm headed to", car: "Car", leave: "I usually leave at" };
+const labels = { name: "Name", phone: "Phone", email: "Email", role: "I want to", from: commuteEnds.from.label, to: commuteEnds.to.label, car: "Car", leave: "I usually leave at" };
 const roles = { ride: "Ride", drive: "Drive", both: "Ride and drive" } as const;
-export type WaitlistRole = keyof typeof roles;
+type WaitlistRole = keyof typeof roles;
 
-// The site's one sign-up form, for riders and drivers alike: the app's "Check your commute?" step joined to the waitlist.
+// The site's one sign-up form, for riders and drivers alike: the app's commute step joined to the waitlist.
 // The route is shared with the hero's route check, so a route picked up there is already filled in here. Anyone who
 // wants to drive is also asked about their car and when they leave. The Drivers page opens it on "Drive".
 export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
   const id = useId();
   const { from, to } = useCommute();
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const { fields: f, set, errors, check } = useForm({ name: "", phone: "", email: "", car: "", leave: "", website: "" });
   const [role, setRole] = useState<WaitlistRole>(startAs);
-  const [car, setCar] = useState("");
-  const [leave, setLeave] = useState("");
-  const [trap, setTrap] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; email?: string }>({});
   const { state, send } = useSendForm("waitlist", labels);
 
-  const { picked, covered } = coverage(from, to);
-  const live = Boolean(site.playStoreUrl);
+  const cta = riderCta();
   const drives = role !== "ride";
 
   function submit(e: { preventDefault(): void }) {
     e.preventDefault();
-    const next = { name: nameError(name), phone: phoneError(phone), email: emailError(email) };
-    setErrors(next);
-    if (next.name || next.phone || next.email) return;
+    if (!check({ name: nameError(f.name), phone: phoneError(f.phone), email: emailError(f.email) })) return;
     send({
-      name: name.trim(),
-      phone: normalizePhone(phone)!,
-      email: email.trim(),
+      name: f.name.trim(),
+      phone: normalizePhone(f.phone)!,
+      email: f.email.trim(),
       role: roles[role],
       from,
       to,
-      covered: picked ? String(covered) : "",
-      car: drives ? car.trim() : "",
-      leave: drives ? leave.trim() : "",
-      website: trap,
+      car: drives ? f.car.trim() : "",
+      leave: drives ? f.leave.trim() : "",
+      website: f.website,
     });
   }
 
   if (state === "sent") {
     return (
-      <Sent title={`You're on the list, ${firstName(name)}.`}>
+      <Sent title={`You're on the list, ${firstName(f.name)}.`}>
         {drives ? (
           <p>
-            We&rsquo;ll call or message you on {normalizePhone(phone)} to get you set up as a driver on the Lahore pilot, and email {email.trim()} when the app
+            We&rsquo;ll call or message you on {normalizePhone(f.phone)} to get you set up as a driver on the Lahore pilot, and email {f.email.trim()} when the app
             opens.
           </p>
         ) : (
           <p>
-            We&rsquo;ll message you on {normalizePhone(phone)} and email {email.trim()} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
+            We&rsquo;ll message you on {normalizePhone(f.phone)} and email {f.email.trim()} when RydCo opens.
           </p>
         )}
       </Sent>
@@ -80,28 +69,25 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
 
   return (
     <form onSubmit={submit} noValidate className="relative">
-      <p className="font-display text-[22px] font-bold">Is your commute covered?</p>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <AreaField id={id} name="from" value={from} onChange={(v) => setCommute({ from: v, by: id })} />
-        <AreaField id={id} name="to" value={to} onChange={(v) => setCommute({ to: v, by: id })} />
+      <p className="t-title">Your daily commute</p>
+      <div className="mt-4">
+        <RoutePicker me={id} />
       </div>
 
-      <CoverageAnswer me={id} className="mt-4 min-h-[40px]" />
-
-      {live ? (
+      {appLive ? (
         <div className="mt-6">
-          <Button href={riderCta().href} external>
-            {riderCta().label}
+          <Button href={cta.href} external={cta.external}>
+            {cta.label}
           </Button>
         </div>
       ) : (
         <>
-          <p className="mt-6 font-display text-[22px] font-bold">Join the waitlist</p>
+          <p className="mt-6 t-title">{waitlistLabel}</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <NameField id={id} value={name} onChange={setName} error={errors.name} />
-            <PhoneField id={id} value={phone} onChange={setPhone} error={errors.phone} />
+            <NameField id={id} value={f.name} onChange={set("name")} error={errors.name} />
+            <PhoneField id={id} value={f.phone} onChange={set("phone")} error={errors.phone} />
             <div className="sm:col-span-2">
-              <EmailField id={id} value={email} onChange={setEmail} error={errors.email} hint="We'll email your sign-up link when the app opens." />
+              <EmailField id={id} value={f.email} onChange={set("email")} error={errors.email} hint="We'll email your sign-up link when the app opens." />
             </div>
           </div>
           <div className="mt-5">
@@ -119,12 +105,12 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
           </div>
           {drives && (
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <TextField id={`${id}-car`} name="car" label="Your car" placeholder="e.g. Honda City 2019" value={car} onChange={setCar} />
-              <TextField id={`${id}-leave`} name="leave" label="I usually leave at" placeholder="e.g. 7:45 am" value={leave} onChange={setLeave} />
+              <TextField id={`${id}-car`} name="car" label="Your car" placeholder="e.g. Honda City 2019" value={f.car} onChange={set("car")} />
+              <TextField id={`${id}-leave`} name="leave" label="I usually leave at" placeholder="e.g. 7:45 am" value={f.leave} onChange={set("leave")} />
             </div>
           )}
-          <Honeypot value={trap} onChange={setTrap} />
-          <FormActions state={state} label="Join the waitlist" note="We only use your details to tell you about RydCo." />
+          <Honeypot value={f.website} onChange={set("website")} />
+          <FormActions state={state} label={waitlistLabel} note="We only use your details to tell you about RydCo." />
         </>
       )}
     </form>

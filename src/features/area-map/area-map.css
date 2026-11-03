@@ -1,0 +1,43 @@
+/* The area map's look over MapLibre's own styles. The light map is warmed toward the site's neutrals so the pin and
+   the card read first, and the credit takes the site's type and colours. */
+.area-map .maplibregl-canvas {
+  filter: sepia(0.22) saturate(1.1);
+}
+/* The credit, in the row above the card: the (i) button, opening to the credit line. */
+.area-credit.maplibregl-ctrl-bottom-left {
+  position: static;
+  min-width: 0;
+}
+.area-credit .maplibregl-ctrl.maplibregl-ctrl-attrib {
+  margin: 0;
+  background: var(--color-screen);
+  color: var(--color-ink-soft);
+  font-size: 11px;
+  box-shadow: var(--shadow-panel);
+}
+.area-credit .maplibregl-ctrl-attrib a {
+  color: var(--color-ink);
+}
+.area-credit .maplibregl-ctrl-attrib-button {
+  background-color: var(--color-screen);
+}
+.area-credit .maplibregl-ctrl-attrib-button:focus {
+  box-shadow: none;
+}
+.area-credit .maplibregl-ctrl-attrib-button:focus-visible {
+  outline: 2px solid var(--color-accent-strong);
+  outline-offset: 2px;
+}
+
+/* The pin lifts while the map moves under it, and drops back when it rests. */
+.area-pin {
+  transition: translate 0.2s var(--ease-out-soft);
+}
+.area-pin[data-moving] {
+  translate: 0 -10px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .area-pin {
+    transition: none;
+  }
+}

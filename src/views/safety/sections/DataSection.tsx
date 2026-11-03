@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 import { Arrow } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
 import { reveal } from "@/lib/reveal";
@@ -15,9 +15,9 @@ export function DataSection() {
             Your date of birth and exact saved places stay private, and drivers&rsquo; ID documents are used only for these checks. You can delete your account
             from the app at any time.
           </p>
-          <Link href="/privacy/" className="inline-flex items-center gap-2 py-2 t-link">
+          <Button href="/privacy/" variant="ghost" className="justify-self-start">
             Read the privacy policy <Arrow />
-          </Link>
+          </Button>
         </div>
       </div>
     </Section>

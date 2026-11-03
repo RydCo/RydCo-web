@@ -1,4 +1,4 @@
-import type { Tone } from "./tones";
+import { toneOn, type Tone } from "./tones";
 
 export function Car({ tone, transform, scale, live }: { tone: Tone; transform?: string; scale?: number; live?: boolean }) {
   return (
@@ -12,5 +12,14 @@ export function Car({ tone, transform, scale, live }: { tone: Tone; transform?: 
       <circle className={tone.body} cx="-8.5" cy="-1.5" r="3.2" />
       <circle className={tone.body} cx="8.5" cy="-1.5" r="3.2" />
     </g>
+  );
+}
+
+// The car on its own as a small mark: parked at the end of the hero's route check, riding the header's route line.
+export function CarMark({ tone = toneOn.screen, className = "h-[16px] w-[26px]" }: { tone?: Tone; className?: string }) {
+  return (
+    <svg viewBox="-16 -17 32 20" aria-hidden="true" className={`block ${className}`}>
+      <Car tone={tone} />
+    </svg>
   );
 }

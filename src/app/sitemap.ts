@@ -1,23 +1,20 @@
 import type { MetadataRoute } from "next";
+import { footerNav, legalNav } from "@/config/navigation";
 import { site } from "@/config/site";
 
 export const dynamic = "force-static";
 
-const routes = [
-  { path: "/", priority: 1 },
-  { path: "/how-it-works/", priority: 0.9 },
-  { path: "/safety/", priority: 0.8 },
-  { path: "/drivers/", priority: 0.8 },
-  { path: "/organizations/", priority: 0.8 },
-  { path: "/contact/", priority: 0.6 },
-  { path: "/privacy/", priority: 0.3 },
-  { path: "/terms/", priority: 0.3 },
+// Every page is in the navigation config, so the sitemap reads it rather than keeping its own list.
+const pages = [
+  { href: "/", priority: 1 },
+  ...footerNav.map((p) => ({ href: p.href, priority: 0.7 })),
+  ...legalNav.map((p) => ({ href: p.href, priority: 0.3 })),
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((r) => ({
-    url: new URL(r.path, site.url).toString(),
+  return pages.map((p) => ({
+    url: new URL(p.href, site.url).toString(),
     changeFrequency: "monthly",
-    priority: r.priority,
+    priority: p.priority,
   }));
 }

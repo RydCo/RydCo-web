@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { site } from "@/config/site";
+import { mailto } from "@/lib/mailto";
 import { LegalPage } from "@/views/legal/LegalPage";
 
 const mail = (
-  <a href={`mailto:${site.email}`} className="font-semibold underline underline-offset-4">
+  <a href={mailto()} className="font-semibold underline underline-offset-4">
     {site.email}
   </a>
 );
@@ -19,12 +20,18 @@ export function TermsView() {
           title: "Accepting these terms",
           body: (
             <>
+              {/* [FILL] Once RydCo is registered, name the company and its address: "between you and RydCo, meaning <company>, <address>". */}
               <p>
                 These terms are an agreement between you and RydCo. You accept them, and acknowledge our{" "}
                 <Link href="/privacy/" className="font-semibold underline underline-offset-4">
                   privacy policy
                 </Link>
-                , by ticking the box before your account is created. We can&rsquo;t create an account without it, and we keep a record of the version you accepted.
+                , by ticking the box in the app before your account is created. We can&rsquo;t create an account without it, and we keep a record of the version you
+                accepted. Agreeing in the app is as binding as signing on paper.
+              </p>
+              <p>
+                The app hasn&rsquo;t opened yet. Joining the waitlist or sending a message on this website doesn&rsquo;t create an account, doesn&rsquo;t promise
+                you a seat or a place as a driver, and doesn&rsquo;t mean you have accepted these terms. Our privacy policy explains how we use what you send.
               </p>
               <p>
                 Accepting these terms doesn&rsquo;t give us access to your camera, location or notifications. Your phone asks you for each one separately. Driver
@@ -57,7 +64,10 @@ export function TermsView() {
             <ul>
               <li>You must be 18 or older, and able to enter into a contract.</li>
               <li>Riders need a Pakistani mobile number and a profile. They don&rsquo;t need to submit documents.</li>
-              <li>Drivers must be 18 or older, hold valid Punjab-issued documents, and pass every driver check before publishing a ride.</li>
+              <li>
+                Drivers must hold a Punjab-issued CNIC, a current car driving licence (not a learner permit) and the car&rsquo;s registration, and pass every
+                driver check before publishing a ride.
+              </li>
               <li>One account per person. The details you give must be true and your own.</li>
               <li>During the pilot, trips must be within the supported areas in Lahore.</li>
             </ul>
@@ -68,10 +78,17 @@ export function TermsView() {
           title: "Cost sharing and payments",
           body: (
             <ul>
-              <li>RydCo suggests each rider&rsquo;s share from the distance, the car&rsquo;s class and the fuel price, locked when the ride is published.</li>
-              <li>A share is a contribution to the cost of a trip the driver is already making. It isn&rsquo;t a fare, and a driver must not use RydCo to make a profit.</li>
+              <li>
+                RydCo works out each rider&rsquo;s share from the distance, the car&rsquo;s class and the fuel price, which is locked when the ride is published. The
+                fuel is split between everyone in the car, the driver included, plus a small pickup fee for each stop.
+              </li>
+              <li>A share never goes above what a rider saw when they requested the seat. When another rider joins, it goes down.</li>
+              <li>
+                A share is a contribution to the cost of a trip the driver is already making. It isn&rsquo;t a fare, and a driver must not use RydCo to make a profit.
+                Punjab law requires a permit to carry passengers for hire or reward, including through an app. RydCo isn&rsquo;t for that.
+              </li>
               <li>Drivers must not ask for more than the share shown in the app, or for payment outside what the app shows.</li>
-              <li>Riders pay drivers directly. RydCo does not process or hold payments.</li>
+              <li>Riders pay drivers directly, in cash, JazzCash, NayaPay or bank transfer. RydCo does not process or hold payments.</li>
               <li>
                 Both sides confirm the payment after each trip. A confirmation records what the two of you tell us. RydCo doesn&rsquo;t check wallet or bank transfers
                 itself.
@@ -89,10 +106,13 @@ export function TermsView() {
               <li>A request is not a booking. A seat is yours once the driver confirms.</li>
               <li>Cancelling more than 60 minutes before departure is free.</li>
               <li>Cancelling within 60 minutes is free but adds a late-cancel strike.</li>
-              <li>Cancelling after the trip has started means a cancel fee to the driver.</li>
-              <li>A rider who doesn&rsquo;t show up after the 3-minute wait owes their full share and gets a strike.</li>
+              <li>Cancelling after the trip has started means a cancel fee to the driver. You can book again once it&rsquo;s paid.</li>
+              <li>
+                At each pickup, the driver waits 3 minutes before they can mark a no-show. A rider who doesn&rsquo;t show up owes their full share and gets a
+                strike.
+              </li>
               <li>Drivers who cancel late or don&rsquo;t show up get strikes too. Riders owe nothing when a driver cancels.</li>
-              <li>After three strikes, an account is suspended while it is reviewed.</li>
+              <li>After three strikes, an account is paused while a person reviews it.</li>
             </ul>
           ),
         },
@@ -149,7 +169,7 @@ export function TermsView() {
                 Gender on RydCo is what people say about themselves, and is never shown as verified. Please use your own judgement on every trip.
               </p>
               <p>
-                SOS and trip sharing are there to help, but they don&rsquo;t replace emergency services. SOS alerts your trusted contact by SMS. It doesn&rsquo;t call the
+                SOS and trip sharing are there to help, but they don&rsquo;t replace emergency services. SOS sends your trusted contact an SMS with your live location and the vehicle&rsquo;s details. It doesn&rsquo;t call the
                 police or an ambulance, RydCo doesn&rsquo;t send help, and an alert can fail if your phone has no signal, battery or permission.
               </p>
               <p>If you are in danger, call for help directly:</p>
@@ -215,7 +235,7 @@ export function TermsView() {
               <p>These terms are governed by the laws of Pakistan, as they apply in Punjab.</p>
               <p>
                 If something goes wrong, please write to {mail} first, and we aim to reply within 15 days. Otherwise, disputes go to the courts at Lahore. You can still go
-                to a Consumer Court where the law allows. Those time limits can be short, so don&rsquo;t wait for us if you plan to file a claim.
+                to a Consumer Court where the law allows. Those time limits can be short, often 30 days, so don&rsquo;t wait for us if you plan to file a claim.
               </p>
             </>
           ),
@@ -234,7 +254,12 @@ export function TermsView() {
         {
           id: "contact",
           title: "Contact",
-          body: <p>Questions about these terms: {mail}</p>,
+          body: (
+            <>
+              <p>Questions about these terms: {mail}</p>
+              {/* [FILL] Once RydCo is registered, add a postal line: <p>Post: company name, registered address</p> */}
+            </>
+          ),
         },
       ]}
     />

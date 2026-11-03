@@ -1,53 +1,48 @@
 import Link from "next/link";
 import { Lockup } from "@/components/brand/Lockup";
-import { footerNav } from "@/config/navigation";
+import { ContactLinks } from "@/components/ui/ContactLinks";
+import { footerNav, legalNav } from "@/config/navigation";
 import { site } from "@/config/site";
+
+const link = "inline-block py-1.5 underline-offset-4 hover:underline";
 
 export function Footer() {
   return (
     <footer className="on-ink field-ink text-surface">
-      <div className="wrap pt-24 pb-10 lg:pt-32">
-        <Lockup on="ink" title="RydCo" className="w-full max-w-[880px]" />
-        <p className="mt-8 font-display text-[clamp(24px,2.6vw,36px)] leading-tight font-bold">
-          Your commute, <span className="whitespace-nowrap">in good company.</span>
-        </p>
-
-        <div className="mt-16 grid gap-10 md:grid-cols-12 lg:mt-24">
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 md:col-span-8">
-            {footerNav.map((group) => (
-              <div key={group.title}>
-                <h2 className="font-display text-[18px] font-bold text-brand">{group.title}</h2>
-                <ul className="mt-3 grid gap-1">
-                  {group.links.map((l) => (
-                    <li key={l.label}>
-                      <Link href={l.href} className="inline-block py-1.5 text-[16px] underline-offset-4 hover:underline">
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
-          <div className="md:col-span-4">
-            <h2 className="font-display text-[18px] font-bold text-brand">Say hello</h2>
-            <ul className="mt-3 grid gap-1 text-[16px]">
-              <li>
-                <a href={`mailto:${site.email}`} className="inline-block py-1.5 underline underline-offset-4">
-                  {site.email}
-                </a>
-              </li>
-              <li>
-                <a href={site.instagram} target="_blank" rel="noopener" className="inline-block py-1.5 underline underline-offset-4">
-                  Instagram {site.instagramHandle}
-                </a>
-              </li>
-              <li className="py-1.5">Starting with a pilot in {site.city}</li>
-            </ul>
-          </div>
+      <div className="wrap grid gap-10 py-14 lg:grid-cols-12 lg:items-end lg:py-20">
+        <div className="lg:col-span-5">
+          <Link href="/" aria-label="RydCo home" className="inline-block rounded-xl">
+            <Lockup on="ink" className="w-[168px]" />
+          </Link>
+          <p className="mt-6 t-title">{site.tagline.text}</p>
+          <p className="mt-1">{site.pilotLine}</p>
         </div>
 
-        <p className="mt-16 text-[14px]">© {new Date().getFullYear()} RydCo.</p>
+        <nav aria-label="Footer" className="lg:col-span-7 lg:justify-self-end">
+          <ul className="flex flex-wrap gap-x-6 gap-y-1 font-semibold">
+            {footerNav.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={link}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between lg:col-span-12">
+          <ContactLinks look="icons" />
+          <ul className="flex flex-wrap items-center gap-x-6 t-small">
+            <li>© {new Date().getFullYear()} RydCo.</li>
+            {legalNav.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className={link}>
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </footer>
   );

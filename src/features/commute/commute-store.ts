@@ -1,10 +1,9 @@
 import { useSyncExternalStore } from "react";
 
 // The route a visitor has picked, shared by the hero's route check and the waitlist form, so nobody picks it twice.
-// `by` names the picker that changed it last, so only that one announces the answer to screen readers.
-export type Commute = { from: string; to: string; by: string | null };
+type Commute = { from: string; to: string };
 
-const empty: Commute = { from: "", to: "", by: null };
+const empty: Commute = { from: "", to: "" };
 let current = empty;
 const listeners = new Set<() => void>();
 

@@ -8,7 +8,7 @@
  *   1. In the rydcoapp@gmail.com Google Drive, create a Google Sheet called "RydCo sign-ups".
  *   2. In the sheet: Extensions → Apps Script. Replace the code there with this whole file. Save.
  *   3. Deploy → New deployment → type "Web app". Execute as: Me. Who has access: Anyone. Deploy, and allow access.
- *   4. Copy the Web app URL (ends in /exec), put it in formEndpoint in src/config/site.ts, then redeploy.
+ *   4. Copy the Web app URL (ends in /exec), put it in formEndpoint in src/config/forms.mjs, then redeploy.
  *
  * Each form gets its own tab (waitlist, contact), created on the first submission. Drivers sign up on the waitlist too.
  * The old "driver" tab, from when drivers had a form of their own, is left as it was.
@@ -32,7 +32,7 @@ const filled = (v) => String(v || "").trim() !== "";
 const FORMS = {
   waitlist: {
     title: "Waitlist",
-    fields: ["name", "phone", "email", "role", "from", "to", "covered", "car", "leave"],
+    fields: ["name", "phone", "email", "role", "from", "to", "car", "leave"],
     valid: (p) => filled(p.name) && /^03\d{2}-\d{7}$/.test(p.phone || "") && EMAIL.test(p.email || ""),
   },
   contact: {

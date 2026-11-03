@@ -7,8 +7,8 @@ import { toneOn } from "./tones";
 // --band-path); without scroll-driven animations, or with reduced motion, it stays parked in the middle.
 const bandPath = "M-40 104 C260 26 460 70 720 70 S1180 116 1480 36";
 
-export function RouteBand({ on = "brand" }: { on?: keyof typeof toneOn }) {
-  const tone = toneOn[on];
+export function RouteBand() {
+  const tone = toneOn.brand;
   return (
     <div className="band overflow-hidden" aria-hidden="true" style={{ "--band-path": `path("${bandPath}")` } as CSSProperties}>
       <svg viewBox="0 0 1440 140" preserveAspectRatio="xMidYMid slice" className="block h-[96px] w-full md:h-[140px]">

@@ -1,19 +1,13 @@
 import { Button } from "@/components/ui/Button";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
 import { ManyIntoOne } from "@/views/home/components/ManyIntoOne";
 
 export function HowItWorksSection() {
   return (
     <Section ground="panel" labelledBy="how-title">
-      <div className="grid gap-6 lg:grid-cols-12">
-        <h2 id="how-title" className="t-h2 lg:col-span-6" {...reveal(0)}>
-          How RydCo works
-        </h2>
-        <p className="max-w-[40ch] lg:col-span-5 lg:col-start-8 lg:self-end" {...reveal(1)}>
-          Three steps, all in the app. Nothing is booked until the driver says yes.
-        </p>
-      </div>
+      <SectionHeading layout="split" id="how-title" title="How RydCo works" lead="Three steps, all in the app. Nothing is booked until the driver says yes." />
       <div className="mt-12 lg:mt-16" {...reveal(2)}>
         <ManyIntoOne />
       </div>

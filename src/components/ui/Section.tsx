@@ -9,19 +9,22 @@ const grounds: Record<Ground, string> = {
   ink: "on-ink field-ink text-surface",
 };
 
+// `bottom` is for a section that carries straight on from the hero above it, on the same ground.
+const pads = { full: "py-24 lg:py-40", bottom: "pb-24 lg:pb-40" };
+
 type Props = {
   ground?: Ground;
+  pad?: keyof typeof pads;
   id?: string;
   labelledBy?: string;
   className?: string;
-  inner?: string;
   children: ReactNode;
 };
 
-export function Section({ ground = "surface", id, labelledBy, className = "", inner = "", children }: Props) {
+export function Section({ ground = "surface", pad = "full", id, labelledBy, className = "", children }: Props) {
   return (
-    <section id={id} aria-labelledby={labelledBy} className={`${grounds[ground]} py-24 lg:py-40 ${className}`}>
-      <div className={`wrap ${inner}`}>{children}</div>
+    <section id={id} aria-labelledby={labelledBy} className={`${grounds[ground]} ${pads[pad]} ${className}`}>
+      <div className="wrap">{children}</div>
     </section>
   );
 }

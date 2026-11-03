@@ -44,5 +44,5 @@ next-env.d.ts
 /design-reference/
 /.taste-skill/
 
-# motion graphics scene build (npm run motion)
+# motion graphics scene build (pnpm motion)
 /.motion-build/

@@ -1,14 +1,13 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
 
 export function ProofSection() {
   return (
-    <Section ground="brand" labelledBy="proof-title">
+    <Section ground="panel" labelledBy="proof-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-10">
         <div className="lg:col-span-6">
-          <h2 id="proof-title" className="t-h2" {...reveal(0)}>
-            Tested with real commuters
-          </h2>
+          <SectionHeading id="proof-title" title="Tested with real commuters" />
           <div className="mt-8 grid gap-5" {...reveal(1)}>
             <p>
               Before building the mobile app, we ran an early web version for FAST-NUCES students and faculty. Without a marketing push, commuters found it and

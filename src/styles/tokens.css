@@ -1,7 +1,21 @@
-/* Colours and radius live in theme.generated.css, made from src/config/theme.mjs. These don't change with the theme.
-   The palette is closed: Tailwind's default colours are removed there, so only the theme's colours exist. */
+/* Colours, radius and easing live in theme.generated.css, made from src/config/theme.mjs. The palette is closed:
+   Tailwind's default colours are removed there, so only the theme's colours exist. Shadows here are made from them. */
 @theme {
-  --ease-out-soft: cubic-bezier(0.22, 0.8, 0.26, 1);
+  /* Field and secondary-button edges: thin at rest, the orange when a field is focused or open, deep orange on an error. */
+  --shadow-edge: inset 0 0 0 1.5px var(--color-line);
+  --shadow-edge-strong: inset 0 0 0 2px var(--color-accent-strong);
+  --shadow-edge-error: inset 0 0 0 2.5px var(--color-accent-deep);
+  /* Things that float over the page: the header once it shrinks, and the open menu. */
+  --shadow-float: 0 24px 60px -24px color-mix(in srgb, var(--color-ink-deep) 45%, transparent);
+  /* The safety deck's cards, lifted off the ink section behind them. */
+  --shadow-deck: 0 30px 60px -24px color-mix(in srgb, var(--color-ink-deep) 90%, transparent);
+  /* Menus that open over a field: an edge, then the float. */
+  --shadow-panel: 0 0 0 1px var(--color-line), 0 24px 48px -20px color-mix(in srgb, var(--color-ink-deep) 40%, transparent);
+  /* Inside the phone mockups: a note lifting off the map, and a bottom sheet rising over it. */
+  --shadow-lift: 0 10px 24px -14px var(--color-ink-deep);
+  --shadow-sheet: 0 -14px 28px -22px var(--color-ink-deep);
+  /* Behind a dialog: the page dimmed with the deepest ink. */
+  --color-scrim: color-mix(in srgb, var(--color-ink-deep) 55%, transparent);
 }
 
 @theme inline {
