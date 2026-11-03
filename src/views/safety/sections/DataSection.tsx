@@ -11,8 +11,10 @@ export function DataSection() {
           Your data, kept close
         </h2>
         <div className="grid gap-5 lg:col-span-6 lg:col-start-7" {...reveal(1)}>
-          <p>Your date of birth and exact saved places stay private. Drivers&rsquo; ID documents are used only for the checks above.</p>
-          <p>Documents are kept and deleted under our retention policy, and you can deactivate or delete your account from the app at any time.</p>
+          <p>
+            Your date of birth and exact saved places stay private, and drivers&rsquo; ID documents are used only for these checks. You can delete your account
+            from the app at any time.
+          </p>
           <Link href="/privacy/" className="inline-flex items-center gap-2 py-2 t-link">
             Read the privacy policy <Arrow />
           </Link>

@@ -20,10 +20,7 @@ export function WhoItsForSection() {
       <h2 id="who-title" className="t-h2" {...reveal(0)}>
         Who RydCo is for
       </h2>
-      <p className="mt-4 max-w-[44ch]" {...reveal(1)}>
-        One car and a few people going the same way. Here&rsquo;s where you fit.
-      </p>
-      <div className="mt-10 lg:mt-14" {...reveal(2)}>
+      <div className="mt-10 lg:mt-14" {...reveal(1)}>
         <WhoFor
           rows={audiences}
           previews={[

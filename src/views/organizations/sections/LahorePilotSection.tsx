@@ -1,19 +1,9 @@
 import { Section } from "@/components/ui/Section";
-import { TickItem } from "@/components/ui/TickItem";
 import { pilot } from "@/config/pilot";
 import { site } from "@/config/site";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
 import { reveal } from "@/lib/reveal";
-
-const pilotFeatures = [
-  "Sign up with a phone number",
-  "Driver checks: CNIC, live selfie, licence and vehicle, reviewed within 24 hours",
-  "Women-only rides",
-  "Trip sharing with a trusted contact, and SOS on every trip",
-  "Phone numbers stay hidden; chat opens once a seat is confirmed",
-  "Fuel share worked out by the app, paid to the driver directly",
-];
 
 export function LahorePilotSection() {
   return (
@@ -32,17 +22,9 @@ export function LahorePilotSection() {
             RydCo starts with weekday commutes on a set of routes in {site.city}, so we can get matching and safety right before we grow.
           </p>
           <h3 className="t-title mt-10" {...reveal(2)}>
-            In the app
-          </h3>
-          <ul className="mt-4 grid gap-3" {...reveal(3)}>
-            {pilotFeatures.map((f) => (
-              <TickItem key={f}>{f}</TickItem>
-            ))}
-          </ul>
-          <h3 className="t-title mt-10" {...reveal(4)}>
             Where it runs
           </h3>
-          <p className="mt-3 max-w-[56ch]" {...reveal(5)}>
+          <p className="mt-3 max-w-[56ch]" {...reveal(3)}>
             From {listOf(pilot.starts.filter((a) => a.covered).map((a) => a.name))} to {listOf(pilot.destinations.map((a) => a.name))}.
           </p>
         </div>

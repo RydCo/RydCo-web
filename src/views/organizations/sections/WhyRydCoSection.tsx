@@ -18,8 +18,7 @@ export function WhyRydCoSection() {
         <div {...reveal(2)}>
           <h3 className="t-title">What RydCo does</h3>
           <p className="mt-3 max-w-[48ch]">
-            RydCo fills those seats. It matches commuters going the same way, checks every driver before they can offer a ride, and works out a fair share of the
-            fuel. Drivers earn back their fuel cost, and riders pay less than going alone.
+            RydCo fills those seats, with checked drivers and a fair share of the fuel. Drivers earn back their fuel cost, and riders pay less than going alone.
           </p>
         </div>
       </div>
