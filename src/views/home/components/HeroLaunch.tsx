@@ -5,7 +5,7 @@ import { Car } from "@/components/brand/Car";
 import { toneOn, type Tone } from "@/components/brand/tones";
 import { Tick } from "@/components/ui/icons";
 import { launchIsOff } from "@/lib/hero-launch";
-import { playCarSound } from "./car-sound";
+import { loadCarSound, playCarSound, type CarSound } from "./car-sound";
 
 // What happens on the first scroll down from the home hero, on every page load. The page darkens around the phone, the
 // little car parked under the pilot label switches its headlights on and drives into the phone's screen. Then the phone
@@ -134,7 +134,7 @@ function holdStill() {
   };
 }
 
-function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, sound: AudioContext | null) {
+function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, sound: CarSound | null) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const midX = vw / 2;
@@ -222,16 +222,9 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, sound
   const p2 = { x: p3.x - (towards.x / towardsLength) * dist * 0.36, y: p3.y - (towards.y / towardsLength) * dist * 0.36 };
   const way = road(p0, p1, p2, p3);
 
-  // The engine, panned with the car from where it starts to the phone.
+  // The car's sound, panned with it from where it starts to the phone.
   const toPan = (x: number) => Math.max(-0.6, Math.min(0.6, ((x / vw) * 2 - 1) * 0.8));
-  if (sound)
-    playCarSound(sound, {
-      catchAt: at.lights / 1000,
-      driveEnd: (at.drive + lasts.drive) / 1000,
-      enterAt: at.enter / 1000,
-      goneAt: (at.enter + lasts.enter) / 1000,
-      pan: [toPan(p0.x), toPan(p3.x)],
-    });
+  if (sound) playCarSound(sound, [toPan(p0.x), toPan(p3.x)], at.lights / 1000, (at.drive + lasts.drive) / 1000);
 
   // The car is one small layer, moved by CSS transform so the browser only slides it, never redraws it. Its drawing is
   // in the car's own units (30 long), sized here to the parked car.
@@ -372,14 +365,14 @@ export function HeroLaunch() {
     if (!stage || !hero || !phone || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     // Sound, made ready on the visitor's first click, tap or key press: the only moments a browser lets a page start it.
-    let audio: AudioContext | null = null;
+    let audio: CarSound | null = null;
     const gestures = ["pointerdown", "keydown", "touchend"] as const;
     const unlock = () => {
       const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } }).userActivation;
       if (activation && !activation.isActive) return;
       try {
-        audio ??= new AudioContext();
-        if (audio.state === "suspended") audio.resume().catch(() => {});
+        audio ??= loadCarSound(new AudioContext());
+        if (audio.ctx.state === "suspended") audio.ctx.resume().catch(() => {});
       } catch {
         audio = null;
       }
@@ -402,16 +395,16 @@ export function HeroLaunch() {
       gestures.forEach((g) => window.removeEventListener(g, unlock));
       // Made on a click, tap or key press, so it's allowed to play, even if it's still starting up from one just now. It
       // plays once, so it's closed when it's done.
-      launch(stage, hero, phone, audio && audio.state !== "closed" ? audio : null);
+      launch(stage, hero, phone, audio && audio.ctx.state !== "closed" ? audio : null);
       const done = audio;
       audio = null;
-      window.setTimeout(() => done?.close().catch(() => {}), 2500);
+      window.setTimeout(() => done?.ctx.close().catch(() => {}), 2500);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       gestures.forEach((g) => window.removeEventListener(g, unlock));
-      audio?.close().catch(() => {});
+      audio?.ctx.close().catch(() => {});
     };
   }, []);
 

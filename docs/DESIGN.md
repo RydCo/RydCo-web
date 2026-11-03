@@ -226,10 +226,12 @@ One loud moment, everything else quiet.
   section rises to meet the car. Live, not a video, so it starts at once from wherever the phone is. On phones it waits
   until the mockup reaches the middle of the screen, so the route check stays usable. It has sound where the browser
   allows it, which is only after the visitor has clicked, tapped or pressed a key, so a visit that has only scrolled
-  stays silent: the starter cranks, the engine catches as the headlights come on and pulls away, following the car
-  across the page, then it's muffled as the car goes into the screen (about 1.2s, quiet, made in the browser by
-  `car-sound.ts`, so there's no file to load). The page holds still while it plays, so the car stays on its way to the
-  phone, moves to the next section once it's dark, and scrolls again as the night lifts. This is the site's one scripted
+  stays silent: the starter cranks, the engine catches as the headlights come on, it pulls away and passes, following
+  the car across the page, then it's muffled, with a whoosh, as the car goes into the screen. It's one 1.45s recording
+  (`public/sounds/car-launch.mp3`, 18 KB, fetched only after that first click), mixed to the launch's timing from three
+  Mixkit sound effects, which are free to use on a website with no credit (`car-sound.ts` names them); if the launch's
+  timing changes, it has to be remixed. The page holds still while it plays, so the car stays on its way to the phone,
+  moves to the next section once it's dark, and scrolls again as the night lifts. This is the site's one scripted
   scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and while a
   dropdown is open.
 - No parallax, other cursor effects (the Hamza card's tilt above is the one, at the owner's request), other scroll-jacking
