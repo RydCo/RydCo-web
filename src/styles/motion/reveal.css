@@ -5,8 +5,8 @@
     opacity: 0;
     transform: translateY(16px);
     transition:
-      opacity 0.6s var(--ease-out-soft),
-      transform 0.6s var(--ease-out-soft);
+      opacity 0.7s var(--ease-out-soft),
+      transform 0.8s var(--ease-out-soft);
     transition-delay: var(--reveal-delay, 0ms);
   }
   .js [data-reveal].is-in {
@@ -16,13 +16,6 @@
   .js:not(.reveal-ready) [data-reveal] {
     animation: reveal-fallback 0s 2.5s forwards;
   }
-}
-/* While the home hero's launch covers the page (views/home/components/HeroLaunch.tsx), the section it lands on may
-   already count as seen. Its drawings wait, and start as the night lifts off them. */
-.launching [data-play] *,
-.launching [data-play] *::before,
-.launching [data-play] *::after {
-  animation-play-state: paused !important;
 }
 @keyframes reveal-fallback {
   to {

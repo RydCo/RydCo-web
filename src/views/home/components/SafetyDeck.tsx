@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
+import { prefersReducedMotion } from "@/hooks/use-reduced-motion";
 
 // Turns the safety board into a deck of cards that moves on by itself: one card large in the middle, its neighbours fanned
 // out behind it, looping. Every time a card arrives it acts out its feature, reset once it's out of sight so it's ready to
@@ -18,7 +19,7 @@ export function SafetyDeck({ children }: { children: ReactNode }) {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+    if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
       root.classList.add("deck-off");
       return;
     }

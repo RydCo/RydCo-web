@@ -2,6 +2,7 @@ import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
 import { Tick } from "@/components/ui/icons";
 import { Header, Body } from "./parts";
+import { workedExample } from "@/config/worked-example";
 
 export function TripLiveScreen() {
   return (
@@ -22,7 +23,7 @@ export function TripLiveScreen() {
             <span>Arfa Tower gate</span>
             <span className="tabular-nums">8:20</span>
           </p>
-          <p className="mt-2 w-fit rounded-full bg-panel px-2.5 py-1 text-[12px] font-semibold">Rs 180 · locked</p>
+          <p className="mt-2 w-fit rounded-full bg-panel px-2.5 py-1 text-[12px] font-semibold">{workedExample.pooled} · locked</p>
         </div>
         <div className="grid grid-cols-3 gap-2">
           {["Share trip", "Chat"].map((a) => (

@@ -1,17 +1,23 @@
 import type { ReactNode } from "react";
+import { Back } from "@/components/ui/icons";
 
 // The app's real screens (from app-mocks/v8.html), rebuilt small enough to sit inside PhoneFrame.
 // Names, places and amounts are the app's own examples.
+
+// The app's round back button, drawn (not a real control) at the top of a mock screen.
+export function BackMark() {
+  return (
+    <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-screen">
+      <Back />
+    </span>
+  );
+}
 
 export function Header({ title, back = true }: { title: string; back?: boolean }) {
   return (
     <div className="flex flex-none items-center gap-2 px-4 pt-1 pb-3">
       {back && (
-        <span aria-hidden="true" className="grid h-8 w-8 place-items-center rounded-full bg-screen">
-          <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12.5 4.5 7 10l5.5 5.5" />
-          </svg>
-        </span>
+        <BackMark />
       )}
       <span className="font-display text-[16px] font-bold">{title}</span>
     </div>

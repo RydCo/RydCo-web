@@ -1,4 +1,4 @@
-// Renders the site's motion graphics to video: `npm run motion` (all), `npm run motion -- two-rides` (one), and
+// Renders the site's motion graphics to video: `pnpm motion` (all), `pnpm motion two-rides` (one), and
 // `--no-build` to reuse the last scene build. Each scene is a real page, built only for this (page.motion.tsx). Playwright
 // steps its animations to the exact time of every frame and FFmpeg encodes the frames, so a video comes out identical
 // each run, whatever the machine's speed. Setup and how to add a scene: docs/ARCHITECTURE.md.

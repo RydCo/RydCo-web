@@ -1,6 +1,7 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
-import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
+import { LahoreScreen } from "@/features/app-preview/screens/LahoreScreen";
 import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
 import { SharesScreen } from "@/features/app-preview/screens/SharesScreen";
 import { StopsScreen } from "@/features/app-preview/screens/StopsScreen";
@@ -17,9 +18,7 @@ const audiences = [
 export function WhoItsForSection() {
   return (
     <Section labelledBy="who-title">
-      <h2 id="who-title" className="t-h2" {...reveal(0)}>
-        Who RydCo is for
-      </h2>
+      <SectionHeading id="who-title" title="Who RydCo is for" />
       <div className="mt-10 lg:mt-14" {...reveal(1)}>
         <WhoFor
           rows={audiences}
@@ -33,8 +32,8 @@ export function WhoItsForSection() {
             <PhoneFrame key="o" label="One car picking up colleagues on the way to the same workplace">
               <StopsScreen />
             </PhoneFrame>,
-            <PhoneFrame key="p" label="The Lahore pilot coverage map">
-              <CoverageScreen />
+            <PhoneFrame key="p" label="The RydCo app's map of commutes across Lahore">
+              <LahoreScreen />
             </PhoneFrame>,
           ]}
         />

@@ -24,7 +24,7 @@ export function WhoFor({ rows, previews }: { rows: Row[]; previews: ReactNode[] 
                 <span className="block font-display text-[clamp(28px,3.2vw,44px)] leading-[1.05] font-extrabold tracking-tight">{row.title}</span>
                 <span className="mt-1 block">{row.line}</span>
               </span>
-              <Arrow className="h-7 w-7 transition-transform duration-150 group-hover:translate-x-1" />
+              <Arrow size="h-7 w-7" className="transition-transform duration-150 group-hover:translate-x-1" />
             </Link>
           </li>
         ))}

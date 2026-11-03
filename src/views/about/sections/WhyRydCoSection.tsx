@@ -1,12 +1,11 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
 
 export function WhyRydCoSection() {
   return (
-    <Section id="partners" labelledBy="why-title">
-      <h2 id="why-title" className="t-h2" {...reveal(0)}>
-        Why we&rsquo;re building RydCo
-      </h2>
+    <Section labelledBy="why-title">
+      <SectionHeading id="why-title" title="Why we&rsquo;re building RydCo" />
       <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-10 lg:mt-16">
         <div {...reveal(1)}>
           <h3 className="t-title">The problem</h3>

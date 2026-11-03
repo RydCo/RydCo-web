@@ -1,8 +1,8 @@
 import { Badge } from "@/components/ui/Badge";
+import { allChecks } from "@/config/checks";
 import { Header, Body } from "./parts";
 
 export function DriverProfileScreen() {
-  const checks = ["Phone verified", "CNIC reviewed", "Live selfie checked", "Licence checked", "Vehicle checked"];
   return (
     <>
       <Header title="Your driver" />
@@ -17,10 +17,10 @@ export function DriverProfileScreen() {
         </div>
         <p className="mt-1 font-semibold">Checks</p>
         <ul className="grid gap-1.5">
-          {checks.map((c) => (
-            <li key={c} className="flex items-center justify-between rounded-[14px] bg-screen px-3 py-2">
-              <span>{c.replace(/ (verified|reviewed|checked)$/, "")}</span>
-              <Badge>{c.replace(/^.* (\w)(\w+)$/, (_m, a: string, b: string) => a.toUpperCase() + b)}</Badge>
+          {allChecks.map((c) => (
+            <li key={c.name} className="flex items-center justify-between rounded-[14px] bg-screen px-3 py-2">
+              <span>{c.name}</span>
+              <Badge>{c.state}</Badge>
             </li>
           ))}
         </ul>

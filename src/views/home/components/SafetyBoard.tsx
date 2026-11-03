@@ -1,10 +1,11 @@
-import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
-import { Tick, Arrow } from "@/components/ui/icons";
+import { Button } from "@/components/ui/Button";
+import { Arrow, Star } from "@/components/ui/icons";
+import { driverChecks, phoneCheck } from "@/config/checks";
 import { playAt, reveal } from "@/lib/reveal";
 
-// A board of the app's real safety controls, each enlarged and cropped by its tile's edges.
+// A board of the app's real safety controls, each drawn large inside its tile, clear of the edges.
 // Every item here is a feature shown in the app mocks; wording follows the app (never "NADRA verified").
 //
 // Tiles marked `play` act their feature out once (CSS in styles/motion/safety-board.css): the checks turn green one by one,
@@ -27,6 +28,9 @@ type TileProps = {
 };
 
 const grounds = { surface: "bg-surface", panel: "bg-panel", brand: "bg-brand" };
+
+// The driver checks fan out down the tile, each pushed in by a different amount.
+const checkStagger = ["", "mr-[1.2em]", "mr-[0.4em]", "mr-[1.6em]"];
 
 function Tile({ ground, title, line, place, step, play, big = 1, bigPhone = big * 1.2, children }: TileProps) {
   return (
@@ -51,23 +55,24 @@ export function SafetyBoard() {
         </h2>
         <div>
           <p>Checks before anyone drives, and tools on every ride.</p>
-          <Link href="/safety/" className="mt-3 inline-flex items-center gap-2 py-2 font-semibold text-brand underline decoration-2 underline-offset-[6px]">
+          <Button href="/safety/" variant="ghost" className="mt-1">
             How we keep trips safe <Arrow />
-          </Link>
+          </Button>
         </div>
       </li>
 
       <Tile ground="panel" step={1} play title="Every driver is checked" line="Reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
-        <div className="absolute top-6 -right-6 grid justify-items-end gap-2.5 text-[20px] sm:-right-10 sm:gap-3 sm:text-[34px] lg:text-[40px]">
-          <Badge className="sb-check pr-[1.6em]" style={playAt(250)}>CNIC reviewed</Badge>
-          <Badge className="sb-check mr-[2.4em]" style={playAt(600)}>Live selfie checked</Badge>
-          <Badge className="sb-check pr-[1.6em]" style={playAt(950)}>Licence checked</Badge>
-          <Badge className="sb-check mr-[3.2em]" style={playAt(1300)}>Vehicle checked</Badge>
+        <div className="absolute top-5 right-5 grid justify-items-end gap-2.5 text-[18px] sm:top-6 sm:right-6 sm:gap-3 sm:text-[28px] lg:text-[32px]">
+          {driverChecks.map((c, i) => (
+            <Badge key={c.name} className={`sb-check ${checkStagger[i % checkStagger.length]}`} style={playAt(250 + i * 350)}>
+              {c.badge}
+            </Badge>
+          ))}
         </div>
       </Tile>
 
       <Tile ground="brand" step={2} play big={1.25} title="Women-only rides" line="Choose to ride only with women." place="row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-3">
-        <div className="absolute top-5 -right-10 flex items-center gap-3 rounded-full bg-surface py-2.5 pr-12 pl-4 text-[14px] font-semibold sm:-right-12 sm:py-3 sm:pr-16 sm:pl-5 sm:text-[24px] lg:top-10 lg:text-[28px]">
+        <div className="absolute top-5 right-5 flex items-center gap-3 rounded-full bg-surface py-2 pr-2 pl-4 text-[14px] font-semibold sm:py-2.5 sm:pl-5 sm:text-[22px] lg:top-8 lg:text-[24px]">
           <span className="whitespace-nowrap">Women-only</span>
           <span className="sb-track relative h-[1.5em] w-[2.6em] flex-none rounded-full bg-ink" style={playAt(450)}>
             <span className="sb-knob absolute top-[0.15em] right-[0.15em] h-[1.2em] w-[1.2em] rounded-full bg-brand" style={playAt(450)} />
@@ -76,50 +81,48 @@ export function SafetyBoard() {
       </Tile>
 
       <Tile ground="surface" step={3} play big={1.6} title="Every rider too" line="Each account starts with a verified phone number." place="row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-2 lg:row-start-1">
-        <div className="absolute top-5 -right-5 text-[16px] sm:-right-6 sm:text-[24px] lg:top-6 lg:text-[28px]">
-          <Badge className="sb-check pr-[1.8em]" style={playAt(350)}>
-            Phone verified
+        <div className="absolute top-5 right-5 text-[16px] sm:text-[22px] lg:top-6 lg:text-[24px]">
+          <Badge className="sb-check" style={playAt(350)}>
+            {phoneCheck.badge}
           </Badge>
         </div>
       </Tile>
 
-      <Tile ground="brand" step={4} big={1.9} title="Numbers stay hidden" line="Chat opens once a seat is confirmed." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-1">
-        <div className="absolute top-4 -right-10 grid justify-items-end gap-2 text-[13px] sm:text-[18px]">
-          <p className="sb-bubble rounded-[22px] rounded-tr-[8px] bg-surface py-2.5 pr-14 pl-4 font-semibold whitespace-nowrap sm:py-3 sm:pl-5">I&rsquo;m at the gate</p>
-          <p className="sb-bubble mr-14 rounded-full bg-ink px-4 py-1.5 text-[0.85em] whitespace-nowrap text-surface tabular-nums">0300 ••• ••••</p>
+      <Tile ground="brand" step={4} big={1.6} title="Numbers stay hidden" line="Chat opens once a seat is confirmed." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-1">
+        <div className="absolute top-4 right-4 grid justify-items-end gap-2 text-[13px] sm:text-[16px]">
+          <p className="sb-bubble rounded-[22px] rounded-tr-[8px] bg-surface px-4 py-2.5 font-semibold whitespace-nowrap">I&rsquo;m at the gate</p>
+          <p className="sb-bubble mr-6 rounded-full bg-ink px-4 py-1.5 text-[0.85em] whitespace-nowrap text-surface tabular-nums">0300 ••• ••••</p>
         </div>
       </Tile>
 
       <Tile ground="surface" step={5} big={2.1} title="Report anytime" line="Every trip has a report button." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-3">
-        <span className="sb-report absolute top-5 -right-10 rounded-full bg-ink py-2.5 pr-14 pl-5 text-[15px] font-semibold whitespace-nowrap text-surface sm:py-3 sm:pr-16 sm:pl-6 sm:text-[22px]">Report</span>
+        <span className="sb-report absolute top-5 right-5 rounded-full bg-ink px-5 py-2.5 text-[15px] font-semibold whitespace-nowrap text-surface sm:text-[20px]">Report</span>
       </Tile>
 
       <Tile ground="panel" step={6} big={1.9} title="SOS on every trip" line="Sends your trusted contact your live location by SMS." place="row-span-2 lg:col-span-3 lg:col-start-10 lg:row-span-2 lg:row-start-5">
-        <span className="sb-sos absolute -top-6 -right-6 grid h-[100px] w-[100px] place-items-center rounded-full bg-sos font-display text-[22px] font-extrabold text-on-sos sm:-top-8 sm:-right-8 sm:h-[150px] sm:w-[150px] sm:text-[30px]">
-          <span className="-translate-x-2 translate-y-1.5 sm:-translate-x-2.5 sm:translate-y-2">SOS</span>
+        <span className="sb-sos absolute top-4 right-4 grid h-[72px] w-[72px] place-items-center rounded-full bg-sos font-display text-[18px] font-extrabold text-on-sos sm:h-[96px] sm:w-[96px] sm:text-[24px]">
+          SOS
         </span>
       </Tile>
 
-      <Tile ground="surface" step={7} play big={1.25} title="Rate every trip" line="Riders rate their driver after each ride." place="row-span-2 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-7">
-        <div className="absolute top-4 -right-8 flex gap-0.5 text-accent lg:top-6 lg:right-8">
+      <Tile ground="surface" step={7} play big={1.25} bigPhone={1.1} title="Rate every trip" line="Riders rate their driver after each ride." place="row-span-2 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-7">
+        <div className="absolute top-4 right-4 flex gap-0.5 text-accent lg:top-6 lg:right-6">
           {[0, 1, 2, 3, 4].map((i) => (
-            <svg key={i} viewBox="0 0 24 24" className="sb-star h-10 w-10 fill-current sm:h-12 sm:w-12 lg:h-14 lg:w-14" style={playAt(250 + i * 130)}>
-              <path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />
-            </svg>
+            <Star key={i} size="h-9 w-9 sm:h-11 sm:w-11 lg:h-12 lg:w-12" className="sb-star" style={playAt(250 + i * 130)} />
           ))}
         </div>
       </Tile>
 
       <Tile ground="brand" step={8} play big={1.2} bigPhone={0.9} title="Share your trip" line="Send your live trip to someone you trust." place="col-span-2 row-span-2 lg:col-span-6 lg:col-start-1 lg:row-span-2 lg:row-start-7">
-        <div className="absolute top-5 -right-10 flex items-center gap-3 rounded-full bg-surface py-3 pr-14 pl-3 text-[18px] whitespace-nowrap sm:text-[22px] lg:top-6">
-          <span className="grid h-12 w-12 place-items-center rounded-full bg-panel font-display font-extrabold">A</span>
+        <div className="absolute top-5 right-5 flex items-center gap-3 rounded-full bg-surface py-2 pr-2 pl-2 text-[16px] whitespace-nowrap sm:text-[20px] lg:top-6">
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-panel font-display font-extrabold">A</span>
           <span>
             <b className="block leading-tight">Ammi</b>
             <span className="text-[16px]">Trusted contact</span>
           </span>
-          <span className="sb-pulse relative ml-3 flex items-center gap-1.5 rounded-full bg-trust px-3 py-1.5 text-[15px] font-semibold text-on-trust" style={playAt(500)}>
-            <Tick /> Sharing live
-          </span>
+          <Badge className="sb-pulse relative ml-1" style={playAt(500)}>
+            Sharing live
+          </Badge>
         </div>
       </Tile>
     </ul>

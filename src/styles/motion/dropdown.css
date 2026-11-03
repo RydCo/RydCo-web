@@ -1,5 +1,5 @@
-/* The dropdown's list, opening out of its field. */
-.dropdown-panel {
+/* The dropdown's list, opening out of its field (or, searchable on a phone, rising as a sheet from the bottom). */
+.dropdown-panel [role="listbox"] {
   scrollbar-width: thin;
   scrollbar-color: var(--color-line) transparent;
 }
@@ -12,6 +12,10 @@
   .dropdown-panel[data-up] {
     --dropdown-from: 6px;
     transform-origin: bottom;
+  }
+  .dropdown-panel[data-sheet] {
+    --dropdown-from: 32px;
+    animation-duration: 0.28s;
   }
 }
 @keyframes dropdown-in {

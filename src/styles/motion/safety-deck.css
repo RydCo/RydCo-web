@@ -38,7 +38,7 @@
     height: var(--deck-h);
     margin: calc(var(--deck-h) / -2) 0 0 calc(var(--deck-w) / -2);
     padding: 1.75rem;
-    box-shadow: 0 30px 60px -24px color-mix(in srgb, black 55%, transparent);
+    box-shadow: var(--shadow-deck);
     /* A little past where it's going, then back: a spring, not a slide. */
     transition:
       transform 0.6s cubic-bezier(0.3, 1.32, 0.5, 1),

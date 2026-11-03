@@ -3,7 +3,7 @@ import { site } from "@/config/site";
 import { HomeView } from "@/views/home/HomeView";
 
 export const metadata: Metadata = {
-  title: { absolute: "RydCo · Your commute, in good company" },
+  title: { absolute: `RydCo · ${site.tagline.phrase}` },
   description: site.description,
   alternates: { canonical: "/" },
 };

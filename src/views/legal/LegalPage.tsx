@@ -1,26 +1,31 @@
 import type { ReactNode } from "react";
+import { Card } from "@/components/ui/Card";
 import { PageHero } from "@/components/ui/PageHero";
+import { Section } from "@/components/ui/Section";
 
-export type LegalSection = { id: string; title: string; body: ReactNode };
+type LegalSection = { id: string; title: string; body: ReactNode };
 
 // The legal pages. Everything here is a draft until a lawyer has reviewed it.
 export function LegalPage({ title, lead, sections }: { title: string; lead: string; sections: LegalSection[] }) {
   return (
     <>
       <PageHero ground="surface" title={title} lead={lead} />
-      <div className="bg-surface pb-24 lg:pb-40">
-        <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <aside className="lg:col-span-4">
-            <div className="on-ink rounded-surface field-ink p-7 text-surface lg:sticky lg:top-32">
-              <p className="font-display text-[22px] leading-tight font-bold">Draft, to be reviewed by a lawyer</p>
-              <p className="mt-3 text-[16px]">
-                A qualified lawyer in Pakistan hasn&rsquo;t reviewed this yet. It is not final and is not legal advice, and the time limits in it may change before the app
-                opens.
+      <Section pad="bottom">
+        {/* The draft notice reads once, across the top. Only the contents list follows you down the page, so nothing overlaps. */}
+        <Card tone="ink" pad="md" className="flex flex-col gap-2 md:flex-row md:items-baseline md:gap-6">
+          <p className="flex-none font-display text-[20px] leading-tight font-bold">Draft, to be reviewed by a lawyer</p>
+          <p className="text-[16px]">
+            A qualified lawyer in Pakistan hasn&rsquo;t reviewed this yet. It is not final and is not legal advice, and the time limits in it may change before the
+            app opens. <span className="whitespace-nowrap">Draft 3, last updated 3 November 2026.</span>
+          </p>
+        </Card>
+        <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-12 lg:gap-10">
+          <nav aria-labelledby="contents-title" className="hidden lg:col-span-4 lg:block">
+            <div className="sticky top-28">
+              <p id="contents-title" className="t-small text-ink-soft">
+                On this page
               </p>
-              <p className="mt-4 text-[16px]">Draft 1, last updated 1 November 2026</p>
-            </div>
-            <nav aria-label="On this page" className="mt-8 hidden lg:block">
-              <ol className="grid gap-1">
+              <ol className="mt-3 grid gap-1">
                 {sections.map((s) => (
                   <li key={s.id}>
                     <a href={`#${s.id}`} className="inline-block py-1.5 text-[16px] underline-offset-4 hover:underline">
@@ -29,8 +34,8 @@ export function LegalPage({ title, lead, sections }: { title: string; lead: stri
                   </li>
                 ))}
               </ol>
-            </nav>
-          </aside>
+            </div>
+          </nav>
           <div className="grid max-w-[68ch] gap-14 lg:col-span-7 lg:col-start-6">
             {sections.map((s) => (
               <section key={s.id} id={s.id} aria-labelledby={`${s.id}-title`}>
@@ -42,7 +47,7 @@ export function LegalPage({ title, lead, sections }: { title: string; lead: stri
             ))}
           </div>
         </div>
-      </div>
+      </Section>
     </>
   );
 }

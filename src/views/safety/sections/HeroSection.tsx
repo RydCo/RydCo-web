@@ -8,7 +8,6 @@ export function HeroSection() {
   const cta = riderCta();
   return (
     <PageHero
-      ground="panel"
       title={
         <>
           Know who you&rsquo;re <span className="whitespace-nowrap">riding with.</span>

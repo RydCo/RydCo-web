@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Car } from "@/components/brand/Car";
 import { toneOn } from "@/components/brand/tones";
+import { BackMark } from "@/features/app-preview/screens/parts";
 
 // The app's Sky Sheet layout (app-mocks/index (1).html), at phone size: the Lahore map fills the phone and each screen is
 // a rounded sheet risen over it, with its back button and step label floating above. These are the frames of the hero's
@@ -44,11 +45,7 @@ export function SkySheet({ step, progress, foot, children }: { step?: string; pr
   return (
     <>
       <div className="relative flex h-10 flex-none items-center gap-2 px-3 pb-1.5">
-        <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-full bg-screen">
-          <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12.5 4.5 7 10l5.5 5.5" />
-          </svg>
-        </span>
+        <BackMark />
         {step && <span className="rounded-full bg-screen px-2.5 py-1.5 text-[11px] leading-none font-semibold">{step}</span>}
         {progress !== undefined && (
           <span aria-hidden="true" className="absolute right-4 bottom-0.5 left-[52px] h-[3px] overflow-hidden rounded-full bg-line">
@@ -56,7 +53,7 @@ export function SkySheet({ step, progress, foot, children }: { step?: string; pr
           </span>
         )}
       </div>
-      <div className="relative flex min-h-0 flex-1 flex-col rounded-t-[26px] bg-surface/85 shadow-[0_-14px_28px_-22px_var(--color-ink-deep)]">
+      <div className="relative flex min-h-0 flex-1 flex-col rounded-t-[26px] bg-surface shadow-sheet">
         <span aria-hidden="true" className="mx-auto mt-2 mb-1.5 h-1 w-9 flex-none rounded-full bg-line" />
         <div data-sheet-body className="flex min-h-0 flex-1 flex-col gap-2.5 overflow-hidden px-3.5 pb-2">
           {children}
@@ -98,9 +95,9 @@ export function Primary({ children, tap }: { children: ReactNode; tap?: Tap }) {
   );
 }
 
-export function Secondary({ children, className = "", tap }: { children: ReactNode; className?: string; tap?: Tap }) {
+export function Secondary({ children, tap }: { children: ReactNode; tap?: Tap }) {
   return (
-    <span data-tap={tap} className={`grid h-10 flex-none place-items-center rounded-full bg-screen text-[12.5px] font-semibold ${className}`}>
+    <span data-tap={tap} className="grid h-10 flex-none place-items-center rounded-full bg-screen text-[12.5px] font-semibold shadow-edge">
       {children}
     </span>
   );

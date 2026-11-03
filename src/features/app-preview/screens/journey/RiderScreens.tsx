@@ -3,6 +3,7 @@ import { toneOn } from "@/components/brand/tones";
 import { Badge } from "@/components/ui/Badge";
 import { Tick } from "@/components/ui/icons";
 import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, MapLabel, Pin, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Windows } from "./SkySheet";
+import { seatsLeft, workedExample } from "@/config/worked-example";
 
 // One ride as a rider, in the app's order: Ayesha finds a seat with Hamza, rides, and pays him. Text and example
 // details are the app's own (app-mocks/index (1).html), leaving out its sample ratings and trip counts, which could be
@@ -73,8 +74,8 @@ export function RideResultsScreen() {
         <b className="font-display text-[15px]">3 rides</b>
         <span className="text-[11.5px] text-ink-soft">Sorted by pickup</span>
       </p>
-      <RideOption tap="late" initials="HR" name="Hamza" seats="2 seats left" share="Rs 245" meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
-      <RideOption initials="SI" name="Sana" seats="1 seat left" share="Rs 264" meetAt="07:44" meet="Model Town Link Rd" walk="6 min walk" dropAt="08:12" drop="Arfa Tower gate" />
+      <RideOption tap="late" initials="HR" name="Hamza" seats={seatsLeft(2)} share={workedExample.solo} meetAt="07:38" meet="Khayaban-e-Jinnah stop" walk="4 min walk" dropAt="08:06" drop="Arfa Tower gate" />
+      <RideOption initials="SI" name="Sana" seats={seatsLeft(1)} share="Rs 264" meetAt="07:44" meet="Model Town Link Rd" walk="6 min walk" dropAt="08:12" drop="Arfa Tower gate" />
     </SkySheet>
   );
 }
@@ -88,7 +89,7 @@ const plan = [
 
 export function RideDetailScreen() {
   return (
-    <SkySheet step="Trips · Ride" foot={<Primary tap="late">Request seat · Rs 245</Primary>}>
+    <SkySheet step="Trips · Ride" foot={<Primary tap="late">Request seat · {workedExample.solo}</Primary>}>
       <RouteCard height={92} from="Meet" to="Drop" />
       <div className="flex items-center gap-2">
         <Avatar>HR</Avatar>
@@ -97,8 +98,8 @@ export function RideDetailScreen() {
           <Badge>Verified driver</Badge>
         </span>
         <span className="text-right leading-tight">
-          <b className="block font-display text-[16px] font-extrabold">Rs 245</b>
-          <span className="text-[10.5px] text-ink-soft">Rs 180 if a 2nd rider joins</span>
+          <b className="block font-display text-[16px] font-extrabold">{workedExample.solo}</b>
+          <span className="text-[10.5px] text-ink-soft">{workedExample.pooled} if a 2nd rider joins</span>
         </span>
       </div>
       <Card className="p-2.5">
@@ -140,7 +141,7 @@ export function RequestAcceptedScreen() {
         </MapLabel>
       </svg>
 
-      <div data-note className="absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
+      <div data-note className="absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-lift">
         <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-[10px] action font-display text-[15px] font-extrabold">
           R
         </span>
@@ -153,7 +154,7 @@ export function RequestAcceptedScreen() {
         </span>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 rounded-t-[26px] bg-surface px-3.5 pt-2 pb-4 shadow-[0_-16px_30px_-22px_var(--color-ink-deep)]">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 rounded-t-[26px] bg-surface px-3.5 pt-2 pb-4 shadow-sheet">
         <span aria-hidden="true" className="mx-auto h-1 w-9 rounded-full bg-line" />
         <div className="flex items-center justify-between gap-2">
           <span className="font-display text-[17px] leading-tight font-bold">Your ride with Hamza</span>
@@ -227,7 +228,7 @@ export function LiveTripScreen() {
             <b className="block font-display text-[14px]">Drop-off</b>
             <span className="text-ink-soft">Arfa Tower gate · 2 min walk</span>
           </span>
-          <span className="flex-none rounded-full bg-panel px-2 py-1 text-[10.5px] font-semibold">Rs 180 · locked</span>
+          <span className="flex-none rounded-full bg-panel px-2 py-1 text-[10.5px] font-semibold">{workedExample.pooled} · locked</span>
         </div>
       </Card>
       <p className="flex items-center gap-1.5 text-[12px]">
@@ -261,7 +262,7 @@ export function SettleTripScreen() {
       </div>
       <Card className="p-3">
         <Label>Your final share</Label>
-        <p className="mt-0.5 font-display text-[32px] leading-none font-extrabold tracking-tight tabular-nums">Rs 180</p>
+        <p className="mt-0.5 font-display text-[32px] leading-none font-extrabold tracking-tight tabular-nums">{workedExample.pooled}</p>
         <p className="mt-1 text-[11px] text-ink-soft">Shared with 1 co-rider · fuel price locked</p>
       </Card>
       <Label>Hamza accepts</Label>
