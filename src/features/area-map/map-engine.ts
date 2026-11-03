@@ -15,7 +15,14 @@ const lahore: [[number, number], [number, number]] = [
 // pin stands. `moved` reports that middle whenever the map comes to rest; `moving` when it starts to move. Kept behind
 // this small surface so the dialog never deals with the map library itself. It is ready as soon as its style is: the
 // tiles fill in after that.
-export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { ready: () => void; moving: () => void; moved: (at: Point) => void }) {
+// `credit` is where the map's credit goes: the dialog's own row above its card, so nothing covers it.
+export async function createMap(
+  el: HTMLElement,
+  credit: HTMLElement,
+  at: Point,
+  zoom: number,
+  on: { ready: () => void; moving: () => void; moved: (at: Point) => void },
+) {
   const map = new maplibregl.Map({
     container: el,
     style: await loadStyle(),
@@ -29,9 +36,18 @@ export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { 
     touchPitch: false,
     attributionControl: false,
   });
-  // The map's credit, which its licence requires, at the top right under the search. It folds into an (i) button once
-  // the map is moved, as the OpenStreetMap attribution guideline allows, and that button opens it again.
-  map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-right");
+  // The map's credit, which its licence requires, as an (i) button that opens it, as the OpenStreetMap attribution
+  // guideline allows. MapLibre opens a compact credit the first time it fills in; it is closed then, once, so it
+  // starts as just the button.
+  map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
+  const attribution = el.querySelector(".maplibregl-ctrl-attrib")!;
+  credit.append(attribution);
+  const startClosed = () => {
+    if (!attribution.classList.contains("maplibregl-compact-show")) return;
+    attribution.classList.remove("maplibregl-compact-show");
+    map.off("styledata", startClosed);
+  };
+  map.on("styledata", startClosed);
   map.touchZoomRotate.disableRotation();
   map.keyboard.disableRotation();
   map.once("style.load", on.ready);

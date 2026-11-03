@@ -36,6 +36,7 @@ export function AreaMap({
   const { places, areas, mapTitle } = commuteEnds[end];
   const dialog = useRef<HTMLDialogElement>(null);
   const holder = useRef<HTMLDivElement>(null);
+  const credit = useRef<HTMLDivElement>(null);
   const map = useRef<AreaMapEngine | null>(null);
   // It opens on the area already chosen, or on the whole city.
   const [opening] = useState(() => areaNamed(places, value)?.at);
@@ -53,8 +54,8 @@ export function AreaMap({
     dialog.current?.focus();
     let gone = false;
     import("./map-engine").then(async ({ createMap }) => {
-      if (gone || !holder.current) return;
-      const engine = await createMap(holder.current, opening ?? lahoreMiddle, opening ? areaZoom : cityZoom, {
+      if (gone || !holder.current || !credit.current) return;
+      const engine = await createMap(holder.current, credit.current, opening ?? lahoreMiddle, opening ? areaZoom : cityZoom, {
         ready: () => setState("ready"),
         moving: () => setMoving(true),
         moved: (at) => {
@@ -144,7 +145,9 @@ export function AreaMap({
       </div>
 
       <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
-        <div className="mb-2 flex justify-end">
+        <div className="mb-2 flex items-end justify-between gap-3">
+          {/* The map's credit (map-engine.ts puts it here); MapLibre's styles for it expect this class. */}
+          <div ref={credit} className="area-credit maplibregl-ctrl-bottom-left" />
           <button type="button" onClick={locate} disabled={!ready} className={iconButtonClasses(true)}>
             <span className="sr-only">{areaMap.locate}</span>
             <Locate />
