@@ -31,33 +31,33 @@ import {
 // The hero launch's car in 3D (views/home/components/HeroLaunch.tsx): the brand car (components/brand/Car.tsx) given depth,
 // wheels and lights. Seen exactly side-on, as at the start, it has the flat car's outline, so it can take over from the car
 // parked in the hero. Loaded only once someone interacts with the page, so a visit that never scrolls doesn't pay for
-// three.js. It draws into one square canvas; the launch moves and scales that canvas across the screen, and this turns the
-// car, spins its wheels and works its lights on the same clock.
+// three.js. It draws into one square canvas; the launch moves and scales that canvas across the screen and, each frame,
+// tells this which way the car faces, how its wheels have turned and how bright its lights are. It stays ink, like the
+// parked car, so its headlights show against the light page.
 
-// `facing` is 1 when the car drives to the right, -1 to the left.
-export type Timing = { lights: number; drive: number; impact: number; facing: 1 | -1 };
+// One frame's pose. yaw: radians, 0 facing right, positive turning its nose away from you. rise: 0 side-on (the parked
+// car's view) to 1, the camera risen to a three-quarter view. roll: the wheels' turn in radians. squat and hop: a lean and
+// a lift for the body. lights: headlight brightness, 0 to about 2. flash: the lens-flare streak across them.
+export type Pose = { yaw: number; rise: number; roll: number; squat: number; hop: number; lights: number; flash: number };
 export type CarShow = {
   canvas: HTMLCanvasElement;
   size: number; // the canvas's size on screen, in CSS px, at scale 1
-  carWidth: number; // how wide the car is in the canvas at the start, in CSS px, to match it to the parked car
-  play: (start: number, timing: Timing) => void;
+  carWidth: number; // how wide the car is in the canvas side-on, in CSS px, to match it to the parked car
+  render: (pose: Pose) => void;
   dispose: () => void;
 };
 
-const size = 520;
+const size = 560;
 // Car units are the flat car's SVG units: 30 long, with y turned to point up.
 const depth = 14;
 const centre = new Vector3(0, 7.15, 0);
-const distance = 275;
+const distance = 200;
 
 // Light that adds to whatever is behind the canvas, on the page as well as on the car: colour is added and the canvas's
 // transparency is left alone, so a beam brightens the phone's light screen instead of laying grey over it.
 const addLight = { blending: CustomBlending, blendSrc: OneFactor, blendDst: OneFactor, blendSrcAlpha: ZeroFactor, blendDstAlpha: OneFactor } as const;
 
 const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || "#000";
-const clamp = (t: number) => Math.min(1, Math.max(0, t));
-const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
-const span = (t: number, from: number, to: number) => clamp((t - from) / (to - from));
 
 function rounded(x: number, y: number, w: number, h: number, r: number) {
   const s = new Shape();
@@ -265,67 +265,36 @@ export function makeCarShow(): CarShow | null {
   renderer.compile(scene, camera);
   renderer.render(scene, camera);
 
-  let raf = 0;
-  const pose = (t: number, timing: Timing) => {
-    const { lights, drive, impact, facing } = timing;
-    // Ink to the launch's orange as night falls, and the hubs come up out of the tyres' colour.
-    const warm = ease(span(t, 0, 300));
-    paint.color.copy(ink).lerp(accent, warm);
-    hub.color.copy(ink).lerp(surface, warm);
-
-    // The camera rises to a three-quarter view, showing the car's depth, while the car turns its nose towards you.
-    const turn = ease(span(t, 60, drive));
-    place(turn * 0.38);
-    const go = span(t, drive, impact);
-    const gone = ease(go);
-    // Driving right, it turns its nose a little towards you, then away into the phone. Driving left, it spins round to
-    // face the same way mirrored, a half-turn drift as night falls, then turns away into the phone.
-    car.rotation.y = facing === 1 ? -0.5 * turn + 1.25 * gone : (Math.PI + 0.5) * turn - 1.25 * gone;
-    // A squat as it pulls away, then a slight nose-down as it rushes in.
-    car.rotation.z = 0.05 * Math.sin(Math.min(1, go * 2.2) * Math.PI) - 0.04 * gone;
-    car.position.y = 0.4 * Math.sin(span(t, 120, 360) * Math.PI);
-    const roll = (span(t, drive - 80, impact) ** 2) * 14 + span(t, 200, drive) * 0.6;
-    wheels.forEach((w) => (w.rotation.z = -roll));
-
-    // The headlights: two blinks, then on.
-    const blink = (from: number, peak: number) => {
-      const d = t - from;
-      return d < 0 ? 0 : peak * Math.exp(-d / 90) * Math.min(1, d / 30);
-    };
-    const first = blink(lights, 1.3);
-    const second = blink(lights + 150, 2.2);
-    const steady = span(t, lights + 150, lights + 330) * 0.9;
-    const boost = span(t, impact - 160, impact) * 1.6;
-    const on = Math.max(first, second, steady) + boost;
+  // One frame, posed by the launch: which way the car faces, how far the camera has risen, the wheels' turn, a squat as
+  // it pulls away, and how bright the headlights are.
+  const render = (p: Pose) => {
+    place(p.rise * 0.38);
+    hub.color.copy(ink).lerp(surface, p.rise);
+    car.rotation.y = p.yaw;
+    car.rotation.z = p.squat;
+    car.position.y = p.hop;
+    wheels.forEach((w) => (w.rotation.z = -p.roll));
+    const on = p.lights;
     lampMaterial.color.copy(lampColour).multiplyScalar(0.35 + Math.min(1, on) * 0.65);
+    // Small, soft points on a light page; the flare streak only when they blink.
     glows.forEach((g) => {
-      g.material.opacity = Math.min(1, on);
-      g.scale.setScalar(5 + on * 5);
+      g.material.opacity = Math.min(0.85, on * 0.6);
+      g.scale.setScalar(2.6 + on * 2.4);
     });
-    const flash = Math.max(first, second) + boost * 0.6;
     flares.forEach((f) => {
-      f.material.opacity = Math.min(1, flash * 0.8);
-      f.scale.set(10 + flash * 26, 1.2 + flash * 0.8, 1);
+      f.material.opacity = Math.min(0.9, p.flash * 0.6);
+      f.scale.set(6 + p.flash * 18, 0.7 + p.flash * 0.5, 1);
     });
-    beams.forEach((m) => (m.uniforms.uI.value = Math.min(1.4, steady + boost * 0.5)));
+    beams.forEach((m) => (m.uniforms.uI.value = Math.min(1.2, on * 0.6)));
+    renderer.render(scene, camera);
   };
 
   return {
     canvas,
     size,
     carWidth,
-    play(start, timing) {
-      cancelAnimationFrame(raf);
-      const frame = () => {
-        const t = performance.now() - start;
-        pose(t, timing);
-        renderer.render(scene, camera);
-        if (t < timing.impact + 120) raf = requestAnimationFrame(frame);
-      };
-      frame();
-    },
+    render,
     dispose() {
-      cancelAnimationFrame(raf);
       renderer.dispose();
       renderer.forceContextLoss();
     },
