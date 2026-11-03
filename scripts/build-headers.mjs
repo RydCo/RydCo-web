@@ -9,20 +9,21 @@ import { securityHeaders } from "../src/config/security.mjs";
 const file = join(dirname(fileURLToPath(import.meta.url)), "..", "vercel.json");
 const current = readFileSync(file, "utf8");
 const config = JSON.parse(current);
-config.headers = [{ source: "/(.*)", headers: securityHeaders() }];
+const headers = [{ source: "/(.*)", headers: securityHeaders() }];
+// The check compares the headers as data, not the file's text: Vercel rewrites vercel.json onto one line before it
+// builds, and a Windows checkout ends its lines with \r\n.
+const inStep = JSON.stringify(config.headers) === JSON.stringify(headers);
+config.headers = headers;
 const next = `${JSON.stringify(config, null, 2)}\n`;
 
-if (next === current) console.log("Security headers up to date.");
-else if (process.argv.includes("--check")) {
-  console.error("vercel.json is out of step with src/config/security.mjs. Run `pnpm headers` and commit vercel.json.");
-  // Where they part, quoted, so a failed build log shows what's different (a stray \r included).
-  const have = current.split("\n");
-  const want = next.split("\n");
-  let line = 0;
-  while (line < Math.max(have.length, want.length) && have[line] === want[line]) line++;
-  console.error(`First difference, line ${line + 1}:\n  vercel.json: ${JSON.stringify(have[line])}\n  expected:    ${JSON.stringify(want[line])}`);
-  process.exit(1);
-} else {
+if (process.argv.includes("--check")) {
+  if (inStep) console.log("Security headers up to date.");
+  else {
+    console.error("vercel.json is out of step with src/config/security.mjs. Run `pnpm headers` and commit vercel.json.");
+    process.exit(1);
+  }
+} else if (next === current) console.log("Security headers up to date.");
+else {
   writeFileSync(file, next);
   console.log("Security headers written to vercel.json.");
 }
