@@ -20,7 +20,7 @@ export function NeedsSection() {
             What you need
           </h2>
           <p className="mt-6 max-w-[46ch]" {...reveal(1)}>
-            Four checks, done once. A reviewer looks at each one before you can publish a ride.
+            Four checks, done once, before you can publish a ride.
           </p>
           <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-x-10">
             {needs.map((n, i) => (
@@ -30,9 +30,6 @@ export function NeedsSection() {
               </li>
             ))}
           </ul>
-          <p className="mt-12 max-w-[52ch] rounded-surface bg-panel p-6" {...reveal(6)}>
-            You can prepare your commute while we review, and save your progress to finish later. You can publish rides once every check is approved.
-          </p>
         </div>
         <div className="lg:col-span-4 lg:col-start-9" {...reveal(3)}>
           <StickyPhone label="The driver checklist in the RydCo app: identity, live selfie, driving licence, vehicle, submit">

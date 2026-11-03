@@ -57,7 +57,7 @@ export function SafetyBoard() {
         </div>
       </li>
 
-      <Tile ground="panel" step={1} play title="Every driver is checked" line="CNIC, a live selfie, licence and car, all reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
+      <Tile ground="panel" step={1} play title="Every driver is checked" line="Reviewed before they can publish a ride." place="col-span-2 row-span-3 lg:col-span-6 lg:col-start-1 lg:row-span-4 lg:row-start-3">
         <div className="absolute top-6 -right-6 grid justify-items-end gap-2.5 text-[20px] sm:-right-10 sm:gap-3 sm:text-[34px] lg:text-[40px]">
           <Badge className="sb-check pr-[1.6em]" style={playAt(250)}>CNIC reviewed</Badge>
           <Badge className="sb-check mr-[2.4em]" style={playAt(600)}>Live selfie checked</Badge>

@@ -316,6 +316,9 @@ Crossfades become cuts.
 
 - Warm, simple, friendly English. Short sentences. One idea at a time, like the app.
 - Headings 6 words or fewer where possible. One supporting line.
+- Say each fact in full once, on its own page: the driver checks and trip tools on Safety, the share and payment on
+  Drivers, the steps on How it works. Elsewhere, a headline or one short line. A phone mock-up already shows its
+  screen's detail, so the words beside it say only what matters. If a heading says it, skip the supporting line.
 - No buzzwords: no "revolutionize", "seamless", "solutions", "empower", "next-gen" or "ecosystem".
 - Copy bank (from the app): "Assalam o alaikum. I'm RydCo." · "Your commute, in good company." · "Lahore pilot" ·
   "Request, don't book." · "Numbers stay hidden." · "Split the cost." · "Report anytime." · "Riders pay you directly."

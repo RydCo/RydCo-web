@@ -9,11 +9,7 @@ export function RidersSection() {
           Every rider is phone verified
         </h2>
         <div className="grid gap-5 lg:col-span-5 lg:col-start-8" {...reveal(1)}>
-          <p>
-            Every account starts with a Pakistani mobile number and a code sent to it by SMS. We call it &ldquo;Phone verified&rdquo;, never &ldquo;identity
-            verified&rdquo;, because that is all it confirms.
-          </p>
-          <p>Your number is never shown to other users. Others see only your first name and the area you start from, never your exact address.</p>
+          <p>Every account starts with a Pakistani mobile number, confirmed by a code sent by SMS. That&rsquo;s all &ldquo;Phone verified&rdquo; means.</p>
         </div>
       </div>
     </Section>

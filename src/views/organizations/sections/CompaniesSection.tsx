@@ -8,19 +8,19 @@ import { reveal } from "@/lib/reveal";
 const problems = [
   {
     title: "Commute cost",
-    text: "Fuel eats into salaries. Colleagues who share a car split the fuel, so each person pays a share instead of the whole tank.",
+    text: "Colleagues who share a car split the fuel instead of each paying for a full tank.",
   },
   {
     title: "Parking",
-    text: "When people going the same way ride together, fewer cars arrive at your gate every morning.",
+    text: "Fewer cars arrive at your gate every morning.",
   },
   {
     title: "Late arrivals",
-    text: "Every ride is planned ahead, with a set departure window and an estimated arrival time worked out from the road before anyone leaves home.",
+    text: "Every ride is planned ahead, with a set departure window and an estimated arrival.",
   },
   {
     title: "Employee safety",
-    text: "Every driver's CNIC, live selfie, licence and car are reviewed before they can offer a ride. Women-only rides, trip sharing and SOS are on every trip.",
+    text: "Every driver is checked first, and every trip has women-only rides, trip sharing and SOS.",
   },
 ];
 
@@ -32,9 +32,6 @@ export function CompaniesSection() {
           <h2 id="companies-title" className="t-h2" {...reveal(0)}>
             A commute your team will actually use.
           </h2>
-          <p className="mt-6 max-w-[46ch]" {...reveal(1)}>
-            RydCo matches people who travel the same way to work, so they share the car and split the fuel. Here is what that changes for you.
-          </p>
           <ul className="mt-14 grid gap-12">
             {problems.map((p, i) => (
               <li key={p.title} className="grid gap-2 sm:grid-cols-[200px_1fr] sm:gap-8" {...reveal(2 + i)}>

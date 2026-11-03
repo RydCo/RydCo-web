@@ -10,8 +10,7 @@ export function PaidSection() {
             Riders pay you directly
           </h2>
           <p className="mt-6 max-w-[44ch]" {...reveal(1)}>
-            RydCo suggests the share but never handles the money. After each trip the rider pays you and taps &ldquo;I sent the payment&rdquo;. You confirm you
-            received it, and the trip is settled.
+            RydCo never handles the money. Riders pay you after each trip, and you confirm you received it.
           </p>
         </div>
         <ul className="flex flex-wrap gap-3 lg:col-span-5 lg:col-start-8" {...reveal(2)}>

@@ -27,7 +27,6 @@ export function HeroSection() {
           Your first ride, <span className="whitespace-nowrap">step by step.</span>
         </>
       }
-      lead="Here's exactly what happens in the RydCo app, from the first screen to settling up with your driver."
       actions={
         <>
           <Button href={cta.href} external={cta.external}>

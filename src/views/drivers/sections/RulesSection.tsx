@@ -3,11 +3,9 @@ import { TickItem } from "@/components/ui/TickItem";
 import { reveal } from "@/lib/reveal";
 
 const yourRules = [
-  "You choose the seats, the days and the departure window.",
   "Pause new requests anytime. Confirmed riders keep their seat.",
-  "At each pickup, a 3-minute wait timer runs before you can mark a no-show.",
-  "A rider who doesn't show up owes their full share and gets a strike.",
-  "Phone numbers stay hidden both ways. Chat happens in the app, and your payment details show only to confirmed riders.",
+  "Wait 3 minutes at a pickup, then mark a no-show. The rider owes their full share.",
+  "Your number stays hidden, and only confirmed riders see your payment details.",
 ];
 
 export function RulesSection() {
