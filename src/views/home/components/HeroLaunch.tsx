@@ -89,6 +89,11 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement) {
 
   stage.hidden = false;
 
+  // The section underneath holds its own animations until the night starts lifting off it (styles/motion/reveal.css).
+  const root = document.documentElement;
+  root.classList.add("launching");
+  const uncover = window.setTimeout(() => root.classList.remove("launching"), at.reveal + lasts.reveal * 0.4);
+
   // A copy of the phone comes forward. It lives in the overlay, so scrolling can't move it. The real one waits behind.
   const box = phone.getBoundingClientRect();
   const startX = box.left + box.width / 2;
@@ -183,7 +188,11 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement) {
       stage.getAnimations({ subtree: true }).forEach((a) => a.cancel());
       out.cancel();
     })
-    .catch(() => {});
+    .catch(() => {})
+    .finally(() => {
+      window.clearTimeout(uncover);
+      root.classList.remove("launching");
+    });
 }
 
 const bright: Tone = { ...toneOn.ink, body: "fill-accent", glass: "fill-surface" };
