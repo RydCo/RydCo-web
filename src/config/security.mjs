@@ -1,10 +1,8 @@
 // The security headers on every page, in one place. scripts/build-headers.mjs writes them into vercel.json for the
 // live site, and next.config.ts sends the same ones from the dev server, so anything they block is blocked locally
 // too. Allowing a new outside source (a font, an embed, analytics) means adding it here.
+import { formHosts } from "./forms.mjs";
 import { mapHost } from "./map.mjs";
-
-// The form endpoint is Google Apps Script, which redirects to googleusercontent.com.
-const forms = ["https://script.google.com", "https://script.googleusercontent.com"];
 
 const policy = {
   "default-src": ["'self'"],
@@ -15,7 +13,7 @@ const policy = {
   "worker-src": ["'self'", "blob:"],
   "font-src": ["'self'"],
   "media-src": ["'self'"],
-  "connect-src": ["'self'", ...forms, mapHost],
+  "connect-src": ["'self'", ...formHosts, mapHost],
   "form-action": ["'self'"],
   "frame-ancestors": ["'none'"],
   "base-uri": ["'self'"],

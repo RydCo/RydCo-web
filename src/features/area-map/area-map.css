@@ -14,7 +14,6 @@
   background: var(--color-screen);
   color: var(--color-ink-soft);
   font-size: 11px;
-  border-radius: 8px;
   margin: 0 12px 0 0;
 }
 .area-map .maplibregl-ctrl-attrib a {

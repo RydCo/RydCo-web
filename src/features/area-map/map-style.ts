@@ -10,9 +10,13 @@ const latinName = ["coalesce", ["get", "name:latin"], ["get", "name"]];
 
 let style: Promise<StyleSpecification> | undefined;
 
+// A failed fetch isn't kept, so the next try (opening the map again) fetches afresh.
 export function loadStyle() {
   style ??= fetch(mapStyle)
-    .then((r) => r.json() as Promise<StyleSpecification>)
+    .then((r) => {
+      if (!r.ok) throw new Error(`Map style: ${r.status}`);
+      return r.json() as Promise<StyleSpecification>;
+    })
     .then((spec) => {
       for (const { layout } of spec.layers as Layer[]) {
         if (!layout?.["text-field"]) continue;
@@ -20,6 +24,10 @@ export function loadStyle() {
         if (JSON.stringify(layout["text-field"]).includes("name:latin")) layout["text-field"] = latinName;
       }
       return spec;
+    })
+    .catch((error: unknown) => {
+      style = undefined;
+      throw error;
     });
   return style;
 }

@@ -1,6 +1,6 @@
 // Writes the security headers from src/config/security.mjs into vercel.json. Vercel reads vercel.json before it
-// builds, so the file has to be committed up to date: `next dev` rewrites it, and `next build` (with --check) stops
-// if it is out of step with the config.
+// builds, so the file has to be committed up to date: `pnpm dev` rewrites it, and `pnpm build` (with --check)
+// stops if it is out of step with the config.
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";

@@ -50,8 +50,6 @@ function Area({ me, end, value }: { me: string; end: End; value: string }) {
       <button
         type="button"
         onClick={() => setMapOpen(true)}
-        onPointerEnter={preloadMap}
-        onFocus={preloadMap}
         title={areaMap.open(label)}
         className={`${fieldFocus} grid h-11 w-11 flex-none place-items-center rounded-full text-ink-soft transition-colors duration-150 hover:bg-panel hover:text-accent-deep`}
       >

@@ -1,6 +1,4 @@
-import type { Area } from "@/config/pilot";
-
-type Point = [number, number];
+import type { Area, Point } from "@/config/pilot";
 
 // How far a pin may be from an area's middle and still count as in it, in kilometres.
 const reach = 3;
@@ -11,6 +9,9 @@ function distance([lat1, lng1]: Point, [lat2, lng2]: Point) {
   const y = (lat2 - lat1) * 110.57;
   return Math.hypot(x, y);
 }
+
+// The area with this name, if it's on the list.
+export const areaNamed = (places: Area[], name: string) => places.find((p) => p.name === name);
 
 // The area whose middle is closest to the pin, or none when every area is out of reach.
 export function nearestArea(places: Area[], pin: Point) {

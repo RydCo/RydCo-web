@@ -2,7 +2,9 @@
 // `zone` is the part of the city the pickers group them under, `aliases` are other names people search by, and `at`
 // is the area's middle as [latitude, longitude], which the map uses to tell which area a pin is in.
 // [FILL] The `at` points are approximate middles; check them on a map before relying on the pin.
-export type Area = { name: string; zone: string; at: [number, number]; aliases?: string[] };
+// A place on the map as [latitude, longitude].
+export type Point = [number, number];
+export type Area = { name: string; zone: string; at: Point; aliases?: string[] };
 
 const zones = {
   dha: "DHA and Cantt",
@@ -126,6 +128,7 @@ export const areaMap = {
   open: (end: string) => `Find “${end}” on the map`,
   search: { placeholder: "Search for an area", noMatch: (typed: string) => `No area matches “${typed}”. Move the map to find it.`, found: areaSearch.found },
   loading: "Loading the map…",
+  failed: "The map couldn’t load. Close it and choose your area from the list.",
   notListed: "Not on our list yet: tell us where in the form",
   confirm: "Use this area",
   other: otherArea,

@@ -1,5 +1,6 @@
 // Everything a person might need to change before launch lives in this folder.
 // Items marked [FILL] are placeholders until the real value is confirmed.
+import { formEndpoint } from "./forms.mjs";
 import { tagline } from "./tagline.mjs";
 
 const city = "Lahore";
@@ -22,8 +23,6 @@ export const site = {
   pilotLine: `Starting with a pilot in ${city}`,
   // [FILL] App status. While this is null, the main buttons take people to the waitlist form on the home page.
   playStoreUrl: null as string | null,
-  // The Google Apps Script web app that stores form submissions (setup steps: infra/google-apps-script/forms.js).
-  // NEXT_PUBLIC_FORM_ENDPOINT on the host overrides it. Set this to null and forms open a pre-filled email instead.
-  formEndpoint: (process.env.NEXT_PUBLIC_FORM_ENDPOINT ||
-    "https://script.google.com/macros/s/AKfycby_3pE0DJs0HgZqnKJDvFVrKbcLF7DrZVxq3TXLnsqkqYjjH2bnyQGtQvCxLAPTwEM/exec") as string | null,
+  // Where the forms are sent (config/forms.mjs, shared with the security headers).
+  formEndpoint,
 };

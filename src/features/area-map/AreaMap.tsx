@@ -5,11 +5,9 @@ import { Dropdown } from "@/components/forms/Dropdown";
 import { fieldFocus } from "@/components/forms/field-base";
 import { buttonClasses, iconButtonClasses } from "@/components/ui/button-styles";
 import { Close, Locate, Search } from "@/components/ui/icons";
-import { areaMap, commuteEnds } from "@/config/pilot";
+import { areaMap, commuteEnds, type Point } from "@/config/pilot";
 import type { AreaMapEngine } from "./map-engine";
-import { nearestArea } from "./nearest-area";
-
-type Point = [number, number];
+import { areaNamed, nearestArea } from "./nearest-area";
 
 const lahoreMiddle: Point = [31.5, 74.33];
 const cityZoom = 11;
@@ -40,10 +38,11 @@ export function AreaMap({
   const holder = useRef<HTMLDivElement>(null);
   const map = useRef<AreaMapEngine | null>(null);
   // It opens on the area already chosen, or on the whole city.
-  const [opening] = useState(() => places.find((p) => p.name === value)?.at);
+  const [opening] = useState(() => areaNamed(places, value)?.at);
   const [pin, setPin] = useState<Point>(opening ?? lahoreMiddle);
   const [moving, setMoving] = useState(false);
-  const [ready, setReady] = useState(false);
+  const [state, setState] = useState<"loading" | "ready" | "failed">("loading");
+  const ready = state === "ready";
   const [note, setNote] = useState("");
   const [found, setFound] = useState("");
   const area = nearestArea(places, pin);
@@ -56,7 +55,7 @@ export function AreaMap({
     import("./map-engine").then(async ({ createMap }) => {
       if (gone || !holder.current) return;
       const engine = await createMap(holder.current, opening ?? lahoreMiddle, opening ? areaZoom : cityZoom, {
-        ready: () => setReady(true),
+        ready: () => setState("ready"),
         moving: () => setMoving(true),
         moved: (at) => {
           setMoving(false);
@@ -65,7 +64,7 @@ export function AreaMap({
       });
       if (gone) engine.remove();
       else map.current = engine;
-    });
+    }).catch(() => !gone && setState("failed"));
     return () => {
       gone = true;
       map.current?.remove();
@@ -77,7 +76,7 @@ export function AreaMap({
 
   function jump(name: string) {
     setFound(name);
-    const at = places.find((p) => p.name === name)?.at;
+    const at = areaNamed(places, name)?.at;
     if (at) map.current?.goTo(at, areaZoom);
   }
 
@@ -103,7 +102,7 @@ export function AreaMap({
       aria-labelledby={`${id}-title`}
       onClose={onClose}
       onClick={(e) => e.target === e.currentTarget && shut()}
-      className="m-0 h-svh outline-none max-h-none w-full max-w-none overflow-hidden bg-panel p-0 text-ink backdrop:bg-scrim sm:m-auto sm:h-[min(640px,88svh)] sm:w-[min(720px,calc(100vw-48px))] sm:rounded-surface sm:shadow-float"
+      className="m-0 h-svh max-h-none w-full max-w-none overflow-hidden bg-panel p-0 text-ink outline-none backdrop:bg-scrim sm:m-auto sm:h-[min(640px,88svh)] sm:w-[min(720px,calc(100vw-48px))] sm:rounded-surface sm:shadow-float"
     >
       <h2 id={`${id}-title`} className="sr-only">
         {mapTitle}
@@ -112,7 +111,7 @@ export function AreaMap({
         {/* MapLibre makes its own container position: relative, so the map fills a wrapper rather than being placed itself. */}
         <div ref={holder} className="h-full w-full" />
       </div>
-      {!ready && <p className="absolute inset-0 grid place-items-center text-ink-soft">{areaMap.loading}</p>}
+      {!ready && <p className="absolute inset-0 grid place-items-center px-8 text-center text-ink-soft">{state === "failed" ? areaMap.failed : areaMap.loading}</p>}
 
       {/* The pin stands on the middle of the map and lifts while the map moves under it. */}
       <div aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">

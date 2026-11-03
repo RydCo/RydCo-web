@@ -2,9 +2,8 @@ import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 // After MapLibre's own styles, so the site's look wins over them.
 import "./area-map.css";
+import type { Point } from "@/config/pilot";
 import { loadStyle } from "./map-style";
-
-type Point = [number, number];
 
 // Lahore and its edges, as [west, south] and [east, north]: the map can't be dragged away from the city.
 const lahore: [[number, number], [number, number]] = [
@@ -13,9 +12,8 @@ const lahore: [[number, number], [number, number]] = [
 ];
 
 // The map the area picker draws its own controls over (zooming is by pinch, scroll or keys): the middle is where the
-// pin stands. `moved` reports that
-// middle, as [latitude, longitude], whenever the map comes to rest; `moving` when it starts to move. Kept behind this
-// small surface so the dialog never deals with the map library itself. It is ready as soon as its style is: the
+// pin stands. `moved` reports that middle whenever the map comes to rest; `moving` when it starts to move. Kept behind
+// this small surface so the dialog never deals with the map library itself. It is ready as soon as its style is: the
 // tiles fill in after that.
 export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { ready: () => void; moving: () => void; moved: (at: Point) => void }) {
   const map = new maplibregl.Map({
@@ -31,8 +29,9 @@ export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { 
     touchPitch: false,
     attributionControl: false,
   });
-  // The map's credit, as its licence asks, at the top right under the search: the card covers the foot of the map.
-  map.addControl(new maplibregl.AttributionControl({ compact: false }), "top-right");
+  // The map's credit, which its licence requires, at the top right under the search. It folds into an (i) button once
+  // the map is moved, as the OpenStreetMap attribution guideline allows, and that button opens it again.
+  map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-right");
   map.touchZoomRotate.disableRotation();
   map.keyboard.disableRotation();
   map.once("style.load", on.ready);
