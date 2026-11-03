@@ -13,7 +13,6 @@ import {
   List,
   MagnifyingGlass,
   MapPin,
-  Minus as MinusIcon,
   Pause as PauseIcon,
   Play as PlayIcon,
   Plus as PlusIcon,
@@ -37,7 +36,6 @@ export const Close = make(X, "h-6 w-6");
 export const Pause = make(PauseIcon, "h-4 w-4", "fill");
 export const Play = make(PlayIcon, "h-4 w-4", "fill");
 export const Plus = make(PlusIcon, "h-5 w-5");
-export const Minus = make(MinusIcon, "h-5 w-5");
 export const Pin = make(MapPin, "h-5 w-5");
 export const Locate = make(Crosshair, "h-5 w-5");
 export const Star = make(StarIcon, "", "fill");

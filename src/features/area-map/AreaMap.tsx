@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Dropdown } from "@/components/forms/Dropdown";
 import { fieldFocus } from "@/components/forms/field-base";
 import { buttonClasses, iconButtonClasses } from "@/components/ui/button-styles";
-import { Close, Locate, Minus, Plus, Search } from "@/components/ui/icons";
+import { Close, Locate, Search } from "@/components/ui/icons";
 import { areaMap, commuteEnds } from "@/config/pilot";
 import type { AreaMapEngine } from "./map-engine";
 import { nearestArea } from "./nearest-area";
@@ -15,10 +15,11 @@ const lahoreMiddle: Point = [31.5, 74.33];
 const cityZoom = 11;
 const areaZoom = 13.5;
 
-// "Find on the map": the map moves under a pin fixed in its middle, a search at the top jumps it to a named area, and
-// the sheet at the bottom names the area the pin is in with one button to use it. Only that name leaves this
-// dialog. The map's code and tiles load when the picker is first touched (preload.ts), never for people who don't
-// use it. A native modal dialog: it holds focus, closes on Escape, and gives focus back to the button that opened it.
+// The map-pin button's dialog: the map fills it and moves under a pin fixed in its middle. Floating over it are the
+// search (which jumps to a named area) with the close button, a locate button, and a card naming the area the pin is
+// in with one button to use it. Only that name leaves this dialog. The map's code and tiles load when the picker is
+// first touched (preload.ts), never for people who don't use it. A native modal dialog: it holds focus, closes on
+// Escape, and gives focus back to the button that opened it.
 export function AreaMap({
   id,
   end,
@@ -48,7 +49,9 @@ export function AreaMap({
   const area = nearestArea(places, pin);
 
   useEffect(() => {
+    // Focus starts on the dialog itself, not on the search, so it opens on the map rather than a lit-up field.
     dialog.current?.showModal();
+    dialog.current?.focus();
     let gone = false;
     import("./map-engine").then(async ({ createMap }) => {
       if (gone || !holder.current) return;
@@ -93,88 +96,68 @@ export function AreaMap({
     shut();
   }
 
-  const control = `${iconButtonClasses(true)} h-11 w-11`;
-
   return (
     <dialog
       ref={dialog}
+      tabIndex={-1}
       aria-labelledby={`${id}-title`}
       onClose={onClose}
       onClick={(e) => e.target === e.currentTarget && shut()}
-      className="m-0 h-svh max-h-none w-full max-w-none overflow-hidden bg-screen p-0 text-ink backdrop:bg-scrim sm:m-auto sm:h-[min(720px,90svh)] sm:w-[min(760px,calc(100vw-48px))] sm:rounded-surface sm:shadow-float"
+      className="m-0 h-svh outline-none max-h-none w-full max-w-none overflow-hidden bg-panel p-0 text-ink backdrop:bg-scrim sm:m-auto sm:h-[min(640px,88svh)] sm:w-[min(720px,calc(100vw-48px))] sm:rounded-surface sm:shadow-float"
     >
-      <div className="flex h-full flex-col">
-        <div className="flex flex-none items-center gap-3 px-4 pt-4 pb-3 sm:px-6 sm:pt-5">
-          <h2 id={`${id}-title`} className="min-w-0 flex-1 t-title">
-            {mapTitle}
-          </h2>
-          <button type="button" onClick={shut} className={iconButtonClasses()}>
-            <span className="sr-only">{areaMap.close}</span>
-            <Close />
+      <h2 id={`${id}-title`} className="sr-only">
+        {mapTitle}
+      </h2>
+      <div className="area-map absolute inset-0">
+        {/* MapLibre makes its own container position: relative, so the map fills a wrapper rather than being placed itself. */}
+        <div ref={holder} className="h-full w-full" />
+      </div>
+      {!ready && <p className="absolute inset-0 grid place-items-center text-ink-soft">{areaMap.loading}</p>}
+
+      {/* The pin stands on the middle of the map and lifts while the map moves under it. */}
+      <div aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-full">
+        <div data-moving={moving || undefined} className="area-pin flex flex-col items-center">
+          <span className="grid h-12 w-12 place-items-center rounded-full bg-screen shadow-lift">{marker}</span>
+          <span className="h-4 w-[3px] rounded-full bg-ink" />
+        </div>
+      </div>
+      <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-strong" />
+
+      <div className="absolute inset-x-0 top-0 flex items-center gap-2 p-3 sm:p-4">
+        <Dropdown
+          id={`${id}-search`}
+          name={`${id}-search`}
+          label={areaMap.search.placeholder}
+          value={found}
+          onChange={jump}
+          options={areas.filter((o) => o.value !== areaMap.other)}
+          search={areaMap.search}
+          className="min-w-0 flex-1"
+          triggerClassName={`${fieldFocus} flex h-12 w-full items-center gap-3 rounded-full bg-screen px-4 text-left text-[17px] font-semibold shadow-panel`}
+        >
+          <Search className="text-ink-soft" />
+          <span className="truncate">{mapTitle}</span>
+        </Dropdown>
+        <button type="button" onClick={shut} className={iconButtonClasses(true)}>
+          <span className="sr-only">{areaMap.close}</span>
+          <Close />
+        </button>
+      </div>
+
+      <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
+        <div className="mb-2 flex justify-end">
+          <button type="button" onClick={locate} disabled={!ready} className={iconButtonClasses(true)}>
+            <span className="sr-only">{areaMap.locate}</span>
+            <Locate />
           </button>
         </div>
-        <div className="flex-none px-4 pb-3 sm:px-6">
-          <Dropdown
-            id={`${id}-search`}
-            name={`${id}-search`}
-            label={areaMap.search.placeholder}
-            value={found}
-            onChange={jump}
-            options={areas.filter((o) => o.value !== areaMap.other)}
-            search={areaMap.search}
-            triggerClassName={`${fieldFocus} flex h-12 w-full items-center gap-3 rounded-full bg-panel px-4 text-left text-[17px] text-ink-soft`}
-          >
-            <Search />
-            <span className="truncate">{areaMap.search.placeholder}</span>
-          </Dropdown>
-        </div>
-
-        <div className="area-map relative min-h-0 flex-1 bg-panel">
-          {/* MapLibre makes its own container position: relative, so the map fills a wrapper rather than being placed itself. */}
-          <div className="absolute inset-0 z-0">
-            <div ref={holder} className="h-full w-full" />
+        <div className="flex flex-col gap-3 rounded-[24px] bg-screen p-3 pl-5 shadow-float sm:flex-row sm:items-center sm:gap-4">
+          <div aria-live="polite" className="min-w-0 flex-1">
+            <p className="truncate text-[19px] leading-snug font-semibold">{area ? area.name : areaMap.other}</p>
+            <p className="truncate text-[14px] text-ink-soft">{note || (area ? area.zone : areaMap.notListed)}</p>
           </div>
-          {!ready && <p className="absolute inset-0 grid place-items-center text-ink-soft">{areaMap.loading}</p>}
-          {/* The pin stands on the middle of the map and lifts while the map moves under it. */}
-          <div aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-full">
-            <div data-moving={moving || undefined} className="area-pin flex flex-col items-center">
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-screen shadow-lift">{marker}</span>
-              <span className="h-4 w-[3px] rounded-full bg-ink" />
-            </div>
-          </div>
-          <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-1/2 z-10 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent-strong" />
-          <div className="absolute right-3 bottom-10 z-10 grid gap-2">
-            <button type="button" onClick={locate} disabled={!ready} className={control}>
-              <span className="sr-only">{areaMap.locate}</span>
-              <Locate />
-            </button>
-            <button type="button" onClick={() => map.current?.zoomIn()} disabled={!ready} className={control}>
-              <span className="sr-only">{areaMap.zoomIn}</span>
-              <Plus />
-            </button>
-            <button type="button" onClick={() => map.current?.zoomOut()} disabled={!ready} className={control}>
-              <span className="sr-only">{areaMap.zoomOut}</span>
-              <Minus />
-            </button>
-          </div>
-        </div>
-
-        {/* The sheet: where the pin is, and one button to use it. */}
-        <div className="relative z-10 -mt-5 flex-none rounded-t-surface bg-screen px-4 pt-5 pb-4 shadow-sheet sm:px-6 sm:pb-6">
-          <div aria-live="polite" className="flex min-h-[56px] items-center gap-3.5">
-            <span aria-hidden="true" className="grid h-12 w-12 flex-none place-items-center rounded-full bg-panel">
-              {marker}
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[14px] text-ink-soft">{area ? areaMap.nearest : areaMap.none}</span>
-              <span className="block truncate text-[19px] leading-snug font-semibold">{area ? area.name : areaMap.other}</span>
-              <span className="block text-[14px] text-ink-soft">{area ? area.zone : areaMap.noneHint}</span>
-            </span>
-          </div>
-          {note && <p className="mt-2 text-[14px] text-accent-deep">{note}</p>}
-          <p className="mt-1 text-[13px] text-ink-soft">{areaMap.help}</p>
-          <button type="button" onClick={confirm} disabled={!ready} className={`${buttonClasses("primary")} mt-4 w-full`}>
-            {area ? areaMap.use(area.name) : areaMap.useOther}
+          <button type="button" onClick={confirm} disabled={!ready} className={`${buttonClasses("primary")} sm:flex-none`}>
+            {areaMap.confirm}
           </button>
         </div>
       </div>

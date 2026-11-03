@@ -1,20 +1,21 @@
 /* The area map's look over MapLibre's own styles. The light map is warmed toward the site's neutrals so the pin and
-   the sheet read first, and the credit line takes the site's type and colours. */
+   the card read first, and the credit line takes the site's type and colours. */
 .area-map .maplibregl-map {
   font: inherit;
 }
 .area-map .maplibregl-canvas {
   filter: sepia(0.22) saturate(1.1);
 }
-/* The sheet overlaps the map's foot, so the credit sits above it, where it stays visible as its licence asks. */
-.area-map .maplibregl-ctrl-bottom-right {
-  bottom: 20px;
+/* Under the floating search row. */
+.area-map .maplibregl-ctrl-top-right {
+  top: 64px;
 }
 .area-map .maplibregl-ctrl-attrib {
   background: var(--color-screen);
   color: var(--color-ink-soft);
-  font-size: 12px;
-  border-top-left-radius: 8px;
+  font-size: 11px;
+  border-radius: 8px;
+  margin: 0 12px 0 0;
 }
 .area-map .maplibregl-ctrl-attrib a {
   color: var(--color-ink);

@@ -4,7 +4,7 @@ import { useState, type ReactNode } from "react";
 import { CarMark } from "@/components/brand/Car";
 import { Dropdown } from "@/components/forms/Dropdown";
 import { fieldFocus } from "@/components/forms/field-base";
-import { Chevron, Pin } from "@/components/ui/icons";
+import { Pin } from "@/components/ui/icons";
 import { areaMap, areaPlaceholder, areaSearch, commuteEnds } from "@/config/pilot";
 import { AreaMap } from "@/features/area-map/AreaMap";
 import { preloadMap } from "@/features/area-map/preload";
@@ -18,8 +18,8 @@ const marks: Record<End, ReactNode> = {
   to: <CarMark />,
 };
 
-// One end of the trip. A tap on the row opens its searchable list; the map button beside it, as in Grab's and
-// Lyft's trip fields, opens the map for finding the area by eye.
+// One end of the trip, read like a field (as in Uber's and Lyft's trip fields, with no chevron): a tap on the row opens
+// its searchable list, and the quiet map icon at its end opens the map for finding the area by eye.
 function Area({ me, end, value }: { me: string; end: End; value: string }) {
   const { label, areas } = commuteEnds[end];
   const [mapOpen, setMapOpen] = useState(false);
@@ -46,7 +46,6 @@ function Area({ me, end, value }: { me: string; end: End; value: string }) {
           </span>
           <span className={`block truncate text-[17px] leading-snug ${value ? "font-semibold" : "text-ink-soft"}`}>{value || areaPlaceholder}</span>
         </span>
-        <Chevron className="transition-transform duration-150 group-aria-expanded:rotate-180" />
       </Dropdown>
       <button
         type="button"
@@ -54,10 +53,10 @@ function Area({ me, end, value }: { me: string; end: End; value: string }) {
         onPointerEnter={preloadMap}
         onFocus={preloadMap}
         title={areaMap.open(label)}
-        className={`${fieldFocus} grid h-12 w-12 flex-none place-items-center rounded-full text-accent-deep transition-colors duration-150 hover:bg-panel`}
+        className={`${fieldFocus} grid h-11 w-11 flex-none place-items-center rounded-full text-ink-soft transition-colors duration-150 hover:bg-panel hover:text-accent-deep`}
       >
         <span className="sr-only">{areaMap.open(label)}</span>
-        <Pin size="h-6 w-6" />
+        <Pin />
       </button>
       {mapOpen && <AreaMap id={`${id}-map`} end={end} value={value} marker={marks[end]} onPick={pick} onClose={() => setMapOpen(false)} />}
     </div>

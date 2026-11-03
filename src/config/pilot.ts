@@ -124,18 +124,12 @@ function withOther<T>(list: T[]) {
 // What the map says. The pin is never stored or sent: only the name of the area it lands in.
 export const areaMap = {
   open: (end: string) => `Find “${end}” on the map`,
-  help: "Move the map to put the pin on your area. We keep only the area’s name, never the exact spot.",
   search: { placeholder: "Search for an area", noMatch: (typed: string) => `No area matches “${typed}”. Move the map to find it.`, found: areaSearch.found },
   loading: "Loading the map…",
-  nearest: "Your pin is in",
-  none: "Not on our list yet",
-  noneHint: "Choose Another area and tell us where in the form.",
-  use: (name: string) => `Use ${name}`,
-  useOther: `Use ${otherArea}`,
+  notListed: "Not on our list yet: tell us where in the form",
+  confirm: "Use this area",
   other: otherArea,
   locate: "Go to my location",
   locateFailed: "We couldn’t find your location. Move the map instead.",
-  zoomIn: "Zoom in",
-  zoomOut: "Zoom out",
   close: "Close the map",
 };

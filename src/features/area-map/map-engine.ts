@@ -12,7 +12,8 @@ const lahore: [[number, number], [number, number]] = [
   [74.65, 31.75],
 ];
 
-// The map the area picker draws its own controls over: the middle is where the pin stands. `moved` reports that
+// The map the area picker draws its own controls over (zooming is by pinch, scroll or keys): the middle is where the
+// pin stands. `moved` reports that
 // middle, as [latitude, longitude], whenever the map comes to rest; `moving` when it starts to move. Kept behind this
 // small surface so the dialog never deals with the map library itself. It is ready as soon as its style is: the
 // tiles fill in after that.
@@ -28,8 +29,10 @@ export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { 
     dragRotate: false,
     pitchWithRotate: false,
     touchPitch: false,
-    attributionControl: { compact: false },
+    attributionControl: false,
   });
+  // The map's credit, as its licence asks, at the top right under the search: the card covers the foot of the map.
+  map.addControl(new maplibregl.AttributionControl({ compact: false }), "top-right");
   map.touchZoomRotate.disableRotation();
   map.keyboard.disableRotation();
   map.once("style.load", on.ready);
@@ -39,8 +42,6 @@ export async function createMap(el: HTMLElement, at: Point, zoom: number, on: { 
     on.moved([lat, lng]);
   });
   return {
-    zoomIn: () => map.zoomIn(),
-    zoomOut: () => map.zoomOut(),
     goTo: ([lat, lng]: Point, to: number) => map.flyTo({ center: [lng, lat], zoom: to, essential: false }),
     remove: () => map.remove(),
   };
