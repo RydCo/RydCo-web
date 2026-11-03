@@ -3,6 +3,7 @@ import { ExampleTag } from "@/components/ui/ExampleTag";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
+import { workedExample } from "@/config/worked-example";
 
 export function ShareSection() {
   return (
@@ -21,18 +22,20 @@ export function ShareSection() {
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(2)}>
           <Card tone="screen" pad="lg" className="relative">
             <ExampleTag>Example</ExampleTag>
-            <p className="font-semibold">Honda City, 10 km to work</p>
-            <p className="mt-1 text-ink-soft">Rs 38.94 per km · Rs 50 pickup fee</p>
+            <p className="font-semibold">
+              {workedExample.car}, {workedExample.km} km to work
+            </p>
+            <p className="mt-1 text-ink-soft">{workedExample.rates}</p>
             <dl className="mt-7 grid gap-6">
               <div>
                 <dt>With one rider</dt>
-                <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">Rs 245</dd>
-                <dd className="mt-2 text-[15px] text-ink-soft">Rs 50 + (10 km × Rs 38.94) ÷ 2 people</dd>
+                <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">{workedExample.solo}</dd>
+                <dd className="mt-2 text-[15px] text-ink-soft">{workedExample.working(1)}</dd>
               </div>
               <div>
                 <dt>With two riders</dt>
-                <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">Rs 180 each</dd>
-                <dd className="mt-2 text-[15px] text-ink-soft">Rs 50 + (10 km × Rs 38.94) ÷ 3 people</dd>
+                <dd className="mt-1 font-display text-[44px] leading-none font-extrabold tracking-tight">{workedExample.pooled} each</dd>
+                <dd className="mt-2 text-[15px] text-ink-soft">{workedExample.working(2)}</dd>
               </div>
             </dl>
           </Card>

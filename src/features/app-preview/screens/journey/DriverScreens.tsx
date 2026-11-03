@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Badge } from "@/components/ui/Badge";
 import { Avatar, Card, Days, Ends, Heading, Label, LiveMap, Primary, RouteCard, SafetyActions, Secondary, Segments, SkySheet, Swap, Windows } from "./SkySheet";
+import { workedExample } from "@/config/worked-example";
 
 // The same ride from the driver's seat, in the app's order: Hamza publishes it, takes Ayesha and Bilal, drives, and
 // confirms their payments. Text is the app's own (app-mocks/index (1).html), with its sample requests swapped for these
@@ -152,7 +153,7 @@ export function DriverLiveTripScreen() {
       <Card className="divide-y divide-line">
         {[
           { initials: "BA", name: "Bilal", share: "Rs 154", state: "In car" },
-          { initials: "AM", name: "Ayesha", share: "Rs 180", state: "Waiting" },
+          { initials: "AM", name: "Ayesha", share: workedExample.pooled, state: "Waiting" },
         ].map((r) => (
           <div key={r.name} className="flex items-center gap-2 p-2 text-[11.5px] leading-tight">
             <Avatar>{r.initials}</Avatar>
@@ -181,11 +182,11 @@ export function ConfirmPaymentsScreen() {
           <Avatar>AM</Avatar>
           <span>
             <b className="block text-[13px]">Ayesha</b>
-            <span className="text-[11px] text-ink-soft tabular-nums">Rs 180 · locked</span>
+            <span className="text-[11px] text-ink-soft tabular-nums">{workedExample.pooled} · locked</span>
           </span>
         </div>
         <p>
-          <b>Ayesha says she paid Rs 180</b> · JazzCash
+          <b>Ayesha says she paid {workedExample.pooled}</b> · JazzCash
         </p>
         <Swap
           before={
@@ -197,7 +198,7 @@ export function ConfirmPaymentsScreen() {
           after={
             <p className="flex items-center gap-2 text-[11px]">
               <Badge>Settled</Badge>
-              <span className="text-ink-soft">Received Rs 180 by JazzCash</span>
+              <span className="text-ink-soft">Received {workedExample.pooled} by JazzCash</span>
             </p>
           }
         />

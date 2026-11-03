@@ -3,6 +3,7 @@ import { PageHero } from "@/components/ui/PageHero";
 import { driverCta } from "@/config/cta";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { SharesScreen } from "@/features/app-preview/screens/SharesScreen";
+import { workedExample } from "@/config/worked-example";
 
 export function HeroSection() {
   const cta = driverCta();
@@ -21,7 +22,7 @@ export function HeroSection() {
         </>
       }
       aside={
-        <PhoneFrame label="Riders' shares worked out for a driver in the RydCo app: Rs 245 with one rider, Rs 180 each with two">
+        <PhoneFrame label={`Riders' shares worked out for a driver in the RydCo app: ${workedExample.solo} with one rider, ${workedExample.pooled} each with two`}>
           <SharesScreen />
         </PhoneFrame>
       }

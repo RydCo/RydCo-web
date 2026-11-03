@@ -1,4 +1,5 @@
 import { Header, Body, PrimaryButton } from "./parts";
+import { workedExample } from "@/config/worked-example";
 
 export function SettleScreen() {
   return (
@@ -9,7 +10,7 @@ export function SettleScreen() {
           <p className="font-display text-[16px] font-bold">Trip complete</p>
           <p className="text-[12px] text-ink-soft">Mon 2 Nov · Akbar Chowk → Arfa Tower gate</p>
           <p className="mt-3 text-[12px] text-ink-soft">Your final share</p>
-          <p className="font-display text-[34px] leading-none font-extrabold tracking-tight">Rs 180</p>
+          <p className="font-display text-[34px] leading-none font-extrabold tracking-tight">{workedExample.pooled}</p>
         </div>
         <ul className="grid gap-1.5">
           {[

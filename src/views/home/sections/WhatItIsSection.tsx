@@ -5,6 +5,8 @@ import { Tilt } from "@/components/ui/Tilt";
 import { paymentMethodsInWords } from "@/config/payments";
 import { exampleTrip, TripCard } from "@/features/trips/TripCard";
 import { playAt, reveal } from "@/lib/reveal";
+import { driverChecks } from "@/config/checks";
+import { seatsLeft, workedExample } from "@/config/worked-example";
 
 // Each part acts itself out once, when half of it is on screen (styles/motion/what-it-is.css). The heading's words drop
 // into place, an orange glint reads along the sentence, and each chip falls onto the page as the glint reaches it, with a
@@ -12,22 +14,23 @@ import { playAt, reveal } from "@/lib/reveal";
 // the glint passes through the key phrases beside it one after another. With reduced motion, or before the page's script
 // runs, it's all just there.
 //
-// With a mouse, each chip springs up when pointed at and points at its part of the card: "Rs 180" shows the card's price
-// once a second rider joins, "2 seats left" its seats, "Licence checked" its licence check. The card tilts towards the
+// With a mouse, each chip springs up when pointed at and points at its part of the card: the two-rider price shows the
+// card's price once a second rider joins, the seats chip its seats, the licence chip its licence check. The card tilts towards the
 // mouse and lifts off the page, its checks rising above it.
 
 const heading = "A seat on your way to work.";
+const licenceCheck = driverChecks.find((c) => c.name === "Driving licence")!;
 
 // The chips are the site's badges at their inline size; `points` names the part of the card each points at, and the
 // colour of the ring it lands with (styles/motion/what-it-is.css).
 type Part = string | { chip: string; tone: ComponentProps<typeof Badge>["tone"]; points: "seats" | "price" | "licence" };
 const sentence: Part[] = [
   "Someone near you already drives your route every morning. RydCo gives you their spare seat ",
-  { chip: "2 seats left", tone: "neutral", points: "seats" },
+  { chip: seatsLeft(exampleTrip.seatsLeft), tone: "neutral", points: "seats" },
   ", a fair share of the fuel cost ",
-  { chip: "Rs 180", tone: "ink", points: "price" },
+  { chip: workedExample.pooled, tone: "ink", points: "price" },
   ", and a driver we have checked ",
-  { chip: "Licence checked", tone: "trust", points: "licence" },
+  { chip: licenceCheck.badge, tone: "trust", points: "licence" },
   ".",
 ];
 

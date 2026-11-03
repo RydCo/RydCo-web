@@ -46,7 +46,7 @@
 .wi-card .tilt [data-trip-badges] > * {
   translate: 0 0 calc(var(--lift, 0) * 26px);
 }
-/* The two-rider price waits just above the one-rider price, for "Rs 180" to call it down (below). */
+/* The two-rider price waits just above the one-rider price, for the two-rider price chip to call it down (below). */
 .wi-card [data-trip-pooled] {
   translate: 0 -0.45em;
 }
