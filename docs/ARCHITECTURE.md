@@ -6,9 +6,12 @@ move, see [DESIGN.md](DESIGN.md).
 The site is a static Next.js export (`output: "export"`): no server, no database. Pages are built ahead of time, and
 the forms post to a Google Apps Script.
 
-`vercel.json` sets the security headers on every page. The Content-Security-Policy only lets the site load its own
-files and send forms to Google Apps Script (`script.google.com`, which redirects to `script.googleusercontent.com`).
-Adding anything from another site (a font, analytics, an embed) means adding its address there too, or it is blocked.
+The security headers on every page come from one place, `src/config/security.mjs`. The Content-Security-Policy only
+lets the site load its own files, send forms to Google Apps Script (`script.google.com`, which redirects to
+`script.googleusercontent.com`) and load the area map from OpenFreeMap (its host comes from `config/map.mjs`).
+`pnpm dev` writes them into `vercel.json`, which Vercel reads before it builds, and the dev server sends the same
+headers, so anything the live site would block is blocked locally too. `pnpm build` stops if `vercel.json` is out of
+step. Adding anything from another site (a font, analytics, an embed) means adding its address in `security.mjs`.
 
 ## Layout
 
@@ -23,7 +26,8 @@ rydco-web/
 │   │   │   └── components/      Pieces only this page uses
 │   │   ├── drivers/  safety/  organizations/  how-it-works/  contact/  legal/
 │   ├── features/            What the site does, used on more than one page
-│   │   ├── commute/             Route check, coverage answer, the shared chosen route
+│   │   ├── commute/             The route picker, the hero's route check, the shared chosen route
+│   │   ├── area-map/            The map for finding an area, loaded only when needed
 │   │   ├── waitlist/  contact/  The two forms: sign-up (riders and drivers) and contact
 │   │   ├── app-preview/         Phone frame, app tour, the rebuilt app screens, motion graphics scenes
 │   │   └── trips/               The trip card
@@ -50,7 +54,7 @@ app  →  views  →  features  →  components  →  hooks / lib / config
 ```
 
 A layer may import from layers to its right, never to its left. A shared `Button` can't depend on a page, so changing
-one page can't break another. `npm run lint` fails if this is broken, and also rejects `../` imports: use `@/` across
+one page can't break another. `pnpm lint` fails if this is broken, and also rejects `../` imports: use `@/` across
 folders and `./` for files in the same folder.
 
 Two things ESLint doesn't check, so please keep to them in review:
@@ -61,7 +65,7 @@ Two things ESLint doesn't check, so please keep to them in review:
 ## Changing the theme
 
 Everything visual starts in `src/config/theme.mjs`. Change a colour, or point `activeTheme` at another theme, and run
-`npm run dev` or `npm run build`. `scripts/build-theme.mjs` then regenerates:
+`pnpm dev` or `pnpm build`. `scripts/build-theme.mjs` then regenerates:
 
 - `src/styles/theme.generated.css`: the colour and radius tokens Tailwind uses
 - `src/app/icon.svg`: the favicon
@@ -71,7 +75,7 @@ The browser bar colour reads the theme directly. The `apricot` theme is the app'
 readable. Gradients are in `src/styles/gradients.css`, built from the same colours, so they follow too. Don't edit the generated
 files, and don't write a hex colour anywhere else: use a role such as `bg-brand` or `text-ink-soft`. Every button look is
 in `src/components/ui/button-styles.ts`. Commit the generated files along with the theme change. Motion graphics are
-videos, so they don't follow on their own: run `npm run motion` as well.
+videos, so they don't follow on their own: run `pnpm motion` as well.
 
 ## Motion graphics
 
@@ -83,13 +87,13 @@ The site itself needs none of this. It only plays the finished files in `public/
 and only the person rendering needs the setup, once:
 
 ```bash
-npm install
-npx playwright install chromium
+pnpm install
+pnpm exec playwright install chromium
 winget install Gyan.FFmpeg                      # macOS: brew install ffmpeg
 code --install-extension ms-playwright.playwright   # optional, for VS Code
 ```
 
-Then `npm run motion` renders every scene, `npm run motion -- two-rides` renders one, and `--no-build` reuses the last
+Then `pnpm motion` renders every scene, `pnpm motion two-rides` renders one, and `--no-build` reuses the last
 scene build. Commit the files it writes to `public/motion/`: a WebM, an MP4 for browsers without VP9, and a poster. Re-render
 whenever a scene, its screens or the theme change, because nothing else updates the video.
 
@@ -138,7 +142,7 @@ Search for `[FILL]` to find every placeholder still waiting for a real value.
 ## Before pushing
 
 ```bash
-npm run lint
-npm run typecheck
-npm run build
+pnpm lint
+pnpm typecheck
+pnpm build
 ```

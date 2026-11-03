@@ -12,8 +12,6 @@ import { appLive, riderCta, waitlistLabel } from "@/config/cta";
 import { commuteEnds } from "@/config/pilot";
 import { useCommute } from "@/features/commute/commute-store";
 import { RoutePicker } from "@/features/commute/RoutePicker";
-import { coverage } from "@/features/commute/coverage";
-import { CoverageAnswer } from "@/features/commute/CoverageAnswer";
 import { useForm } from "@/hooks/use-form";
 import { useSendForm } from "@/hooks/use-send-form";
 import { emailError, firstName, nameError, phoneError } from "@/lib/person";
@@ -23,7 +21,7 @@ const labels = { name: "Name", phone: "Phone", email: "Email", role: "I want to"
 const roles = { ride: "Ride", drive: "Drive", both: "Ride and drive" } as const;
 type WaitlistRole = keyof typeof roles;
 
-// The site's one sign-up form, for riders and drivers alike: the app's "Check your commute?" step joined to the waitlist.
+// The site's one sign-up form, for riders and drivers alike: the app's commute step joined to the waitlist.
 // The route is shared with the hero's route check, so a route picked up there is already filled in here. Anyone who
 // wants to drive is also asked about their car and when they leave. The Drivers page opens it on "Drive".
 export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
@@ -33,7 +31,6 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
   const [role, setRole] = useState<WaitlistRole>(startAs);
   const { state, send } = useSendForm("waitlist", labels);
 
-  const { picked, covered } = coverage(from, to);
   const cta = riderCta();
   const drives = role !== "ride";
 
@@ -47,7 +44,6 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
       role: roles[role],
       from,
       to,
-      covered: picked ? String(covered) : "",
       car: drives ? f.car.trim() : "",
       leave: drives ? f.leave.trim() : "",
       website: f.website,
@@ -64,7 +60,7 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
           </p>
         ) : (
           <p>
-            We&rsquo;ll message you on {normalizePhone(f.phone)} and email {f.email.trim()} when RydCo opens{picked && covered ? ` on ${from} to ${to}` : ""}.
+            We&rsquo;ll message you on {normalizePhone(f.phone)} and email {f.email.trim()} when RydCo opens.
           </p>
         )}
       </Sent>
@@ -73,12 +69,10 @@ export function WaitlistForm({ startAs = "ride" }: { startAs?: WaitlistRole }) {
 
   return (
     <form onSubmit={submit} noValidate className="relative">
-      <p className="t-title">Is your commute covered?</p>
+      <p className="t-title">Your daily commute</p>
       <div className="mt-4">
         <RoutePicker me={id} />
       </div>
-
-      <CoverageAnswer me={id} className="mt-4 min-h-[40px]" />
 
       {appLive ? (
         <div className="mt-6">

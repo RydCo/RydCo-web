@@ -1,20 +1,22 @@
-/* The area map's look over Leaflet's own styles. The tiles are calmed toward the site's warm neutrals so the pin and
-   the panel read first, and the credit line takes the site's type and colours. */
-.area-map .leaflet-container {
-  background: var(--color-panel);
+/* The area map's look over MapLibre's own styles. The light map is warmed toward the site's neutrals so the pin and
+   the sheet read first, and the credit line takes the site's type and colours. */
+.area-map .maplibregl-map {
   font: inherit;
 }
-.area-map .leaflet-tile-pane {
-  filter: grayscale(0.6) sepia(0.25) contrast(0.95);
+.area-map .maplibregl-canvas {
+  filter: sepia(0.22) saturate(1.1);
 }
-.area-map .leaflet-control-attribution {
+/* The sheet overlaps the map's foot, so the credit sits above it, where it stays visible as its licence asks. */
+.area-map .maplibregl-ctrl-bottom-right {
+  bottom: 20px;
+}
+.area-map .maplibregl-ctrl-attrib {
   background: var(--color-screen);
   color: var(--color-ink-soft);
   font-size: 12px;
   border-top-left-radius: 8px;
-  padding: 2px 8px;
 }
-.area-map .leaflet-control-attribution a {
+.area-map .maplibregl-ctrl-attrib a {
   color: var(--color-ink);
 }
 

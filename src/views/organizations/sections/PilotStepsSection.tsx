@@ -6,7 +6,7 @@ import { pilotEnquiry } from "@/config/contact";
 import { reveal } from "@/lib/reveal";
 
 const pilotSteps = [
-  { title: "Map your commute", text: "Tell us where your office is and which areas your team lives in. We check them against our coverage." },
+  { title: "Map your commute", text: "Tell us where your office is and which areas your team lives in, so we can match people on the same route." },
   { title: "Your team joins", text: "People sign up with a phone number. Anyone who wants to drive completes the driver checks." },
   { title: "Ride together", text: "RydCo matches people heading to your office on the same route, on weekday commutes." },
   { title: "Review it together", text: "At the end of the pilot we sit down with you: what worked, what didn't, and what to change." },

@@ -3,7 +3,7 @@ import { Section } from "@/components/ui/Section";
 import { railStop } from "@/components/ui/StepTimeline";
 import { paymentMethodsInWords } from "@/config/payments";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
-import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
+import { LahoreScreen } from "@/features/app-preview/screens/LahoreScreen";
 import { PhoneScreen } from "@/features/app-preview/screens/PhoneScreen";
 import { RequestScreen } from "@/features/app-preview/screens/RequestScreen";
 import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
@@ -21,10 +21,10 @@ const steps: { title: string; text: string; screen: ReactNode; label: string }[]
     label: "Choosing a role in the RydCo app",
   },
   {
-    title: "Check your commute",
-    text: "See where the pilot runs in Lahore and test your own route before you sign up.",
-    screen: <CoverageScreen />,
-    label: "The pilot coverage map in the RydCo app",
+    title: "Add your commute",
+    text: "The pilot runs across all of Lahore. Tell the app where you start and where you're headed.",
+    screen: <LahoreScreen />,
+    label: "The RydCo app's map of commutes across Lahore",
   },
   {
     title: "Sign up with your number",

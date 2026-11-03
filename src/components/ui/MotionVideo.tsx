@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-// A silent, looping motion graphic from public/motion (rendered by `npm run motion`). It plays while it's on screen.
+// A silent, looping motion graphic from public/motion (rendered by `pnpm motion`). It plays while it's on screen.
 // Reduced motion or no JavaScript: its poster stays, and nothing moves.
 export function MotionVideo({ name, className = "" }: { name: string; className?: string }) {
   const ref = useRef<HTMLVideoElement>(null);

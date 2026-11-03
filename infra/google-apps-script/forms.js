@@ -32,7 +32,7 @@ const filled = (v) => String(v || "").trim() !== "";
 const FORMS = {
   waitlist: {
     title: "Waitlist",
-    fields: ["name", "phone", "email", "role", "from", "to", "covered", "car", "leave"],
+    fields: ["name", "phone", "email", "role", "from", "to", "car", "leave"],
     valid: (p) => filled(p.name) && /^03\d{2}-\d{7}$/.test(p.phone || "") && EMAIL.test(p.email || ""),
   },
   contact: {

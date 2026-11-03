@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/Button";
 import { buttonClasses } from "@/components/ui/button-styles";
 import { riderCta } from "@/config/cta";
 import { prefersReducedMotion } from "@/hooks/use-reduced-motion";
-import { CoverageAnswer } from "./CoverageAnswer";
 import { RoutePicker } from "./RoutePicker";
 
 // The route picker as the hero's main action, the way Uber opens on its trip planner and Airbnb on its search bar.
@@ -44,10 +43,7 @@ export function HeroRouteCheck({ aside }: { aside?: ReactNode }) {
           }
         />
       </form>
-      <div className="mt-4 flex min-h-[52px] flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-6">
-        <CoverageAnswer me={HERO} />
-        {aside}
-      </div>
+      {aside && <div className="mt-4">{aside}</div>}
     </div>
   );
 }

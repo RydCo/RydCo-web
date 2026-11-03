@@ -1,7 +1,7 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
-import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
+import { LahoreScreen } from "@/features/app-preview/screens/LahoreScreen";
 import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
 import { SharesScreen } from "@/features/app-preview/screens/SharesScreen";
 import { StopsScreen } from "@/features/app-preview/screens/StopsScreen";
@@ -32,8 +32,8 @@ export function WhoItsForSection() {
             <PhoneFrame key="o" label="One car picking up colleagues on the way to the same workplace">
               <StopsScreen />
             </PhoneFrame>,
-            <PhoneFrame key="p" label="The Lahore pilot coverage map">
-              <CoverageScreen />
+            <PhoneFrame key="p" label="The RydCo app's map of commutes across Lahore">
+              <LahoreScreen />
             </PhoneFrame>,
           ]}
         />

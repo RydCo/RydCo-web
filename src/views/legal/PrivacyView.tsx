@@ -310,7 +310,7 @@ export function PrivacyView() {
               <p>When you join the waitlist, we receive:</p>
               <ul>
                 <li>Your name, mobile number and email.</li>
-                <li>Whether you want to ride, drive or both, the areas you start in and head to, and whether that route is in the pilot.</li>
+                <li>Whether you want to ride, drive or both, and the areas you start in and head to.</li>
                 <li>If you want to drive, your car and when you usually leave, if you fill them in.</li>
               </ul>
               <p>
@@ -322,14 +322,19 @@ export function PrivacyView() {
                 If the form can&rsquo;t be sent that way, your email app opens with the same details instead, and nothing is sent until you send that email.
               </p>
               <p>
-                We use it only to reply to you, to tell you when RydCo opens on your route, to send you a link to sign up and, if you want to drive, to call or
+                We use it only to reply to you, to tell you when RydCo opens, to send you a link to sign up and, if you want to drive, to call or
                 message you about getting set up. You give your consent by sending the form. If you don&rsquo;t want these messages, tell us and we&rsquo;ll stop.
                 Ask us at any time to see, correct or delete your details. Otherwise we delete them 12 months after our last contact with you.
               </p>
               <p>
                 This website doesn&rsquo;t set cookies, doesn&rsquo;t store anything in your browser, and doesn&rsquo;t use analytics or advertising tools. Its
-                fonts and images come from our own host, not from other companies. Vercel, our host, keeps basic technical logs, such as your IP address,
+                fonts and images come from our own host, not from other companies, apart from the map described below. Vercel, our host, keeps basic technical logs, such as your IP address,
                 browser and the pages requested, so the site can run securely. Google receives the same kind of technical details when you send a form.
+              </p>
+              <p>
+                If you open the map to find your area, it loads from OpenFreeMap, a free map service built on OpenStreetMap, which receives the same kind of
+                technical details. The map&rsquo;s position stays in your browser: only the name of the area you choose goes into the form. If you tap
+                &ldquo;Go to my location&rdquo;, your browser asks first, and your location is used only to move the map. It isn&rsquo;t sent to us or kept.
               </p>
               <p>Links to Instagram take you to a site that has its own privacy policy.</p>
             </>

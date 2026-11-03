@@ -6,26 +6,17 @@ import { Close, Search, Tick } from "@/components/ui/icons";
 import { fieldEdge, fieldSurface } from "./field-base";
 
 // `hint` is a quieter second line under the label, `keywords` are other names a search finds it by, and an `always`
-// option stays in view whatever is searched, so there is always a way on. An option with an `action` is a step rather
-// than a value (like "Choose on map"): choosing it runs the action, and it stays pinned under the list, after its icon.
-export type DropdownOption = {
-  value: string;
-  label: string;
-  group?: string;
-  hint?: string;
-  keywords?: string[];
-  always?: boolean;
-  icon?: ReactNode;
-  action?: () => void;
-};
+// option stays in view whatever is searched, so there is always a way on.
+export type DropdownOption = { value: string; label: string; group?: string; hint?: string; keywords?: string[]; always?: boolean };
 
 // The words a searchable list uses, from whoever owns the list. Passing them is what makes a dropdown searchable.
 export type SearchCopy = {
   placeholder: string;
   noMatch: (typed: string) => string;
   found: (count: number) => string;
-  useTyped: (typed: string) => string;
-  typedHint: string;
+  // Without these, nothing is offered when the search matches nothing (a search that can only jump to a listed place).
+  useTyped?: (typed: string) => string;
+  typedHint?: string;
 };
 
 // How the list fits the window, in pixels. It opens downward unless that leaves too little room and there's more above.
@@ -68,7 +59,7 @@ function Label({ text, query }: { text: string; query: string }) {
   );
 }
 
-// One row of the list: its icon if it has one, the label with what was searched in bold, the hint under it, and a
+// One row of the list: the label with what was searched in bold, the hint under it, and a
 // tick on the chosen one.
 function Row({
   id,
@@ -98,9 +89,8 @@ function Row({
       onClick={() => onChoose(index)}
       className={`flex min-h-[46px] cursor-pointer items-center gap-3 rounded-[16px] px-3.5 py-2 text-[16px] leading-snug transition-colors duration-100 aria-selected:font-semibold md:min-h-[42px] ${active ? "bg-panel" : ""}`}
     >
-      {option.icon && <span className="grid h-9 w-9 flex-none place-items-center rounded-full bg-brand text-accent-deep">{option.icon}</span>}
       <span className="min-w-0 flex-1">
-        <span className={`block ${option.action ? "font-semibold" : ""}`}>
+        <span className="block">
           <Label text={option.label} query={query} />
         </span>
         {option.hint && <span className="block text-[13px] font-normal text-ink-soft">{option.hint}</span>}
@@ -154,10 +144,9 @@ export function Dropdown({
   // When nothing on the list matches, what was typed becomes a choice of its own, so it reaches the form in the
   // person's own words instead of being lost behind "Another area".
   const ownWords = query.trim().slice(0, longestTyped);
-  const shown = search && noMatch && ownWords ? [{ value: ownWords, label: search.useTyped(ownWords), hint: search.typedHint }, ...matched] : matched;
-  const groups = grouped(shown.filter((o) => !o.action));
-  const pinned = shown.flatMap((option, index) => (option.action ? [{ option, index }] : []));
-  const selected = shown.findIndex((o) => !o.action && o.value === value);
+  const shown = search?.useTyped && noMatch && ownWords ? [{ value: ownWords, label: search.useTyped(ownWords), hint: search.typedHint }, ...matched] : matched;
+  const groups = grouped(shown);
+  const selected = shown.findIndex((o) => o.value === value);
   const optionId = (index: number) => `${id}-option-${index}`;
   const listId = `${id}-list`;
 
@@ -181,15 +170,8 @@ export function Dropdown({
 
   // The search field goes when the list closes, so focus returns to the button, except on Tab, where the browser is
   // already moving it on to the next field.
-  // A step closes the list with focus back on the button, so whatever it opens returns focus there.
   function choose(index: number, refocus = searchable) {
-    const option = shown[index];
-    if (option.action) {
-      close(true);
-      option.action();
-      return;
-    }
-    if (option.value !== value) onChange(option.value);
+    if (shown[index].value !== value) onChange(shown[index].value);
     close(refocus);
   }
 
@@ -222,7 +204,7 @@ export function Dropdown({
       close(searchable);
       return true;
     }
-    if (e.key === "Tab" && active >= 0 && !shown[active].action) choose(active, false);
+    if (e.key === "Tab" && active >= 0) choose(active, false);
     else if (e.key === "Tab") close();
     return e.key === "Tab";
   }
@@ -279,7 +261,7 @@ export function Dropdown({
   useEffect(() => {
     const box = list.current;
     const row = document.getElementById(`${id}-option-${active}`);
-    if (!open || !box || !row || !box.contains(row) || viaPointer.current) return;
+    if (!open || !box || !row || viaPointer.current) return;
     const bottom = row.offsetTop + row.offsetHeight;
     if (active === 0) box.scrollTop = 0;
     else if (row.offsetTop < box.scrollTop) box.scrollTop = row.offsetTop - panelPadding / 2;
@@ -386,23 +368,25 @@ export function Dropdown({
             {search && (noMatch ? search.noMatch(ownWords) : searched ? search.found(shown.length) : "")}
           </p>
           {/* Pressing on the list keeps focus where it is, so the list stays open while it's being scrolled. */}
-          <div id={listId} role="listbox" aria-label={label} onMouseDown={(e) => e.preventDefault()} className="flex min-h-0 flex-1 flex-col">
-            <div ref={list} className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain">
-              {groups.map((group, g) => (
-                <div key={group.name ?? g} role={group.name ? "group" : undefined} aria-labelledby={group.name ? `${id}-group-${g}` : undefined}>
-                  {group.name && (
-                    <p id={`${id}-group-${g}`} className="px-3.5 pt-2.5 pb-1 text-[13px] leading-snug font-semibold text-ink-soft">
-                      {group.name}
-                    </p>
-                  )}
-                  {group.rows.map(({ option, index }) => row(option, index))}
-                </div>
-              ))}
-              <div aria-hidden="true" className="dropdown-more" />
-            </div>
-            {pinned.length > 0 && (
-              <div className="mt-1 flex-none border-t border-line pt-1">{pinned.map(({ option, index }) => row(option, index))}</div>
-            )}
+          <div
+            ref={list}
+            id={listId}
+            role="listbox"
+            aria-label={label}
+            onMouseDown={(e) => e.preventDefault()}
+            className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain"
+          >
+            {groups.map((group, g) => (
+              <div key={group.name ?? g} role={group.name ? "group" : undefined} aria-labelledby={group.name ? `${id}-group-${g}` : undefined}>
+                {group.name && (
+                  <p id={`${id}-group-${g}`} className="px-3.5 pt-2.5 pb-1 text-[13px] leading-snug font-semibold text-ink-soft">
+                    {group.name}
+                  </p>
+                )}
+                {group.rows.map(({ option, index }) => row(option, index))}
+              </div>
+            ))}
+            <div aria-hidden="true" className="dropdown-more" />
           </div>
         </div>
       )}

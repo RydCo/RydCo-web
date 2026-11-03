@@ -34,7 +34,7 @@ const questions = [
   },
   {
     q: "Where does RydCo work?",
-    a: "On the pilot routes in Lahore for now. Check your route below.",
+    a: "Anywhere in Lahore during the pilot. More cities come after it.",
   },
 ];
 

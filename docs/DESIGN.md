@@ -39,10 +39,9 @@ and carpooling means two lines becoming one. So the line is the only motif, used
 
 No other decorative shape appears anywhere: no blobs, circles or patterns.
 
-**The live thing:** *"Is my commute covered?"* Pick where you start and where you're headed from the pilot
-areas, and the page answers "Covered" or "Not covered yet". The CTA then links to the waitlist. This comes straight
-from the app's own "Check your commute?" screen. Without JavaScript it falls back to a plain list of pilot areas.
-*(Needs the real pilot area list. See §11.)*
+**The live thing:** *"Your daily commute."* The pilot covers all of Lahore, so there is no coverage check: pick where
+you start and where you're headed (search, or find it on the map) and the CTA takes the route to the waitlist. This
+comes straight from the app's own commute step.
 
 ---
 
@@ -254,12 +253,12 @@ Crossfades become cuts.
 | `PhoneFrame` | Ink device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
 | Brand drawings | The route motif in `components/brand`: `HeroRoute` (animated signature), `Lockup` (static logo), `RouteBand` (full-width crossing), `RouteConverge` (homes joining one line). Rail stops on step lists come from `railStop` in `StepTimeline`. |
 | `TripCard` | The BlaBlaCar-pattern trip summary: driver first name, rating, specific badges, pickup → drop-off with the route mark, times, seats left, Rs per seat. Used only as a clearly labelled example. |
-| `Dropdown` | The one dropdown, used by the route picker and the contact form (`src/components/forms/Dropdown.tsx`). Replaces the native select so it looks the same everywhere: a white floating list with rows that highlight in `panel` (as in the app's place list) and a tick on the chosen one. Rows can carry a quieter second line (`hint`). Works with the keyboard, including typing a name to jump to it, and opens upward when there's no room below. **Searchable** (the area pickers): opening it moves focus to a search field that filters as you type, ignoring case, spaces and punctuation and matching other names too (`keywords`: "Defence" finds DHA, "Gulberg 3" finds Gulberg III), with the match in bold, empty groups hidden, a "no match" line that offers what was typed as a choice of its own ("Use “Raiwind Road”", so it reaches the waitlist in the person's words), and "Another area" always kept (`always`). On phones it opens as a sheet from the bottom so the keyboard never hides the results. Areas live in `config/pilot.ts`, each with its part of the city and its other names; the pilot ones are listed first under "In the pilot". An option with an `action` is a step, not a value ("Choose on map"): it is pinned under the list with its icon and runs the action when chosen. |
+| `Dropdown` | The one dropdown, used by the route picker and the contact form (`src/components/forms/Dropdown.tsx`). Replaces the native select so it looks the same everywhere: a white floating list with rows that highlight in `panel` (as in the app's place list) and a tick on the chosen one. Rows can carry a quieter second line (`hint`). Works with the keyboard, including typing a name to jump to it, and opens upward when there's no room below. **Searchable** (the area pickers): opening it moves focus to a search field that filters as you type, ignoring case, spaces and punctuation and matching other names too (`keywords`: "Defence" finds DHA, "Gulberg 3" finds Gulberg III), with the match in bold, empty groups hidden, a "no match" line that offers what was typed as a choice of its own ("Use “Raiwind Road”", so it reaches the waitlist in the person's words), and "Another area" always kept (`always`). On phones it opens as a sheet from the bottom so the keyboard never hides the results. Areas live in `config/pilot.ts`, each with its part of the city and its other names; grouped under their part of the city. Without `useTyped` in its words, a search offers nothing when it finds nothing (the map's search, which can only jump to a listed area). |
 | `Badge` | Trust-green pill with a tick for checks that really happen (names from `config/checks.ts`, the one list of checks). Tones `neutral`, `surface`, `ink` for everything else. Size `text`, or `inline` inside a display-size sentence. |
-| `RoutePicker` | The one commute picker (`features/commute/RoutePicker.tsx`): "I start in" and "I'm headed to" in one white card, stacked like the app's "Find a ride" card, joined by the route running down the left (start dot → line → car). The same layout at every width and in every place. Both ends are searchable dropdowns that end with "Choose on map". The hero (`HeroRouteCheck`, with the main button full width under the two ends) and the waitlist form use the same component and share the chosen route (`commute-store.ts`). |
-| `AreaMap` | "Choose on map" (`features/area-map/`): a modal dialog (full screen on phones) where the map moves under a fixed pin wearing that end's mark, and the panel under it names the area the pin is in, with its pilot status, and a "Use …" button. Locate-me and zoom buttons float over the map. Only the area's name is kept, never the point. Leaflet and OpenStreetMap tiles load only when it opens, with OpenStreetMap credited. The area is the listed one whose middle (`at` in `pilot.ts`) is nearest, within 3 km; farther than that it offers "Another area". |
-| `HeroRouteCheck` | The live thing (§2) as the hero's main action: the `RoutePicker` with the main button, and the "Covered / Not covered yet" answer underneath. The button scrolls to the waitlist with the cursor in the name field. |
-| `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number, email (for the launch sign-up link) and ride / drive / both. Choosing drive or both adds "Your car" and "I usually leave at". It is the only sign-up form: the Drivers page shows it opened on "Drive". A route picked in the hero is already filled in. |
+| `RoutePicker` | The one commute picker (`features/commute/RoutePicker.tsx`): "I start in" and "I'm headed to" in one white card, stacked like the app's "Find a ride" card, joined by the route running down the left (start dot → line → car). The same layout at every width and in every place. Each end is a searchable dropdown, grouped by part of the city, with a map-pin button beside it (as in Grab's and Lyft's trip fields) that opens `AreaMap`. Touching the card starts loading the map. The hero (`HeroRouteCheck`, with the main button full width under the two ends) and the waitlist form use the same component and share the chosen route (`commute-store.ts`). |
+| `AreaMap` | The map-pin button's dialog (`features/area-map/`), full screen on phones: a search at the top that jumps to a listed area, the map moving under a fixed pin wearing that end's mark, locate-me and zoom buttons, and a bottom sheet naming the area the pin is in (its part of the city under it) with one full-width "Use …" button. Only the area's name is kept, never the point. MapLibre with OpenFreeMap's vector tiles (`config/map.mjs`), loaded only once someone touches the picker (`preload.ts`). The area is the listed one whose middle (`at` in `pilot.ts`) is nearest, within 3 km; farther than that it offers "Another area". |
+| `HeroRouteCheck` | The live thing (§2) as the hero's main action: the `RoutePicker` with the main button. The button scrolls to the waitlist with the cursor in the name field. |
+| `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination, then name, mobile number, email (for the launch sign-up link) and ride / drive / both. Choosing drive or both adds "Your car" and "I usually leave at". It is the only sign-up form: the Drivers page shows it opened on "Drive". A route picked in the hero is already filled in. |
 | `ContactForm` | The contact form (topic picker, preselected from `?topic=`), for questions, company pilots and partners. Both forms post to a Google Sheet (see `infra/google-apps-script/forms.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, surface pill fields on a panel card. Both forms keep their fields and errors in `useForm` and end with `FormActions`. Every field shares one edge and focus style (`fieldEdge` / `fieldFocus` in `forms/field-base.tsx`): a thin edge at rest, a 2px orange edge when focused or open, a thicker deep-orange edge on an error. Buttons and links keep the site-wide focus outline. |
 
 ---
@@ -278,7 +277,7 @@ Crossfades become cuts.
 3. **How it works:** "Many into one". Scattered dots (everyone driving alone) are pulled into one route line (one shared car).
    Under it, three steps in an `<ol>`, each named by its verb: *Request · Ride · Split*. They follow the app's real flow:
    request a seat, the driver confirms; meet at the pickup point; pay your share to the driver directly.
-4. **Is my commute covered?** The live thing, on an panel field, with a phone showing the app's coverage screen.
+4. **Your daily commute:** the live thing joined to the waitlist, on a panel field, with a phone showing the app's welcome screen.
 5. **Safety:** a board of enlarged real app elements on flat tiles: verified badges, the women-only rides toggle, "Numbers stay hidden",
    trip sharing with a trusted contact, "Report anytime". Each has a one-line caption. Links to the Safety page.
 6. **Route band:** the line crosses the page once, from riders to everyone else.
@@ -300,7 +299,7 @@ Crossfades become cuts.
 - **Safety:** each check named exactly as the app names it, and what it does and doesn't mean (taken from the app's "Why?" sheets).
 - **Drivers:** "Earn back your fuel cost." What you need (CNIC, live selfie, licence, vehicle, reviewed within 24 hours),
   how the share is worked out, how you get paid (directly, by Cash, JazzCash, NayaPay or bank), sign-up action.
-- **How it works:** the full rider flow as phone screens: choose a role → check coverage → phone number → request → ride → settle up.
+- **How it works:** the full rider flow as phone screens: choose a role → add your commute → phone number → request → ride → settle up.
 - **About:** the vision ("How Pakistan gets to work, greener."), why we are building RydCo, and the FAST-NUCES early web app as proof, then a closing call to ride, drive or get in touch. No team section, at the founders' request.
 - **Contact:** the contact form (`ContactForm`), with email and Instagram beside it and a reminder to use SOS during a trip.
 - **Privacy and Terms:** a simple heading structure with a banner: "Draft, to be reviewed by a lawyer."
@@ -341,8 +340,8 @@ Crossfades become cuts.
 2. **Real features:** which of these exist today? Phone verification · CNIC review · live selfie check · licence check ·
    vehicle check · women-only rides · trusted contact / trip sharing · hidden phone numbers + in-app chat · report button ·
    SOS · fuel-cost split · repeating weekday rides · payment methods (Cash, JazzCash, NayaPay, Bank/Raast).
-3. **Pilot areas:** the real list for the coverage check (the mock uses Johar Town, DHA Phase 5, Gulberg III, Model Town,
-   Garden Town, Faisal Town → Arfa Technology Park, Gulberg Main Boulevard, Mall Road, Liberty Market).
+3. **Pilot areas:** settled: the pilot covers all of Lahore. The pickers' list (`config/pilot.ts`) is the places people
+   pick from; its map points are approximate.
 4. **Contact email**, and the **domain**, for canonical URLs, sitemap and OG.
 5. **Team** for the partners section: names, roles, one line each (or a placeholder).
 6. **Photos:** we have none. Options: (a) your own photos (best), (b) a few credited photos of Lahore streets and commutes from
@@ -361,7 +360,7 @@ Crossfades become cuts.
 | Urbanist + Figtree, so the site matches the app | The app's dark theme (the site is light, with ink sections) |
 | The idea of an brand field with ink ink (the splash) | The small orange circle on beige (brand is used in big blocks instead) |
 | Copy and tone: "Assalam o alaikum. I'm RydCo.", "Your commute, in good company.", one short idea per line | The chat-bubble layout (fine in the app, wrong for a website) |
-| The real flow: choose a role → pilot coverage → phone sign-up → request → driver confirms → ride → settle up | Mock names, phone numbers and prices as if they were real |
+| The real flow: choose a role → commute → phone sign-up → request → driver confirms → ride → settle up | Mock names, phone numbers and prices as if they were real |
 | Specific badge names and the "never say" wording rules | — |
 | Screens to rebuild inside `PhoneFrame` | — |
 

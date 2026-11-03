@@ -7,7 +7,7 @@ import { twoRides } from "@/features/app-preview/screens/journey/journey";
 import { MapBackdrop } from "@/features/app-preview/screens/journey/SkySheet";
 import { runClock } from "./clock";
 
-// The motion graphic in the home hero's phone, rendered to public/motion/two-rides by `npm run motion`. This never ships:
+// The motion graphic in the home hero's phone, rendered to public/motion/two-rides by `pnpm motion`. This never ships:
 // the site only plays the video. The map holds still while each screen pushes in, its content rises, a finger taps
 // what's next, and the car drives the route. The first screen stays at rest, so the end of the loop meets the start.
 

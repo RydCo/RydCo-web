@@ -16,7 +16,7 @@ export function LegalPage({ title, lead, sections }: { title: string; lead: stri
           <p className="flex-none font-display text-[20px] leading-tight font-bold">Draft, to be reviewed by a lawyer</p>
           <p className="text-[16px]">
             A qualified lawyer in Pakistan hasn&rsquo;t reviewed this yet. It is not final and is not legal advice, and the time limits in it may change before the
-            app opens. <span className="whitespace-nowrap">Draft 2, last updated 2 November 2026.</span>
+            app opens. <span className="whitespace-nowrap">Draft 3, last updated 3 November 2026.</span>
           </p>
         </Card>
         <div className="mt-12 grid gap-12 lg:mt-16 lg:grid-cols-12 lg:gap-10">

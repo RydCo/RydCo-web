@@ -3,11 +3,8 @@ import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { pilot } from "@/config/pilot";
 
-// Four of the pilot's home areas, drawn joining one line to the office.
-const homes = pilot.starts
-  .filter((a) => a.covered)
-  .slice(0, 4)
-  .map((a) => a.name);
+// Four of Lahore's home areas, drawn joining one line to the office.
+const homes = pilot.starts.slice(0, 4).map((a) => a.name);
 
 export function HeroSection() {
   return (

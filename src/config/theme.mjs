@@ -1,6 +1,6 @@
 // The one place to change how RydCo looks. Change `activeTheme`, or a colour below, and everything follows: the
 // site's colours and gradients, the favicon and the link-preview image (scripts/build-theme.mjs generates them on
-// `npm run dev` and `npm run build`, and stops the build if a theme's text wouldn't be readable).
+// `pnpm dev` and `pnpm build`, and stops the build if a theme's text wouldn't be readable).
 //
 // Colours are named for their job, never for how they look, so a class like `bg-brand` stays true in any theme.
 // To add a theme, copy one, rename it, change its colours and point `activeTheme` at it.

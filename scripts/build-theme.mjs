@@ -1,5 +1,5 @@
 // Turns src/config/theme.mjs into everything that needs its colours: the CSS tokens, the favicon and the link-preview
-// image. Runs before `next dev` and `next build`; run it yourself with `npm run theme`.
+// image. Runs before `next dev` and `next build`; run it yourself with `pnpm theme`.
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
