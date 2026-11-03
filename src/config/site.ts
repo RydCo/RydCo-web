@@ -1,9 +1,11 @@
 // Everything a person might need to change before launch lives in this folder.
 // Items marked [FILL] are placeholders until the real value is confirmed.
+import { tagline } from "./tagline.mjs";
+
+const city = "Lahore";
 
 export const site = {
-  name: "RydCo",
-  tagline: "Your commute, in good company.",
+  tagline,
   description:
     "RydCo is carpooling for daily commuters in Pakistan, starting with a pilot in Lahore. Share the car, split the fuel cost, and ride with checked drivers.",
   // The site's address, used for link previews, the sitemap and robots.txt. On Vercel it comes from the project's
@@ -15,7 +17,9 @@ export const site = {
   email: "rydcoapp@gmail.com",
   instagram: "https://www.instagram.com/rydco.app/",
   instagramHandle: "@rydco.app",
-  city: "Lahore",
+  city,
+  // Where RydCo is today: the badge over the hero headline and the footer.
+  pilotLine: `Starting with a pilot in ${city}`,
   // [FILL] App status. While this is null, the main buttons take people to the waitlist form on the home page.
   playStoreUrl: null as string | null,
   // The Google Apps Script web app that stores form submissions (setup steps: infra/google-apps-script/forms.js).

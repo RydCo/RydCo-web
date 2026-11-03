@@ -30,7 +30,7 @@ The route line is RydCo's logo: a ink line with round ends that travels, turns, 
 underline of the wordmark, with the car parked at its end. A daily commute is a line you draw again every morning,
 and carpooling means two lines becoming one. So the line is the only motif, used at four scales:
 
-1. **Large:** the hero. The line draws itself across the brand field, passes behind the phone and ends under "Starting with a pilot in Lahore" (the signature moment).
+1. **Large:** the hero. The line draws itself across the brand field, passes behind the phone and curls under to where the car parks (the signature moment).
 2. **Section scale:** one full-width band where the line crosses the page once, between the rider half and the
    "who it's for" half of the homepage. It also drives the "How it works" diagram, where scattered dots join into one line.
 3. **Component scale:** every button is a pill (a short piece of road with round ends). Image and screen crops use
@@ -57,16 +57,16 @@ file, `src/config/theme.mjs`, and are named for their job, not their look. To ch
 | --- | --- | --- | --- |
 | `surface` | #FFF6EE | `--ground` | Page background, light cards, light text on ink. |
 | `brand` | #FFE3CF | `--cyan` | Hero and big colour blocks, where the gradient ends up. |
-| `panel` | #FBE3D4 | `--accent-wash` | Soft sections, cards, chips. |
+| `panel` | #F5D3BD | `--accent-wash` (deepened) | Soft sections, cards, chips. A clear step from surface (1.32:1) and brand (1.15:1) so cards never blend in. |
 | `screen` | #FFFFFF | `--surface` | Form fields, secondary buttons, the inside of phone mockups. |
-| `line` | #E3C6AF | `--line-2` | The edge of a secondary button. |
+| `line` | #A9826B | `--line-2` (deepened) | The edge of a secondary button and fields: 3.45:1 on white, so the edge is seen. |
 | `accent` | #DB6A33 | `--accent` | The app's orange: the top of the button gradient, bullets, stars, map routes. |
 | `accent-strong` | #C2551F | none | Where button labels start sitting. Route lines on brand or panel, selected states. |
-| `accent-deep` | #A8430F | none | The foot of the button gradient, text links, ticks. |
+| `accent-deep` | #983A0B | none | The foot of the button gradient, text links, ticks. |
 | `on-accent` | #FFFFFF | `--on-accent` | Text on the button gradient. |
 | `ink` | #3A2A22 | `--ink` | All text, the wordmark and car, dark sections. |
 | `ink-deep` | #2A201A | `--device` | Where dark sections deepen to, and the phone mockup's body. |
-| `ink-soft` | #7A6151 | `--ink-2` | Secondary text only. |
+| `ink-soft` | #6A5143 | `--ink-2` (deepened) | Secondary text only. |
 | `trust` | #1F7A4A | `--ok` | Only for "verified" or "confirmed" signals. Never decoration or buttons. |
 | `sos` | #C8362E | `--sos` | Only for SOS. |
 
@@ -99,13 +99,14 @@ The build checks these for whichever theme is active.
 
 | Pair | Ratio | Use |
 | --- | --- | --- |
-| ink on surface / brand / panel | 12.8 / 11.2 / 11.1:1 | All body text |
+| ink on surface / brand / panel | 12.8 / 11.2 / 9.73:1 | All body text |
 | surface or brand on ink | 12.8 / 11.2:1 | Text and highlights on dark sections |
-| on-accent on accent-strong / accent-deep | 4.55 / 6.04:1 | Button labels (measured at 4.64:1 or better on the real gradient) |
-| accent-deep on surface | 5.66:1 | Text links |
+| on-accent on accent-strong / accent-deep | 4.55 / 7.13:1 | Button labels (measured at 4.64:1 or better on the real gradient) |
+| accent-deep on surface / panel | 6.68 / 5.07:1 | Text links |
 | accent on surface / ink | 3.21 / 3.99:1 | Marks only (3:1 for graphics). Never small text. |
 | accent-strong on brand | 3.72:1 | Route lines, and `text-sun` headlines at display size |
-| ink-soft on surface / panel | 5.38 / 4.66:1 | Secondary text |
+| ink-soft on surface / panel | 6.85 / 5.20:1 | Secondary text |
+| line on screen / surface | 3.45 / 3.23:1 | Field and secondary-button edges |
 | on-trust on trust / on-sos on sos | 5.33 / 5.22:1 | Badges and SOS |
 
 ### Rules
@@ -114,6 +115,9 @@ The build checks these for whichever theme is active.
 - **Only one primary look.** A brand field gets the same orange button as everywhere else.
 - **`accent` is too light for small text** and for marks on brand or panel. Use `accent-deep` for text and `accent-strong` for marks.
 - Only the theme's colours exist: Tailwind's default palette is removed. No black and no pure white page grounds.
+- **No colour outside the theme anywhere:** no hex, `rgb()`, `black`/`white`, opacity modifiers (`bg-ink/30`) or
+  `style` colours in components. A new need gets a theme colour or a token in `tokens.css`. The build checks text
+  contrast, edge contrast (3:1 for field and button edges) and that grounds which sit on each other look different.
 - Surfaces are separated by a step in tone (surface → brand → panel → ink), never by lines.
 
 ---
@@ -151,8 +155,10 @@ Five sizes, no more:
 - **Phone frame:** ink body, 44px outer radius, the screen inside at 34px. No notch drawing, no reflections.
 - **Grid:** 12 columns, max width 1200px, outer margins 16px on phones and 32px on desktop. The two margins always match.
 - **Section gap:** 96px on phones, 160px on desktop. The gap inside a section is always smaller than the gap between sections.
-- **Depth:** mostly flat. Primary buttons carry one soft shadow in their own colour. Things that truly float (mobile
-  menu, dropdown) get one soft shadow. Nothing else.
+- **Depth:** mostly flat. Primary buttons carry one soft shadow in their own colour. Things that truly float (the header
+  once it shrinks, the mobile menu, the dropdown) get one soft shadow. Nothing else. Every shadow is a token in
+  `src/styles/tokens.css` made from theme colours (`shadow-edge`, `shadow-float`, `shadow-panel`, and `shadow-lift` /
+  `shadow-sheet` inside phone mockups). Never write a shadow or a colour by hand.
 - Gradients only from `gradients.css`. No glass or blur. No hairline dividers or 1px outlined boxes (secondary buttons and
   form fields excepted).
 
@@ -163,9 +169,10 @@ Five sizes, no more:
 One loud moment, everything else quiet.
 
 **The signature: the route line (homepage hero only).**
-- The line enters from the right edge of the brand field, passes behind the phone, loops round the pilot label and
-  underlines it, as the logo's line underlines the wordmark. The car rides its tip and parks at the end. The label is
-  visible from the first paint.
+- The line enters from the right edge of the brand field, passes behind the phone and curls under to where the car
+  parks, as the logo's line curls under the wordmark. The car rides its tip and parks at the end. The pilot line
+  ("Starting with a pilot in Lahore") sits in a badge above the headline, so it's visible from the first paint at
+  every screen size.
 - Hero phone: leans back in space and rises in once (0.9s), with a looping motion graphic on its screen, rendered to
   video (see `docs/ARCHITECTURE.md`). One ride as a rider (Find a ride to Settle trip), then the same trip as its driver
   (Offer a ride to Confirm payments): 13 screens rebuilt from the app mock in its order and used nowhere else on the site,
@@ -173,13 +180,22 @@ One loud moment, everything else quiet.
   next, routes draw and the car drives them. Nothing sits under the phone. It plays only while on screen. There's no pause button, at the owner's request, so it doesn't meet WCAG 2.2.2.
 - Total about **1.7s**, starting about 120ms after first paint. Easing: cubic in-out.
 - Built as one inline SVG driven by a tiny inline script (`stroke-dashoffset` for the line, `getPointAtLength` for the
-  car) that runs while the page is still parsing. No animation library, no wait for the app's JavaScript.
+  car) that runs while the page is still parsing. No animation library and no wait for the app's JavaScript here.
 - The h1, supporting line and button are **visible from the first paint**. They never wait for the animation.
 - It plays once per visit, never loops, and never replays on scroll.
 
 **Everything else:**
 - Section entrance: heading, then text, then picture, each rising 16px with a fade, staggered about 70ms, once,
-  triggered by `IntersectionObserver`. If JavaScript fails, content is visible (it is hidden only when the script has added a class).
+  triggered by Motion's `inView` as soon as any of it enters the screen. Anything the page passes in one jump (a fast
+  flick or an anchor link) is revealed too, so content is never left hidden. If JavaScript fails,
+  content is visible (it is hidden only when the script has added a class).
+- Header: at the top of the page there's no bar, just the logo, links and button on the hero. Once the page scrolls they
+  gather into a shorter, narrower white pill floating over the content, on one spring (no bounce, about 0.6s) as a
+  layout animation, so nothing reflows. It eases back at the top. Instant with reduced motion.
+- Phone menu: the sheet eases down from the bar and its links follow one after another (about 35ms apart); it eases out
+  on close. Closes with Escape, a tap outside or a choice.
+- **Library:** Motion (`motion`, pinned) for scroll and in-view triggers. CSS does the animating; Motion only says when.
+  Icons come from Phosphor (`@phosphor-icons/react`, pinned) through `components/ui/icons.tsx`, never imported directly.
 - Hover, press and focus feedback on every button, link and card: about 150ms, transform and colour only.
 - "Who it's for" list: pointing at or focusing a row swaps the phone preview beside it (240ms crossfade, pure CSS
   with `:has()`). On phones the rows show without previews.
@@ -202,15 +218,7 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- Hero launch (home): on the first scroll down, on every page load, about 2.6s. The parked car drives into the phone, the
-  phone comes to the front as night (`ink-deep` mixed with black, the one ground outside the palette) blooms out from it,
-  road lines and the things a ride is made of burst out of it, then it drops away pulling the route line down the screen
-  with the car riding it, and the next section rises to meet the car. Live, not a video, so it starts at once from wherever
-  the phone is. On phones it waits until the mockup reaches the middle of the screen, so the route check stays usable.
-  Nothing locks: it sits over the page, and the page moves to the next section while it's dark. This is the site's one
-  scripted scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and
-  while a dropdown is open.
-- No parallax, cursor effects, other scroll-jacking or looping background motion. The only auto-playing video is the hero
+- No parallax, cursor effects, scroll-jacking or looping background motion. The only auto-playing video is the hero
   phone's silent motion graphic.
 
 **`prefers-reduced-motion: reduce`:** the hero shows the finished line, underline and car, and the phone with its
@@ -233,29 +241,37 @@ Crossfades become cuts.
 
 | Component | What it is |
 | --- | --- |
-| `Navbar` | Surface bar, sticky with a solid background (no blur). Ink wordmark left; links: How it works · Safety · Drivers · Organizations; one pill action: "Join the waitlist" or "Get the app". On phones a menu button opens a full-width sheet. |
-| `Footer` | Ink field. The full logo lockup (route line + car + wordmark) set large in brand and surface, then link columns, contact line, "Lahore pilot", copyright, legal links. |
-| `Button` | Pill. Variants: `primary` (the `action` gradient), `secondary` (white with a thin edge), `ghost` (underlined text). The same three on every ground. |
-| `Section` | Sets the ground (`surface`, `tint`, `brand`, `ink`), section padding, max width, and the entrance motion for its children. |
+| `Navbar` | Sticky, no blur. Logo left; links: Ride · Drive · Safety · For companies · About (`config/navigation.ts`), the sides of a ride first, then trust, companies and who we are. Every link is a page (no jumps within a page) and the page you're on is marked: `aria-current` and a short stretch of route under its name (`NavLinks`). One pill action: "Join the waitlist" or "Get the app", shown only once the bar has gathered on scroll, so it never repeats the hero's own button on the first screen. Contact sits in the footer. No bar at the top of the page; gathers into a white pill on scroll (`ShrinkBar`, §6). On phones a menu button drops a sheet from the bar, with the current page tinted. |
+| `Footer` | Ink field, short: the logo with the tagline and the pilot line, the header's links plus Contact in one row, then email and Instagram as bare icon links that warm to orange on hover (`ContactLinks look="icons"`), copyright and legal links. |
+| `ContactLinks` | The one list of ways to reach RydCo outside the forms (email, Instagram). `icons` for the footer; `rows` (round icon, name, address under it) for the contact page. Pages never print the raw address as their own link. |
+| `RouteMark` | The motif at text scale: start dot, a short stretch of route, the car. Leads the hero's pilot line. |
+| `Button` | Pill. Variants: `primary` (the `action` gradient), `secondary` (white with a thin edge), `ghost` (underlined text in the ground's own text colour). Sizes: `sm` (header), `md`, `lg` (in a tall field row). The same on every ground. `iconButtonClasses()` is the one round icon-only button; `iconButtonClasses(true)` floats over a picture such as the map (white, panel shadow). A disabled primary turns `ink-soft`. |
+| `Section` | Sets the ground (`surface`, `panel`, `brand`, `ink`), section padding (`full`, or `bottom` under a hero on the same ground) and max width. |
+| `SectionHeading` | A section's h2 and its opening line, with the staggered entrance. `stack` or `split` (side by side on wide screens). |
+| `Card` | The one card: surface radius, a tone (`panel`, `surface`, `screen`, `ink`) and padding `sm` / `md` / `lg`. `as` makes it a list item or paragraph. |
+| `CtaBand` | A page's closing call to action, as its own section: heading and line left, actions at the right edge. Always on the `brand` ground, so a page never ends with an ink section running into the ink footer. |
+| `PageHero` | The first screen of every inner page (grounds `brand`, `surface`, `ink`), with an optional picture beside it. |
 | `PhoneFrame` | Ink device frame holding an app screen built in HTML/CSS at real size, or a real screenshot later. Screen contents follow the app's real screens. |
-| `RouteLine` | The SVG motif. Modes: `hero` (animated signature), `lockup` (static logo for the footer and OG image), `band` (full-width crossing), `mark` (small pickup-to-drop-off dot-and-line). |
+| Brand drawings | The route motif in `components/brand`: `HeroRoute` (animated signature), `Lockup` (static logo), `RouteBand` (full-width crossing), `RouteConverge` (homes joining one line). Rail stops on step lists come from `railStop` in `StepTimeline`. |
 | `TripCard` | The BlaBlaCar-pattern trip summary: driver first name, rating, specific badges, pickup → drop-off with the route mark, times, seats left, Rs per seat. Used only as a clearly labelled example. |
-| `Dropdown` | The one dropdown, used by the hero and every form (`src/components/forms/Dropdown.tsx`). Replaces the native select so it looks the same everywhere: a white floating list with rows that highlight in `panel` (as in the app's place list) and a tick on the chosen one. Area lists are grouped into "In the pilot" and "Not covered yet". Works with the keyboard, including typing a name to jump to it, and opens upward when there's no room below. |
-| `Badge` | Trust-green pill with a tick for checks that really happen ("Phone verified", "CNIC reviewed", "Licence checked", "Vehicle checked"). Neutral tint pill for everything else. |
-| `HeroRouteCheck` | The live thing (§2) as the hero's main action: "I start in" and "I'm headed to" in one surface pill joined by the route (start dot → line → car; on phones the line runs down the left), the main button, and the "Covered / Not covered yet" answer underneath. The chosen route is shared with `WaitlistForm` (`src/features/commute/commute-store.ts`), and the button scrolls to the waitlist with the cursor in the name field. |
+| `Dropdown` | The one dropdown, used by the route picker and the contact form (`src/components/forms/Dropdown.tsx`). Replaces the native select so it looks the same everywhere: a white floating list with rows that highlight in `panel` (as in the app's place list) and a tick on the chosen one. Rows can carry a quieter second line (`hint`). Works with the keyboard, including typing a name to jump to it, and opens upward when there's no room below. **Searchable** (the area pickers): opening it moves focus to a search field that filters as you type, ignoring case, spaces and punctuation and matching other names too (`keywords`: "Defence" finds DHA, "Gulberg 3" finds Gulberg III), with the match in bold, empty groups hidden, a "no match" line that offers what was typed as a choice of its own ("Use “Raiwind Road”", so it reaches the waitlist in the person's words), and "Another area" always kept (`always`). On phones it opens as a sheet from the bottom so the keyboard never hides the results. Areas live in `config/pilot.ts`, each with its part of the city and its other names; the pilot ones are listed first under "In the pilot". An option with an `action` is a step, not a value ("Choose on map"): it is pinned under the list with its icon and runs the action when chosen. |
+| `Badge` | Trust-green pill with a tick for checks that really happen (names from `config/checks.ts`, the one list of checks). Tones `neutral`, `surface`, `ink` for everything else. Size `text`, or `inline` inside a display-size sentence. |
+| `RoutePicker` | The one commute picker (`features/commute/RoutePicker.tsx`): "I start in" and "I'm headed to" in one white card, stacked like the app's "Find a ride" card, joined by the route running down the left (start dot → line → car). The same layout at every width and in every place. Both ends are searchable dropdowns that end with "Choose on map". The hero (`HeroRouteCheck`, with the main button full width under the two ends) and the waitlist form use the same component and share the chosen route (`commute-store.ts`). |
+| `AreaMap` | "Choose on map" (`features/area-map/`): a modal dialog (full screen on phones) where the map moves under a fixed pin wearing that end's mark, and the panel under it names the area the pin is in, with its pilot status, and a "Use …" button. Locate-me and zoom buttons float over the map. Only the area's name is kept, never the point. Leaflet and OpenStreetMap tiles load only when it opens, with OpenStreetMap credited. The area is the listed one whose middle (`at` in `pilot.ts`) is nearest, within 3 km; farther than that it offers "Another area". |
+| `HeroRouteCheck` | The live thing (§2) as the hero's main action: the `RoutePicker` with the main button, and the "Covered / Not covered yet" answer underneath. The button scrolls to the waitlist with the cursor in the name field. |
 | `WaitlistForm` | The live thing (§2) joined to the waitlist: start and destination with a live "Covered / Not covered yet" answer, then name, mobile number, email (for the launch sign-up link) and ride / drive / both. Choosing drive or both adds "Your car" and "I usually leave at". It is the only sign-up form: the Drivers page shows it opened on "Drive". A route picked in the hero is already filled in. |
-| `ContactForm` | The contact form (topic picker, preselected from `?topic=`), for questions, company pilots and partners. Both forms post to a Google Sheet (see `infra/google-apps-script/forms.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, surface pill fields on a tint panel. |
+| `ContactForm` | The contact form (topic picker, preselected from `?topic=`), for questions, company pilots and partners. Both forms post to a Google Sheet (see `infra/google-apps-script/forms.js`) and fall back to a pre-filled email if `formEndpoint` is null. Visible labels, inline errors tied with `aria-describedby`, a honeypot against spam, surface pill fields on a panel card. Both forms keep their fields and errors in `useForm` and end with `FormActions`. Every field shares one edge and focus style (`fieldEdge` / `fieldFocus` in `forms/field-base.tsx`): a thin edge at rest, a 2px orange edge when focused or open, a thicker deep-orange edge on an error. Buttons and links keep the site-wide focus outline. |
 
 ---
 
 ## 9. Page plans
 
 ### Home (riders first)
-1. **Hero:** brand field, full width, in two columns. Left: h1 "Your commute, in good company.", one line saying what
+1. **Hero:** brand field, full width, in two columns. Left: the pilot line led by the route mark, then h1 "Ride together, save together." (from `config/tagline.mjs`), one line saying what
    RydCo is, then the route check (`HeroRouteCheck`) with the primary action (waitlist or app) and a secondary "Driving
    to work? Offer a ride" link to Drivers. The task comes first, as on Uber and Airbnb. Right: a tilted phone looping
-   one ride as a rider and then as its driver (`MotionVideo`, rendered from the `journey` screens in the app's Sky Sheet layout). Under both, the route line ends beneath "Starting with a pilot in Lahore". On phones
-   the columns stack, with the phone after the check. The first scroll sets off the hero launch (`HeroLaunch`, §6).
+   one ride as a rider and then as its driver (`MotionVideo`, rendered from the `journey` screens in the app's Sky Sheet layout). Under both, the route line curls under to the parked car. On phones
+   the columns stack, with the phone after the check.
 2. **What it is:** one statement on surface: RydCo matches people going the same way every day so they share the car and
    split the fuel cost. Small app fragments sit inline in the sentence (a seat chip, a Rs-per-seat chip, a
    "Phone verified" badge).
@@ -275,17 +291,18 @@ Crossfades become cuts.
 ### Organizations and partners (structure from Uber's business pages)
 - (a) **For companies:** the problem in their words (commute cost, parking, late arrivals, employee safety) → what RydCo
   does about each, one line per problem → how a pilot works with them (an `<ol>` of 4 steps) → what we need from them →
-  "Talk to us about a pilot" (mailto with subject filled in).
-- (b) **For sponsors and partners:** the daily-commute problem in Pakistan (with sources, or no numbers at all) → what
-  RydCo is doing → the Lahore pilot (only real facts) → "Partner with us" (contact form). The team section is left
+  "Talk to us about a pilot" (the contact form, opened on the company topic).
+- (b) **For sponsors and partners:** the Lahore pilot (only real facts) → "Partner with us" (contact form). The story
+  (the problem, what RydCo does, the early web app) lives on About, so it is told once. The team section is left
   out for now, at the founders' request.
 
-### Safety · Drivers · How it works · Contact · Privacy · Terms
+### Safety · Drivers · How it works · About · Contact · Privacy · Terms
 - **Safety:** each check named exactly as the app names it, and what it does and doesn't mean (taken from the app's "Why?" sheets).
 - **Drivers:** "Earn back your fuel cost." What you need (CNIC, live selfie, licence, vehicle, reviewed within 24 hours),
   how the share is worked out, how you get paid (directly, by Cash, JazzCash, NayaPay or bank), sign-up action.
 - **How it works:** the full rider flow as phone screens: choose a role → check coverage → phone number → request → ride → settle up.
-- **Contact:** "Assalam o alaikum. Let's talk." mailto links by audience. No form.
+- **About:** the vision ("How Pakistan gets to work, greener."), why we are building RydCo, and the FAST-NUCES early web app as proof, then a closing call to ride, drive or get in touch. No team section, at the founders' request.
+- **Contact:** the contact form (`ContactForm`), with email and Instagram beside it and a reminder to use SOS during a trip.
 - **Privacy and Terms:** a simple heading structure with a banner: "Draft, to be reviewed by a lawyer."
 
 ---
@@ -295,7 +312,7 @@ Crossfades become cuts.
 - Warm, simple, friendly English. Short sentences. One idea at a time, like the app.
 - Headings 6 words or fewer where possible. One supporting line.
 - No buzzwords: no "revolutionize", "seamless", "solutions", "empower", "next-gen" or "ecosystem".
-- Copy bank (from the app): "Assalam o alaikum. I'm RydCo." · "Your commute, in good company." · "Lahore pilot" ·
+- Copy bank (from the app): "Assalam o alaikum. I'm RydCo." · "Ride together, save together." (the tagline, from the pitch deck) · "Lahore pilot" ·
   "Request, don't book." · "Numbers stay hidden." · "Split the cost." · "Report anytime." · "Riders pay you directly."
 
 ### Honesty rules (carried over from the app's own rules)

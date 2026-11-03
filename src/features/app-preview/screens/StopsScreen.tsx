@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
+import { railStop } from "@/components/ui/StepTimeline";
 import { Header, Body, PrimaryButton } from "./parts";
 
 export function StopsScreen() {
@@ -21,7 +22,7 @@ export function StopsScreen() {
             <li key={s.place} className="relative">
               <span
                 aria-hidden="true"
-                className={`absolute top-[3px] -left-[27px] h-[13px] w-[13px] rounded-full ${i === stops.length - 1 ? "border-[3px] border-accent-strong bg-screen" : "bg-accent-strong"}`}
+                className={`absolute top-[3px] -left-[27px] h-[13px] w-[13px] border-[3px] ${railStop(i === stops.length - 1, "screen")}`}
               />
               <span className="flex justify-between gap-2">
                 <b className="leading-tight">{s.place}</b>

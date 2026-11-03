@@ -1,0 +1,32 @@
+/* The area map's look over Leaflet's own styles. The tiles are calmed toward the site's warm neutrals so the pin and
+   the panel read first, and the credit line takes the site's type and colours. */
+.area-map .leaflet-container {
+  background: var(--color-panel);
+  font: inherit;
+}
+.area-map .leaflet-tile-pane {
+  filter: grayscale(0.6) sepia(0.25) contrast(0.95);
+}
+.area-map .leaflet-control-attribution {
+  background: var(--color-screen);
+  color: var(--color-ink-soft);
+  font-size: 12px;
+  border-top-left-radius: 8px;
+  padding: 2px 8px;
+}
+.area-map .leaflet-control-attribution a {
+  color: var(--color-ink);
+}
+
+/* The pin lifts while the map moves under it, and drops back when it rests. */
+.area-pin {
+  transition: translate 0.2s var(--ease-out-soft);
+}
+.area-pin[data-moving] {
+  translate: 0 -10px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .area-pin {
+    transition: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { control, describedProps, Field, invalidRing, type Base } from "./field-base";
+import { control, describedProps, Field, fieldEdge, type Base } from "./field-base";
 
 export function TextArea({
   value,
@@ -16,7 +16,7 @@ export function TextArea({
         rows={5}
         onChange={(e) => onChange(e.target.value)}
         {...describedProps(base)}
-        className={`${control} mt-2 block min-h-[150px] resize-y rounded-surface py-4 ${invalidRing(base.error)}`}
+        className={`${control} mt-2 block min-h-[150px] resize-y rounded-surface py-4 ${fieldEdge(base.error)}`}
         name={name}
         required={required}
         placeholder={placeholder}

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "RydCo",
     locale: "en_PK",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "RydCo. Your commute, in good company." }],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: `RydCo. ${site.tagline.text}` }],
   },
   twitter: { card: "summary_large_image" },
 };

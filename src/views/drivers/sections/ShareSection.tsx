@@ -1,5 +1,7 @@
+import { Card } from "@/components/ui/Card";
 import { ExampleTag } from "@/components/ui/ExampleTag";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { reveal } from "@/lib/reveal";
 
 export function ShareSection() {
@@ -7,9 +9,7 @@ export function ShareSection() {
     <Section ground="panel" id="share" labelledBy="share-title">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-6">
-          <h2 id="share-title" className="t-h2" {...reveal(0)}>
-            How the share is worked out
-          </h2>
+          <SectionHeading id="share-title" title="How the share is worked out" />
           <div className="mt-8 grid gap-5" {...reveal(1)}>
             <p>
               RydCo works out a fair share of the fuel from the distance, your car&rsquo;s class and the fuel price. The fuel is split between everyone in the
@@ -20,7 +20,7 @@ export function ShareSection() {
           </div>
         </div>
         <div className="lg:col-span-5 lg:col-start-8" {...reveal(2)}>
-          <div data-ui className="relative rounded-surface bg-screen p-7 md:p-9">
+          <Card tone="screen" pad="lg" className="relative">
             <ExampleTag>Example</ExampleTag>
             <p className="font-semibold">Honda City, 10 km to work</p>
             <p className="mt-1 text-ink-soft">Rs 38.94 per km · Rs 50 pickup fee</p>
@@ -36,7 +36,7 @@ export function ShareSection() {
                 <dd className="mt-2 text-[15px] text-ink-soft">Rs 50 + (10 km × Rs 38.94) ÷ 3 people</dd>
               </div>
             </dl>
-          </div>
+          </Card>
         </div>
       </div>
     </Section>

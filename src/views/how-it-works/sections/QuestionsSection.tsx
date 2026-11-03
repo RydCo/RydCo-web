@@ -1,4 +1,6 @@
+import { Plus } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
+import { riderCancelAnswer } from "@/config/rules";
 import { reveal } from "@/lib/reveal";
 
 const questions = [
@@ -12,7 +14,7 @@ const questions = [
   },
   {
     q: "What if I need to cancel?",
-    a: "More than 60 minutes before: free. Within 60 minutes: still free, but it adds a late-cancel strike. After the trip has started there is a cancel fee to the driver, and you can book again once it's paid.",
+    a: riderCancelAnswer,
   },
   {
     q: "What if the driver cancels?",
@@ -49,9 +51,7 @@ export function QuestionsSection() {
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-[20px] font-bold md:text-[22px] [&::-webkit-details-marker]:hidden">
                 {item.q}
                 <span aria-hidden="true" className="grid h-10 w-10 flex-none place-items-center rounded-full bg-panel transition-transform duration-200 group-open:rotate-45">
-                  <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-                    <path d="M10 4v12M4 10h12" />
-                  </svg>
+                  <Plus />
                 </span>
               </summary>
               <p className="mt-3 max-w-[60ch] pb-1">{item.a}</p>

@@ -1,4 +1,5 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { CoverageScreen } from "@/features/app-preview/screens/CoverageScreen";
 import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
@@ -17,12 +18,7 @@ const audiences = [
 export function WhoItsForSection() {
   return (
     <Section labelledBy="who-title">
-      <h2 id="who-title" className="t-h2" {...reveal(0)}>
-        Who RydCo is for
-      </h2>
-      <p className="mt-4 max-w-[44ch]" {...reveal(1)}>
-        One car and a few people going the same way. Here&rsquo;s where you fit.
-      </p>
+      <SectionHeading id="who-title" title="Who RydCo is for" lead="One car and a few people going the same way. Here&rsquo;s where you fit." />
       <div className="mt-10 lg:mt-14" {...reveal(2)}>
         <WhoFor
           rows={audiences}

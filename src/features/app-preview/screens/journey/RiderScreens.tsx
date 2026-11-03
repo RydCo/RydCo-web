@@ -140,7 +140,7 @@ export function RequestAcceptedScreen() {
         </MapLabel>
       </svg>
 
-      <div data-note className="absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-[0_10px_24px_-14px_var(--color-ink-deep)]">
+      <div data-note className="absolute inset-x-2.5 top-[3px] z-10 flex items-center gap-2.5 rounded-[18px] bg-screen p-2.5 shadow-lift">
         <span aria-hidden="true" className="grid h-8 w-8 flex-none place-items-center rounded-[10px] action font-display text-[15px] font-extrabold">
           R
         </span>
@@ -153,7 +153,7 @@ export function RequestAcceptedScreen() {
         </span>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 rounded-t-[26px] bg-surface px-3.5 pt-2 pb-4 shadow-[0_-16px_30px_-22px_var(--color-ink-deep)]">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 rounded-t-[26px] bg-surface px-3.5 pt-2 pb-4 shadow-sheet">
         <span aria-hidden="true" className="mx-auto h-1 w-9 rounded-full bg-line" />
         <div className="flex items-center justify-between gap-2">
           <span className="font-display text-[17px] leading-tight font-bold">Your ride with Hamza</span>

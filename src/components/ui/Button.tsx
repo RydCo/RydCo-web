@@ -1,17 +1,18 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { buttonClasses, type ButtonVariant } from "./button-styles";
+import { buttonClasses, type ButtonSize, type ButtonVariant } from "./button-styles";
 
 type Props = {
   href: string;
   variant?: ButtonVariant;
+  size?: ButtonSize;
   external?: boolean;
   className?: string;
   children: ReactNode;
 };
 
-export function Button({ href, variant = "primary", external, className = "", children }: Props) {
-  const classes = `${buttonClasses(variant)} ${className}`;
+export function Button({ href, variant = "primary", size = "md", external, className = "", children }: Props) {
+  const classes = `${buttonClasses(variant, size)} ${className}`;
   if (external || href.startsWith("mailto:")) {
     const opensTab = external && !href.startsWith("mailto:");
     return (

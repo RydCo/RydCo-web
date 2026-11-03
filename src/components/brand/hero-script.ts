@@ -3,7 +3,7 @@
 //
 // Before the first paint it marks the page "route-pending", so CSS (styles/motion/hero-route.css) holds the line undrawn and the car
 // hidden. Once the page is parsed it draws the line in from the right edge and the car rides its tip until it parks
-// under the label. Reduced motion or no JavaScript: no class, so the finished line shows and nothing moves.
+// at the end. Reduced motion or no JavaScript: no class, so the finished line shows and nothing moves.
 // If anything here fails, the CSS fallback reveals the finished line after 4 seconds.
 export const heroScript = `(function(){var d=document.documentElement;
 try{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return}catch(e){return}

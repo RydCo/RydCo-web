@@ -3,7 +3,12 @@
     background: var(--color-surface);
     color: var(--color-ink);
     -webkit-text-size-adjust: 100%;
-    scroll-padding-top: 96px;
+    /* The header's height in the page flow: the bar plus its gap above. Heroes and anchors read it. */
+    --header-h: 76px;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+    @media (width >= 48rem) {
+      --header-h: 80px;
+    }
   }
   body {
     font-family: var(--font-sans);

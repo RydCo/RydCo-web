@@ -1,6 +1,6 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StepTimeline } from "@/components/ui/StepTimeline";
-import { reveal } from "@/lib/reveal";
 
 const steps = [
   { title: "Get checked", text: "Send your documents in the app. We aim to review them within 24 hours, and you can ride as a rider while you wait." },
@@ -12,9 +12,7 @@ const steps = [
 export function StepsSection() {
   return (
     <Section labelledBy="drive-steps-title">
-      <h2 id="drive-steps-title" className="t-h2" {...reveal(0)}>
-        How driving with RydCo works
-      </h2>
+      <SectionHeading id="drive-steps-title" title="How driving with RydCo works" />
       <StepTimeline steps={steps} />
     </Section>
   );

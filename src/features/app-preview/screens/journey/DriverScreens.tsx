@@ -88,7 +88,7 @@ export function RideRequestsScreen() {
         <Swap
           before={
             <div className="grid grid-cols-2 gap-1.5">
-              <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Decline</Secondary>
+              <Secondary>Decline</Secondary>
               <Primary tap="early">Accept</Primary>
             </div>
           }
@@ -191,7 +191,7 @@ export function ConfirmPaymentsScreen() {
           before={
             <div className="grid grid-cols-2 gap-1.5">
               <Primary tap="early">I received it</Primary>
-              <Secondary className="shadow-[inset_0_0_0_1.5px_var(--color-line)]">Not received</Secondary>
+              <Secondary>Not received</Secondary>
             </div>
           }
           after={

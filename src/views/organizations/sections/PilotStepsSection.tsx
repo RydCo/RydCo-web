@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
 import { Section } from "@/components/ui/Section";
 import { StepTimeline } from "@/components/ui/StepTimeline";
 import { pilotEnquiry } from "@/config/contact";
@@ -18,7 +19,7 @@ export function PilotStepsSection() {
         How a pilot with your company works
       </h2>
       <StepTimeline steps={pilotSteps} ground="panel" />
-      <div className="mt-16 grid gap-8 rounded-surface bg-surface p-8 md:p-10 lg:grid-cols-12 lg:items-center" {...reveal(5)}>
+      <Card tone="surface" pad="lg" className="mt-16 grid gap-8 lg:grid-cols-12 lg:items-center" {...reveal(5)}>
         <div className="lg:col-span-8">
           <h3 className="t-title">What we need from you</h3>
           <p className="mt-2 max-w-[56ch]">An office address, one contact person on your side, and help letting your team know RydCo is there.</p>
@@ -26,7 +27,7 @@ export function PilotStepsSection() {
         <div className="lg:col-span-4 lg:justify-self-end">
           <Button href={pilotEnquiry}>Talk to us about a pilot</Button>
         </div>
-      </div>
+      </Card>
     </Section>
   );
 }

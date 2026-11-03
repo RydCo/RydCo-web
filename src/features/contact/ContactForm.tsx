@@ -1,16 +1,15 @@
 "use client";
 
 import { useId, useState, useSyncExternalStore } from "react";
-import { FormStatus } from "@/components/forms/FormMessages";
+import { FormActions } from "@/components/forms/FormActions";
 import { Honeypot } from "@/components/forms/Honeypot";
 import { NameField } from "@/components/forms/PersonFields";
 import { SelectField } from "@/components/forms/SelectField";
 import { Sent } from "@/components/forms/Sent";
-import { SubmitButton } from "@/components/forms/SubmitButton";
 import { TextArea } from "@/components/forms/TextArea";
 import { TextField } from "@/components/forms/TextField";
 import { contactTopics, type ContactTopic } from "@/config/contact";
-import { useFields } from "@/hooks/use-fields";
+import { useForm } from "@/hooks/use-form";
 import { useSendForm } from "@/hooks/use-send-form";
 import { firstName, nameError } from "@/lib/person";
 
@@ -29,9 +28,7 @@ export function ContactForm() {
   const id = useId();
   const urlTopic = useTopicFromUrl();
   const [chosenTopic, setChosenTopic] = useState<ContactTopic | null>(null);
-  const [f, set] = useFields({ name: "", reply: "", organization: "", message: "" });
-  const [trap, setTrap] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; reply?: string; message?: string }>({});
+  const { fields: f, set, errors, check } = useForm({ name: "", reply: "", organization: "", message: "", website: "" });
   const { state, send } = useSendForm("contact", labels);
 
   const topicId = chosenTopic ?? urlTopic ?? "riding";
@@ -39,15 +36,14 @@ export function ContactForm() {
 
   function submit(e: { preventDefault(): void }) {
     e.preventDefault();
-    const next = {
+    const ok = check({
       name: nameError(f.name),
       reply: f.reply.trim() ? undefined : "Add an email or phone number so we can reply.",
       message: f.message.trim() ? undefined : "Write a short message.",
-    };
-    setErrors(next);
-    if (next.name || next.reply || next.message) return;
+    });
+    if (!ok) return;
     const topic = contactTopics.find((t) => t.id === topicId)?.label ?? topicId;
-    send({ topic, name: f.name.trim(), reply: f.reply.trim(), organization: needsOrg ? f.organization.trim() : "", message: f.message.trim(), website: trap });
+    send({ topic, name: f.name.trim(), reply: f.reply.trim(), organization: needsOrg ? f.organization.trim() : "", message: f.message.trim(), website: f.website });
   }
 
   if (state === "sent") {
@@ -84,11 +80,8 @@ export function ContactForm() {
       </div>
       {needsOrg && <TextField id={`${id}-org`} name="organization" label="Company or organization" autoComplete="organization" value={f.organization} onChange={set("organization")} />}
       <TextArea id={`${id}-message`} name="message" label="Message" value={f.message} onChange={set("message")} error={errors.message} required />
-      <Honeypot value={trap} onChange={setTrap} />
-      <div>
-        <SubmitButton sending={state === "sending"}>Send message</SubmitButton>
-        <FormStatus state={state} />
-      </div>
+      <Honeypot value={f.website} onChange={set("website")} />
+      <FormActions state={state} label="Send message" />
     </form>
   );
 }

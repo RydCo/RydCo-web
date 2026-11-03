@@ -1,5 +1,6 @@
 import { BulletTitle } from "@/components/ui/BulletTitle";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { StopsScreen } from "@/features/app-preview/screens/StopsScreen";
 import { StickyPhone } from "@/features/app-preview/StickyPhone";
 import { reveal } from "@/lib/reveal";
@@ -29,12 +30,7 @@ export function CompaniesSection() {
     <Section id="companies" labelledBy="companies-title">
       <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
-          <h2 id="companies-title" className="t-h2" {...reveal(0)}>
-            A commute your team will actually use.
-          </h2>
-          <p className="mt-6 max-w-[46ch]" {...reveal(1)}>
-            RydCo matches people who travel the same way to work, so they share the car and split the fuel. Here is what that changes for you.
-          </p>
+          <SectionHeading id="companies-title" title="A commute your team will actually use." lead="RydCo matches people who travel the same way to work, so they share the car and split the fuel. Here is what that changes for you." />
           <ul className="mt-14 grid gap-12">
             {problems.map((p, i) => (
               <li key={p.title} className="grid gap-2 sm:grid-cols-[200px_1fr] sm:gap-8" {...reveal(2 + i)}>

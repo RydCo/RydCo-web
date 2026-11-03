@@ -1,5 +1,7 @@
+import { Card } from "@/components/ui/Card";
+import { ContactLinks } from "@/components/ui/ContactLinks";
 import { Section } from "@/components/ui/Section";
-import { site } from "@/config/site";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/features/contact/ContactForm";
 import { reveal } from "@/lib/reveal";
 
@@ -8,36 +10,21 @@ export function MessageSection() {
     <Section id="message" labelledBy="contact-title">
       <div className="grid gap-16 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-7">
-          <h2 id="contact-title" className="t-h2" {...reveal(0)}>
-            What can we help with?
-          </h2>
-          <div className="mt-10 rounded-surface bg-panel p-6 md:p-8" {...reveal(1)}>
+          <SectionHeading id="contact-title" title="What can we help with?" />
+          <Card className="mt-10" {...reveal(1)}>
             <ContactForm />
-          </div>
+          </Card>
         </div>
 
         <aside className="grid content-start gap-4 lg:col-span-4 lg:col-start-9" aria-label="Other ways to reach us" {...reveal(2)}>
-          <div className="rounded-surface bg-panel p-7">
-            <h3 className="t-title">Rather email?</h3>
-            <a href={`mailto:${site.email}`} className="mt-2 inline-block py-1 break-all t-link">
-              {site.email}
-            </a>
-          </div>
-          <div className="rounded-surface bg-panel p-7">
-            <h3 className="t-title">Instagram</h3>
-            <a
-              href={site.instagram}
-              target="_blank"
-              rel="noopener"
-              className="mt-2 inline-block py-1 t-link"
-            >
-              {site.instagramHandle}
-            </a>
-          </div>
-          <div className="on-ink rounded-surface field-ink p-7 text-surface">
+          <Card pad="lg">
+            <h3 className="t-title">Or reach us directly</h3>
+            <ContactLinks look="rows" className="mt-4" />
+          </Card>
+          <Card tone="ink" pad="lg">
             <h3 className="t-title">On a trip right now?</h3>
             <p className="mt-2">Use SOS or Report in the app. They reach help faster than a message here.</p>
-          </div>
+          </Card>
         </aside>
       </div>
     </Section>

@@ -1,3 +1,4 @@
+import { paymentMethods } from "@/config/payments";
 import { Header, Bot, Body, PrimaryButton } from "./parts";
 
 export function SharesScreen() {
@@ -16,9 +17,9 @@ export function SharesScreen() {
         </div>
         <Bot strong>How should riders pay you?</Bot>
         <div className="flex flex-wrap gap-1.5">
-          {["Cash", "JazzCash", "NayaPay", "Bank / Raast"].map((m, i) => (
-            <span key={m} className={`rounded-full px-3 py-1.5 text-[12px] font-semibold ${i < 2 ? "bg-accent-strong text-on-accent" : "bg-screen"}`}>
-              {m}
+          {paymentMethods.map((m, i) => (
+            <span key={m.name} className={`rounded-full px-3 py-1.5 text-[12px] font-semibold ${i < 2 ? "bg-accent-strong text-on-accent" : "bg-screen"}`}>
+              {m.name}
             </span>
           ))}
         </div>

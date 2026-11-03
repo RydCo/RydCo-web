@@ -28,11 +28,12 @@ rydco-web/
 │   │   ├── app-preview/         Phone frame, app tour, the rebuilt app screens, motion graphics scenes
 │   │   └── trips/               The trip card
 │   ├── components/          Shared parts that know nothing about RydCo's features
-│   │   ├── ui/                  Button, Badge, Section, PageHero, icons
+│   │   ├── ui/                  Button, Badge, Card, Section, SectionHeading, CtaBand, PageHero, icons
 │   │   ├── forms/               Text field, dropdown, submit button, thank-you panel
-│   │   ├── layout/              Navbar, mobile menu, footer, scroll observer
+│   │   ├── layout/              Navbar and its shrinking bar, mobile menu, footer, reveal observer
 │   │   └── brand/               Logo, route line, car, hero animation
-│   ├── config/              Facts that change: the theme, site details, pilot areas, links, navigation
+│   ├── config/              Facts that change, each in one place: theme and easing, tagline, site details, pilot areas,
+│   │                        checks, payment methods, trip rules, calls to action, links, navigation
 │   ├── hooks/               Shared React hooks
 │   ├── lib/                 Plain helpers: sending forms, phone numbers, mailto
 │   └── styles/              Generated theme, base styles, utilities, one file per animation
@@ -103,7 +104,7 @@ To add a scene:
 4. Show the result with `<MotionVideo name="..." />`.
 
 Video suits motion that can wait to load. Anything that must start the moment someone acts, from where things are on the
-page, stays live: see `HeroLaunch` in `src/views/home/components/`.
+page, stays live: see `SafetyDeck` in `src/views/home/components/`.
 
 To preview a scene while working, build with `MOTION_RENDER=1` and open its route from `.motion-build`: it plays in a loop.
 

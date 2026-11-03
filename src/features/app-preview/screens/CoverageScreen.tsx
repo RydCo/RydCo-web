@@ -1,7 +1,11 @@
 import { Badge } from "@/components/ui/Badge";
+import { pilot } from "@/config/pilot";
 import { Header, Bot, Body } from "./parts";
 
 // Schematic of the pilot: homes on the edge, workplaces in the middle, covered routes drawn as route lines.
+// The pilot's home areas it doesn't reach yet, drawn faded.
+const notYet = new Set(pilot.starts.filter((a) => !a.covered).map((a) => a.name));
+
 export function CoverageScreen() {
   // [x, y, label side]: each label has its own clear spot so none overlap at phone size.
   const places: Record<string, [number, number, "left" | "right" | "below"]> = {
@@ -51,7 +55,7 @@ export function CoverageScreen() {
               <path key={a + b} d={curve(a, b)} className="fill-none stroke-accent" strokeWidth="4.5" strokeLinecap="round" />
             ))}
             {Object.entries(places).map(([name, [x, y, side]]) => {
-              const isSoon = name === "Township" || name === "Bahria Town";
+              const isSoon = notYet.has(name);
               const label =
                 side === "left"
                   ? { x: x - 9, y: y + 3.5, anchor: "end" as const }

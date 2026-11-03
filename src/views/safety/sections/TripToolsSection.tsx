@@ -1,5 +1,6 @@
 import { BulletTitle } from "@/components/ui/BulletTitle";
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { TripLiveScreen } from "@/features/app-preview/screens/TripLiveScreen";
 import { StickyPhone } from "@/features/app-preview/StickyPhone";
 import { reveal } from "@/lib/reveal";
@@ -41,9 +42,7 @@ export function TripToolsSection() {
           </StickyPhone>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">
-          <h2 id="trip-title" className="t-h2" {...reveal(0)}>
-            On every trip
-          </h2>
+          <SectionHeading id="trip-title" title="On every trip" />
           <ul className="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-x-10">
             {tripTools.map((t, i) => (
               <li key={t.title} {...reveal(1 + i)}>

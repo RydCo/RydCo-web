@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { riderCta } from "@/config/cta";
-import { site } from "@/config/site";
 import { AppTour } from "@/features/app-preview/AppTour";
 import { RequestScreen } from "@/features/app-preview/screens/RequestScreen";
 import { ResultsScreen } from "@/features/app-preview/screens/ResultsScreen";
@@ -18,7 +17,7 @@ const tour = [
 
 export function HeroSection() {
   // The waitlist form is at the bottom of this page, so the hero button scrolls to it rather than leaving.
-  const cta = site.playStoreUrl ? riderCta() : { label: "Join the waitlist", href: "#check", external: false };
+  const cta = riderCta("#check");
   return (
     <PageHero
       ground="surface"

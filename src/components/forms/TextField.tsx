@@ -1,4 +1,4 @@
-import { control, describedProps, Field, invalidRing, type Base } from "./field-base";
+import { control, describedProps, Field, fieldEdge, type Base } from "./field-base";
 
 export function TextField({
   value,
@@ -28,7 +28,7 @@ export function TextField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         {...describedProps(base)}
-        className={`${control} mt-2 h-[56px] rounded-full ${invalidRing(base.error)}`}
+        className={`${control} mt-2 h-[56px] rounded-full ${fieldEdge(base.error)}`}
         name={name}
         required={required}
         autoComplete={autoComplete}

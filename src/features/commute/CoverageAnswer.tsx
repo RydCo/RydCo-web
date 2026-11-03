@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/Badge";
+import { notCovered } from "@/config/pilot";
 import { useCommute } from "@/features/commute/commute-store";
 import { coverage } from "@/features/commute/coverage";
 
@@ -9,7 +10,7 @@ function Answer({ from, to }: { from: string; to: string }) {
   if (!picked) return null;
   return (
     <p className="flex flex-wrap items-center gap-x-3 gap-y-2">
-      <span className="text-[20px]">{covered ? <Badge>Covered</Badge> : <Badge tone="surface">Not covered yet</Badge>}</span>
+      <span className="text-[20px]">{covered ? <Badge>Covered</Badge> : <Badge tone="surface">{notCovered}</Badge>}</span>
       <span>{covered ? "RydCo runs on this route in the pilot." : "Join anyway and we’ll tell you when it opens."}</span>
     </p>
   );

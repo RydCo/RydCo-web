@@ -1,13 +1,13 @@
 import { Section } from "@/components/ui/Section";
+import { SectionHeading } from "@/components/ui/SectionHeading";
+import { appLive } from "@/config/cta";
 import { pilot } from "@/config/pilot";
-import { site } from "@/config/site";
 import { PhoneFrame } from "@/features/app-preview/PhoneFrame";
 import { WelcomeScreen } from "@/features/app-preview/screens/WelcomeScreen";
 import { WaitlistForm } from "@/features/waitlist/WaitlistForm";
 import { reveal } from "@/lib/reveal";
 
 export function GetTheAppSection() {
-  const live = Boolean(site.playStoreUrl);
   return (
     <Section ground="panel" id="waitlist" labelledBy="app-title">
       <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-10">
@@ -17,14 +17,7 @@ export function GetTheAppSection() {
           </PhoneFrame>
         </div>
         <div className="order-1 lg:order-2 lg:col-span-7">
-          <h2 id="app-title" className="t-h2" {...reveal(0)}>
-            Get the RydCo app.
-          </h2>
-          <p className="mt-5 max-w-[46ch]" {...reveal(1)}>
-            {live
-              ? "It runs on the Lahore pilot routes. Check that yours is covered, then download it and request your first seat."
-              : "It opens first on the Lahore pilot routes. Check that yours is covered, then join the waitlist and we’ll message you when it’s ready to download."}
-          </p>
+          <SectionHeading id="app-title" title="Get the RydCo app." lead={<>{appLive ? "It runs on the Lahore pilot routes. Check that yours is covered, then download it and request your first seat." : "It opens first on the Lahore pilot routes. Check that yours is covered, then join the waitlist and we’ll message you when it’s ready to download."}</>} />
           <div className="mt-8" {...reveal(2)}>
             <WaitlistForm />
           </div>
@@ -48,12 +41,11 @@ function AreaList({ title, areas }: { title: string; areas: { name: string; cove
     <div>
       <h3 className="font-semibold">{title}</h3>
       <ul className="mt-2 grid gap-1">
-        {areas.map((a) => (
-          <li key={a.name}>
-            {a.name}
-            {!a.covered && <span className="text-ink-soft"> (not covered yet)</span>}
-          </li>
-        ))}
+        {areas
+          .filter((a) => a.covered)
+          .map((a) => (
+            <li key={a.name}>{a.name}</li>
+          ))}
       </ul>
     </div>
   );

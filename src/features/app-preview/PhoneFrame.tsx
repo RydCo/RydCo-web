@@ -2,11 +2,11 @@ import type { ReactNode } from "react";
 
 // A plain ink-coloured device holding one of the app's real screens, rebuilt in HTML.
 // Swap the children for an <img> of a real screenshot once one exists.
-export function PhoneFrame({ children, label, className = "" }: { children: ReactNode; label: string; className?: string }) {
+export function PhoneFrame({ children, label }: { children: ReactNode; label: string }) {
   return (
-    <figure className={`mx-auto w-[300px] max-w-full ${className}`}>
+    <figure className="mx-auto w-[300px] max-w-full">
       <div className="rounded-[44px] bg-ink-deep p-[10px]">
-        <div data-ui className="relative flex aspect-[9/19] flex-col overflow-hidden rounded-[34px] bg-surface text-[13px] leading-snug text-ink">
+        <div className="relative flex aspect-[9/19] flex-col overflow-hidden rounded-[34px] bg-surface text-[13px] leading-snug text-ink">
           <StatusBar />
           {children}
         </div>

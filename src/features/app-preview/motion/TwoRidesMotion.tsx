@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ease } from "@/config/theme.mjs";
 import { StatusBar } from "@/features/app-preview/PhoneFrame";
-import { MapBackdrop } from "@/features/app-preview/screens/journey/SkySheet";
 import { twoRides } from "@/features/app-preview/screens/journey/journey";
+import { MapBackdrop } from "@/features/app-preview/screens/journey/SkySheet";
 import { runClock } from "./clock";
 
 // The motion graphic in the home hero's phone, rendered to public/motion/two-rides by `npm run motion`. This never ships:
@@ -14,7 +15,7 @@ const hold = 2000;
 const push = 200;
 const duration = twoRides.length * hold;
 
-const soft = "cubic-bezier(0.22, 0.8, 0.26, 1)";
+const soft = ease.outSoft;
 
 const at = (el: Element, keyframes: Keyframe[], delay: number, length: number, options: KeyframeAnimationOptions = {}) =>
   el.animate(keyframes, { delay, duration: length, fill: "both", easing: soft, ...options });
@@ -57,7 +58,7 @@ function tap(root: Element, target: HTMLElement, centre: { x: number; y: number 
     return el;
   };
   const place = "translate(-50%, -50%)";
-  mark("h-9 w-9 bg-ink/30").animate(
+  mark("h-9 w-9 bg-line").animate(
     [
       { opacity: 0, transform: `${place} scale(1.3)` },
       { opacity: 1, transform: `${place} scale(1)`, offset: 0.3 },
@@ -66,7 +67,7 @@ function tap(root: Element, target: HTMLElement, centre: { x: number; y: number 
     ],
     { delay: start, duration: 440, easing: "ease-out" },
   );
-  mark("h-9 w-9 border-2 border-ink/40").animate(
+  mark("h-9 w-9 border-2 border-ink-soft").animate(
     [
       { opacity: 0, transform: `${place} scale(0.8)` },
       { opacity: 1, transform: `${place} scale(0.9)`, offset: 0.1 },
@@ -125,7 +126,7 @@ export function TwoRidesMotion() {
   }, []);
 
   return (
-    <div ref={rootRef} data-ui className="fixed top-0 left-0 z-[100] flex h-[592px] w-[280px] flex-col overflow-hidden bg-surface text-[13px] leading-snug text-ink">
+    <div ref={rootRef} className="fixed top-0 left-0 z-[100] flex h-[592px] w-[280px] flex-col overflow-hidden bg-surface text-[13px] leading-snug text-ink">
       <StatusBar />
       <div className="relative min-h-0 flex-1">
         <MapBackdrop />
