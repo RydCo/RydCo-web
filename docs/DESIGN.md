@@ -220,14 +220,18 @@ One loud moment, everything else quiet.
 - Hero launch (home): on the first scroll down, on every page load, about 3.4s. The page darkens around the phone, which
   stays lit. The little car parked under the pilot label turns cream for the dark, flicks its headlights on and drives,
   at its own size, in a smooth curve into the bottom of the phone's screen, its beam lighting the way; it stays nearly
-  level and shrinks a little as it goes in, with a soft light where it enters. Then the phone comes to the front as night
-  (`ink-deep` mixed with black, the one ground outside the palette) falls fully, road lines and the things a ride is made
-  of burst out of it, it drops away pulling the route line down the screen with the car riding it, and the next section
-  rises to meet the car. Live, not a video, so it starts at once from wherever the phone is. On phones it waits until the
-  mockup reaches the middle of the screen, so the route check stays usable. The page holds still while it plays, so the
-  car stays on its way to the phone, moves to the next section once it's dark, and scrolls again as the night lifts. This
-  is the site's one scripted scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the
-  hero's button and while a dropdown is open.
+  level and shrinks a little as it goes in, with a soft light where it enters. Then the phone comes to the front as
+  night (`ink-deep` mixed with black, the one ground outside the palette) falls fully, road lines and the things a ride
+  is made of burst out of it, it drops away pulling the route line down the screen with the car riding it, and the next
+  section rises to meet the car. Live, not a video, so it starts at once from wherever the phone is. On phones it waits
+  until the mockup reaches the middle of the screen, so the route check stays usable. It has sound where the browser
+  allows it, which is only after the visitor has clicked, tapped or pressed a key, so a visit that has only scrolled
+  stays silent: the starter cranks, the engine catches as the headlights come on and pulls away, following the car
+  across the page, then it's muffled as the car goes into the screen (about 1.2s, quiet, made in the browser by
+  `car-sound.ts`, so there's no file to load). The page holds still while it plays, so the car stays on its way to the
+  phone, moves to the next section once it's dark, and scrolls again as the night lifts. This is the site's one scripted
+  scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and while a
+  dropdown is open.
 - No parallax, other cursor effects (the Hamza card's tilt above is the one, at the owner's request), other scroll-jacking
   or looping background motion. The only auto-playing video is the hero
   phone's silent motion graphic.
