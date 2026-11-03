@@ -5,44 +5,26 @@ import { Car } from "@/components/brand/Car";
 import { toneOn, type Tone } from "@/components/brand/tones";
 import { Tick } from "@/components/ui/icons";
 import { launchIsOff } from "@/lib/hero-launch";
-import type { CarShow } from "./car3d";
+import { playCarSound } from "./car-sound";
 
-// What happens on the first scroll down from the home hero, on every page load. Night falls out from the parked car as it
-// comes to life in 3D, its headlights blink twice and stay on, and it drives into the phone, which has come to the front.
-// Light bursts out of the phone as it hits, road lines and the things a ride is made of burst out of it, then it drops
-// away pulling the route line down the screen, and the next section rises to meet the car. About 3.2s. It's live rather
-// than a video because it has to start at once, from wherever the phone is. It sits over the page and nothing is locked,
-// and the page is moved to the next section while it's dark. Skipped with reduced motion, by a jump past the hero, and by
-// the hero's button.
+// What happens on the first scroll down from the home hero, on every page load. The page darkens around the phone, the
+// little car parked under the pilot label switches its headlights on and drives into the phone's screen. Then the phone
+// comes to the front as night falls, road lines and the things a ride is made of burst out of it, it drops away pulling
+// the route line down the screen with the car riding it, and the next section rises to meet the car. About 3.4s. It's live
+// rather than a video because it has to start at once, from wherever the phone is. The page holds still while it plays,
+// is moved to the next section once it's dark, and scrolls again as the night lifts. Skipped with reduced motion, by a
+// jump past the hero, and by the hero's button.
 //
-// The 3D car (./car3d, three.js) loads only once someone touches, scrolls, points or types, so a visit that never does
-// isn't slowed by it. If it isn't ready in time, or the device can't draw 3D, the flat car drives the same route.
+// With sound, if the browser allows it: the car's starter cranks, the engine catches as the headlights come on, and it
+// drives off into the phone (./car-sound). Browsers only let a page make sound after the visitor has clicked, tapped or
+// pressed a key on it, so a visit that has only scrolled stays silent.
 
 const soft = "cubic-bezier(0.22, 0.8, 0.26, 1)";
 const rush = "cubic-bezier(0.45, 0, 0.8, 0.55)";
 
-// When each part starts, in ms.
-const at = { phoneIn: 0, bloom: 80, lights: 260, drive: 560, impact: 960, burst: 960, fly: 1020, phoneOut: 1840, route: 1860, reveal: 2600 };
-const lasts = { phoneIn: 520, bloom: 560, flash: 520, phoneOut: 440, route: 860, reveal: 560 };
-// How long a launch waits for the 3D car if it's still loading, before going with the flat one.
-const waitFor3d = 400;
-
-// Whether to fetch the 3D car at all: WebGL 2 on a real graphics chip (drawn in software it would stutter), enough
-// memory, and not when the visitor has asked to save data.
-function can3d() {
-  const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
-  if (nav.connection?.saveData || (nav.deviceMemory ?? 8) < 4) return false;
-  const gl = document.createElement("canvas").getContext("webgl2");
-  if (!gl) return false;
-  let chip = String(gl.getParameter(gl.RENDERER));
-  // Chrome and Safari hide the chip's name behind a generic one; the debug extension says what it really is.
-  if (/webkit webgl/i.test(chip)) {
-    const info = gl.getExtension("WEBGL_debug_renderer_info");
-    if (info) chip = String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL));
-  }
-  gl.getExtension("WEBGL_lose_context")?.loseContext();
-  return !/swiftshader|llvmpipe|software|basic render/i.test(chip);
-}
+// When each part starts, in ms. The engine catches, and the headlights come on, at `lights`; the car pulls away just after.
+const at = { lights: 280, drive: 300, enter: 840, phoneIn: 1020, burst: 1440, fly: 1500, phoneOut: 2220, route: 2240, reveal: 2880 };
+const lasts = { dim: 360, drive: 700, enter: 180, phoneIn: 520, dark: 300, phoneOut: 440, route: 860, reveal: 560 };
 
 // Small, repeatable random numbers, so it looks the same each time.
 function random(seed: number) {
@@ -55,9 +37,38 @@ function random(seed: number) {
   };
 }
 
+const clamp01 = (t: number) => Math.min(1, Math.max(0, t));
+const span = (t: number, from: number, length: number) => clamp01((t - from) / length);
+const inOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+// An angle in degrees, brought into -180..180.
+const wrap = (a: number) => ((((a + 180) % 360) + 360) % 360) - 180;
+
+type Point = { x: number; y: number };
+
+// The car's way from where it's parked into the phone's screen: one curve, measured by distance, so it keeps an even pace.
+function road(p0: Point, p1: Point, p2: Point, p3: Point) {
+  const on = (u: number) => {
+    const v = 1 - u;
+    return { x: v * v * v * p0.x + 3 * v * v * u * p1.x + 3 * v * u * u * p2.x + u * u * u * p3.x, y: v * v * v * p0.y + 3 * v * v * u * p1.y + 3 * v * u * u * p2.y + u * u * u * p3.y };
+  };
+  const points = Array.from({ length: 81 }, (_, i) => on(i / 80));
+  const lengths: number[] = new Array(points.length).fill(0);
+  for (let i = 1; i < points.length; i++) lengths[i] = lengths[i - 1] + Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
+  const total = lengths[80] || 1;
+  return (f: number) => {
+    const d = clamp01(f) * total;
+    let i = 1;
+    while (i < 80 && lengths[i] < d) i++;
+    const a = points[i - 1];
+    const b = points[i];
+    const k = (d - lengths[i - 1]) / (lengths[i] - lengths[i - 1] || 1);
+    return { x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k, angle: Math.atan2(b.y - a.y, b.x - a.x) };
+  };
+}
+
 const lineColours = ["bg-surface", "bg-surface", "bg-surface", "bg-accent", "bg-brand"];
 
-// Made 25 a frame, so building them doesn't hold up the car's first moves. They don't show until the hit.
+// Made 25 a frame, so building them doesn't hold up the car. They don't show until the phone comes forward.
 function roadLines(stage: HTMLElement, x: number, y: number, reach: number, unit: number, made: Element[], start: number) {
   const r = random(7);
   let i = 0;
@@ -107,7 +118,23 @@ function flyOut(stage: HTMLElement, unit: number) {
   });
 }
 
-function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, show: CarShow | null) {
+// While the launch plays, the page holds still, so the car stays on its way to the phone. Scrolling already under way is
+// stopped where it is, and wheel, touch and keyboard scrolling wait until the night starts lifting.
+function holdStill() {
+  window.scrollTo({ top: window.scrollY, behavior: "instant" });
+  const stop = (e: Event) => e.preventDefault();
+  const keys = (e: KeyboardEvent) => [" ", "PageDown", "PageUp", "ArrowDown", "ArrowUp", "Home", "End"].includes(e.key) && e.preventDefault();
+  window.addEventListener("wheel", stop, { passive: false });
+  window.addEventListener("touchmove", stop, { passive: false });
+  window.addEventListener("keydown", keys);
+  return () => {
+    window.removeEventListener("wheel", stop);
+    window.removeEventListener("touchmove", stop);
+    window.removeEventListener("keydown", keys);
+  };
+}
+
+function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, sound: AudioContext | null) {
   const vw = window.innerWidth;
   const vh = window.innerHeight;
   const midX = vw / 2;
@@ -119,19 +146,19 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, show:
   const made: Element[] = [];
   const next = hero.nextElementSibling;
   const toNextSection = () => next?.scrollIntoView({ block: "start", behavior: "instant" });
+  const release = holdStill();
 
   stage.hidden = false;
-  stage.dataset.car = show ? "3d" : "flat";
 
   // The section underneath holds its own animations until the night starts lifting off it (styles/motion/reveal.css).
   const root = document.documentElement;
   root.classList.add("launching");
   const uncover = window.setTimeout(() => root.classList.remove("launching"), at.reveal + lasts.reveal * 0.4);
 
-  // A copy of the phone comes forward. It lives in the overlay, so scrolling can't move it. The real one waits behind.
+  // A copy of the phone, exactly where the real one is, above the dark: it stays lit while the car drives into it, then
+  // comes forward. It lives in the overlay, so scrolling can't move it. The real one waits behind.
   const box = phone.getBoundingClientRect();
-  const startX = box.left + box.width / 2;
-  const startY = box.top + box.height / 2;
+  const screen = phone.querySelector<HTMLElement>("[data-ui]")?.getBoundingClientRect() ?? box;
   const tilt = getComputedStyle(phone).transform;
   const copy = phone.cloneNode(true) as HTMLElement;
   const width = phone.offsetWidth;
@@ -149,8 +176,8 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, show:
   phone.style.visibility = "hidden";
 
   const fit = Math.min(1.2, (vh * 0.8) / height);
-  const dx = startX - midX;
-  const dy = startY - midY;
+  const dx = box.left + box.width / 2 - midX;
+  const dy = box.top + box.height / 2 - midY;
   copy.animate(
     [
       { transform: `translate(${dx}px, ${dy}px) ${tilt === "none" ? "" : tilt}` },
@@ -158,121 +185,108 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, show:
     ],
     { delay: at.phoneIn, duration: lasts.phoneIn, fill: "both", easing: soft },
   );
-  const out = copy.animate([{ translate: "0 0" }, { translate: `0 ${vh + height}px` }], { delay: at.phoneOut, duration: lasts.phoneOut, fill: "both", easing: "cubic-bezier(0.5, 0, 0.9, 0.6)" });
+  const drop = copy.animate([{ translate: "0 0" }, { translate: `0 ${vh + height}px` }], { delay: at.phoneOut, duration: lasts.phoneOut, fill: "forwards", easing: "cubic-bezier(0.5, 0, 0.9, 0.6)" });
 
-  // The hero's car comes to life where it's parked, then drives into the phone. If it's off screen (on a phone, once
-  // scrolled past it), it comes in from just below.
-  const parked = [...hero.querySelectorAll<SVGGElement>("[data-route-car]")].find((c) => c.getBoundingClientRect().width > 0);
-  const c = parked?.getBoundingClientRect() ?? new DOMRect(midX - 30, vh + 40, 60, 30);
-  const carX = c.left + c.width / 2;
-  const carY = Math.min(c.top + c.height / 2, vh + 40);
-  const towards = (f: number) => [carX + (midX - carX) * f, carY + (midY - carY) * f] as const;
-  // Where it swings up to for the headlights, kept well inside the screen.
-  const [upX, upY] = towards(0.22);
-  const up = [Math.min(vw * 0.78, Math.max(vw * 0.22, upX)), Math.min(vh * 0.78, Math.max(vh * 0.3, upY))] as const;
-  const facing = midX < carX ? -1 : 1;
-  const whole = at.impact;
-  const k = (ms: number) => ms / whole;
-
-  if (show) {
-    // The 3D car's canvas takes over from the parked car, scaled so the two are the same size, and is carried across the
-    // screen here while ./car3d turns it, spins its wheels and works its lights on the same clock.
-    const holder = stage.querySelector<HTMLElement>("[data-car3d]")!;
-    holder.replaceChildren(show.canvas);
-    const s0 = c.width / show.carWidth;
-    const pose = ([x, y]: readonly [number, number], s: number) => `translate(${x - show.size / 2}px, ${y - show.size / 2}px) scale(${s})`;
-    // It swings up towards you as night falls, big enough for its shape and its headlights to show, then drives in.
-    holder.animate(
-      [
-        { opacity: 0, transform: pose(towards(0), s0) },
-        { opacity: 1, transform: pose(towards(0), s0), offset: k(140), easing: "cubic-bezier(0.3, 0, 0.2, 1)" },
-        { opacity: 1, transform: pose(up, s0 * 3.4), offset: k(at.drive - 40), easing: "cubic-bezier(0.5, 0, 0.75, 0.3)" },
-        { opacity: 1, transform: pose(towards(0.8), s0 * 3.7), offset: k(at.drive + (at.impact - at.drive) * 0.7), easing: "cubic-bezier(0.4, 0, 0.7, 1)" },
-        // Solid right up to the hit, then gone inside the flash.
-        { opacity: 1, transform: pose(towards(0.98), s0 * 1.9), offset: k(at.impact - 30) },
-        { opacity: 0, transform: pose(towards(1), s0 * 1.6) },
-      ],
-      { duration: whole, fill: "both" },
-    );
-    show.play(start, { lights: at.lights, drive: at.drive, impact: at.impact, facing });
-    // A moment's crossfade hides any difference between the flat car and its 3D twin.
-    window.setTimeout(() => parked && (parked.style.visibility = "hidden"), 140);
-  } else {
-    const driver = stage.querySelector<HTMLElement>("[data-driver]");
-    if (parked) parked.style.visibility = "hidden";
-    if (driver) {
-      driver.style.width = `${c.width}px`;
-      driver.style.height = `${c.width * 0.6}px`;
-      // It faces the way it drives, turning round as it sets off if the phone is to its left.
-      const pose = ([x, y]: readonly [number, number], s: number, turn = 1) => `translate(${x - c.width / 2}px, ${y - (c.width * 0.6) / 2}px) scale(${s * turn}, ${s})`;
-      driver.animate(
-        [
-          { opacity: 1, transform: pose(towards(0), 1) },
-          { opacity: 1, transform: pose(towards(0), 1), offset: k(at.drive), easing: "ease-in" },
-          { opacity: 1, transform: pose(towards(0.6), 1.6, facing), offset: k(at.drive + (at.impact - at.drive) * 0.6), easing: "ease-in" },
-          { opacity: 0, transform: pose(towards(1), 0.3, facing) },
-        ],
-        { duration: whole, fill: "both" },
-      );
-    }
-  }
-
-  // Night falls out from the car, so its headlights come on in the dark. Once it's dark the page moves on underneath.
+  // The page darkens around the phone, then goes fully dark as the phone comes forward. Once it's dark the page moves on
+  // underneath, and it stays still until the night lifts.
   const night = stage.querySelector<HTMLElement>("[data-night]");
-  const dark = Math.hypot(Math.max(carX, vw - carX), Math.max(carY, vh - carY)) + 60;
-  const bloom = night?.animate([{ clipPath: `circle(0px at ${carX}px ${carY}px)` }, { clipPath: `circle(${dark}px at ${carX}px ${carY}px)` }], {
-    delay: at.bloom,
-    duration: lasts.bloom,
-    fill: "both",
-    easing: "cubic-bezier(0.45, 0, 0.3, 1)",
-  });
-  bloom?.finished.then(toNextSection).catch(() => {});
+  const darkAt = at.phoneIn + lasts.dark;
+  const dark = night?.animate(
+    [
+      { opacity: 0, easing: "ease-out" },
+      { opacity: 0.8, offset: lasts.dim / darkAt },
+      { opacity: 0.8, offset: at.phoneIn / darkAt, easing: "ease-in" },
+      { opacity: 1 },
+    ],
+    { duration: darkAt, fill: "both" },
+  );
+  dark?.finished.then(toNextSection).catch(() => {});
+  const free = window.setTimeout(release, at.reveal);
 
-  // The hit: headlight light bursts out of the phone with a ring, the whole screen flashes once, and the phone jolts.
-  stage.querySelector<HTMLElement>("[data-bulb]")?.animate([{ opacity: 0 }, { opacity: 0.45, offset: 0.12 }, { opacity: 0 }], {
-    delay: at.impact - 30,
-    duration: 320,
-    fill: "both",
-    easing: "ease-out",
-  });
-  const flash = stage.querySelector<HTMLElement>("[data-flash]");
-  const ring = stage.querySelector<HTMLElement>("[data-ring]");
-  const rays = stage.querySelector<HTMLElement>("[data-rays]");
-  rays?.animate(
+  // The little car: from where it's parked, in a smooth curve into the bottom of the phone's screen, its headlights on.
+  // It's drawn in the car's own units (30 long), so it's exactly the parked car's size.
+  const parked = [...hero.querySelectorAll<SVGGElement>("[data-route-car]")].find((c) => c.getBoundingClientRect().width > 0);
+  const c = parked?.getBoundingClientRect() ?? new DOMRect(midX - 24, vh + 30, 48, 28);
+  if (parked) parked.style.visibility = "hidden";
+  const scale = c.width / 30;
+  // Where the car meets the road: the bottom of its body, in the flat car's drawing.
+  const p0 = { x: c.left + c.width / 2, y: Math.min(c.top + (c.height * 16) / 17.7, vh + 30) };
+  const left = (screen.left + screen.right) / 2 < p0.x;
+  const p3 = { x: left ? screen.right - screen.width * 0.24 : screen.left + screen.width * 0.24, y: screen.bottom - screen.height * 0.12 };
+  const towards = { x: (screen.left + screen.right) / 2 - p3.x, y: (screen.top + screen.height * 0.45 - p3.y) * 0.2 };
+  const towardsLength = Math.hypot(towards.x, towards.y) || 1;
+  const dist = Math.hypot(p3.x - p0.x, p3.y - p0.y);
+  // It sets off the way it's facing, then swings round into the screen.
+  const facing = left ? -1 : 1;
+  const p1 = { x: p0.x + facing * dist * 0.38, y: p0.y };
+  const p2 = { x: p3.x - (towards.x / towardsLength) * dist * 0.36, y: p3.y - (towards.y / towardsLength) * dist * 0.36 };
+  const way = road(p0, p1, p2, p3);
+
+  // The engine, panned with the car from where it starts to the phone.
+  const toPan = (x: number) => Math.max(-0.6, Math.min(0.6, ((x / vw) * 2 - 1) * 0.8));
+  if (sound)
+    playCarSound(sound, {
+      catchAt: at.lights / 1000,
+      driveEnd: (at.drive + lasts.drive) / 1000,
+      enterAt: at.enter / 1000,
+      goneAt: (at.enter + lasts.enter) / 1000,
+      pan: [toPan(p0.x), toPan(p3.x)],
+    });
+
+  // The car is one small layer, moved by CSS transform so the browser only slides it, never redraws it. Its drawing is
+  // in the car's own units (30 long), sized here to the parked car.
+  const car = stage.querySelector<HTMLElement>("[data-car]");
+  const drawing = car?.querySelector<SVGSVGElement>("svg");
+  if (drawing) Object.assign(drawing.style, { left: `${-16 * scale}px`, top: `${-21 * scale}px`, width: `${102 * scale}px`, height: `${29 * scale}px` });
+  const day = stage.querySelector<SVGGElement>("[data-day]");
+  const dusk = stage.querySelector<SVGGElement>("[data-dusk]");
+  const beam = stage.querySelector<SVGPolygonElement>("[data-beam]");
+  const lamp = stage.querySelector<SVGCircleElement>("[data-lamp]");
+  // The headlights flick on twice, then stay on.
+  const lights = (t: number) => (t < at.lights ? 0 : t < at.lights + 50 ? 1 : t < at.lights + 110 ? 0.25 : Math.min(1, 0.6 + (t - at.lights - 110) / 200));
+  let raf = 0;
+  const frame = () => {
+    const t = performance.now() - start;
+    const u = inOut(span(t, at.drive, lasts.drive));
+    const p = way(u);
+    const going = inOut(span(t, at.enter, lasts.enter));
+    // It stays nearly level, leaning at most 20 degrees into a turn: a side-on car driving up the screen reads as driving
+    // away into the scene. Driving left, it turns round as it sets off, drawn mirrored so it stays upright. It shrinks a
+    // little as it goes into the screen.
+    const angle = (p.angle * 180) / Math.PI;
+    const lean = Math.max(-20, Math.min(20, wrap(left ? angle - 180 : angle)));
+    const turning = left ? inOut(span(t, 0, at.drive + 120)) : 1;
+    const flip = left ? Math.cos(Math.PI * turning) : 1;
+    const shrink = 1 - 0.5 * going;
+    if (car) {
+      car.style.transform = `translate(${p.x}px, ${p.y}px) scale(${shrink}) rotate(${lean * turning}deg) scale(${flip}, 1)`;
+      car.style.opacity = String(1 - going);
+    }
+    // Ink by day, cream once it's dark, like the logo on each.
+    if (t < lasts.dim + 40) {
+      const dim = span(t, 0, lasts.dim);
+      if (day) day.style.opacity = String(1 - dim);
+      if (dusk) dusk.style.opacity = String(dim);
+    }
+    if (t < at.lights + 360) {
+      const on = lights(t);
+      if (beam) beam.style.opacity = String(on * 0.85);
+      if (lamp) lamp.style.opacity = String(on);
+    }
+    if (t < at.phoneIn + 40) raf = requestAnimationFrame(frame);
+  };
+  frame();
+
+  // A soft light where it goes into the screen.
+  const glow = stage.querySelector<HTMLElement>("[data-glow]");
+  if (glow) Object.assign(glow.style, { left: `${p3.x}px`, top: `${p3.y}px`, width: `${screen.width * 0.7}px`, height: `${screen.width * 0.7}px` });
+  glow?.animate(
     [
-      { opacity: 0, transform: "translate(-50%, -50%) scale(0.3) rotate(-8deg)" },
-      { opacity: 0.85, transform: "translate(-50%, -50%) scale(0.9) rotate(0deg)", offset: 0.2 },
-      { opacity: 0, transform: "translate(-50%, -50%) scale(1.4) rotate(6deg)" },
+      { opacity: 0, transform: "translate(-50%, -50%) scale(0.3)" },
+      { opacity: 0.9, transform: "translate(-50%, -50%) scale(0.8)", offset: 0.3 },
+      { opacity: 0, transform: "translate(-50%, -50%) scale(1.2)" },
     ],
-    { delay: at.impact, duration: 700, fill: "both", easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
-  );
-  for (const el of [flash, ring, rays]) {
-    if (el) Object.assign(el.style, { left: `${midX}px`, top: `${midY}px` });
-  }
-  flash?.animate(
-    [
-      { opacity: 0, transform: "translate(-50%, -50%) scale(0.1)" },
-      { opacity: 1, transform: "translate(-50%, -50%) scale(0.8)", offset: 0.14 },
-      { opacity: 0.9, transform: "translate(-50%, -50%) scale(1.05)", offset: 0.4 },
-      { opacity: 0, transform: "translate(-50%, -50%) scale(1.6)" },
-    ],
-    { delay: at.impact - 30, duration: lasts.flash, fill: "both", easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
-  );
-  ring?.animate(
-    [
-      { opacity: 1, transform: "translate(-50%, -50%) scale(0.2)" },
-      { opacity: 0, transform: "translate(-50%, -50%) scale(2.6)" },
-    ],
-    { delay: at.impact, duration: 620, fill: "both", easing: "cubic-bezier(0.15, 0.7, 0.3, 1)" },
-  );
-  copy.animate(
-    [
-      { scale: "1", rotate: "0deg" },
-      { scale: "1.05", rotate: "-1.8deg", offset: 0.22 },
-      { scale: "0.985", rotate: "0.9deg", offset: 0.58 },
-      { scale: "1", rotate: "0deg" },
-    ],
-    { delay: at.impact, duration: 420, easing: "ease-out" },
+    { delay: at.enter + 60, duration: 420, fill: "both", easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
   );
 
   roadLines(stage, midX, midY, reach, unit, made, start);
@@ -300,18 +314,20 @@ function launch(stage: HTMLElement, hero: HTMLElement, phone: HTMLElement, show:
   });
   reveal.finished
     .then(() => {
-      show?.dispose();
-      stage.querySelector("[data-car3d]")?.replaceChildren();
-      toNextSection();
+      cancelAnimationFrame(raf);
+      // In case the move in the dark didn't happen; never back up past where someone has scrolled to since.
+      if (next && next.getBoundingClientRect().top > 1) toNextSection();
       phone.style.visibility = "";
       if (parked) parked.style.visibility = "";
       stage.hidden = true;
       made.forEach((el) => el.remove());
       stage.getAnimations({ subtree: true }).forEach((a) => a.cancel());
-      out.cancel();
+      drop.cancel();
     })
     .catch(() => {})
     .finally(() => {
+      window.clearTimeout(free);
+      release();
       window.clearTimeout(uncover);
       root.classList.remove("launching");
     });
@@ -355,18 +371,20 @@ export function HeroLaunch() {
     const phone = hero?.querySelector<HTMLElement>(".hero-phone");
     if (!stage || !hero || !phone || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    // The 3D car, made once three.js has loaded after the first interaction.
-    let show: CarShow | null = null;
-    let making: Promise<CarShow | null> | null = null;
-    const signals = ["pointermove", "pointerdown", "touchstart", "wheel", "keydown", "scroll"] as const;
-    const warm = () => {
-      signals.forEach((s) => window.removeEventListener(s, warm));
-      if (!can3d()) return;
-      making ??= import("@/views/home/components/car3d")
-        .then((m) => (show = m.makeCarShow()))
-        .catch(() => null);
+    // Sound, made ready on the visitor's first click, tap or key press: the only moments a browser lets a page start it.
+    let audio: AudioContext | null = null;
+    const gestures = ["pointerdown", "keydown", "touchend"] as const;
+    const unlock = () => {
+      const activation = (navigator as Navigator & { userActivation?: { isActive: boolean } }).userActivation;
+      if (activation && !activation.isActive) return;
+      try {
+        audio ??= new AudioContext();
+        if (audio.state === "suspended") audio.resume().catch(() => {});
+      } catch {
+        audio = null;
+      }
     };
-    signals.forEach((s) => window.addEventListener(s, warm, { passive: true }));
+    gestures.forEach((g) => window.addEventListener(g, unlock, { passive: true }));
 
     const startedAt = window.scrollY;
     const onScroll = () => {
@@ -381,22 +399,25 @@ export function HeroLaunch() {
       const box = phone.getBoundingClientRect();
       if (box.top + box.height / 2 > window.innerHeight * 0.55) return;
       stop();
-      if (show || !making) return launch(stage, hero, phone, show);
-      // Still loading: give it a moment, then go with whichever car is ready.
-      const late = new Promise<null>((done) => window.setTimeout(() => done(null), waitFor3d));
-      Promise.race([making, late]).then(() => launch(stage, hero, phone, show));
+      gestures.forEach((g) => window.removeEventListener(g, unlock));
+      // Made on a click, tap or key press, so it's allowed to play, even if it's still starting up from one just now. It
+      // plays once, so it's closed when it's done.
+      launch(stage, hero, phone, audio && audio.state !== "closed" ? audio : null);
+      const done = audio;
+      audio = null;
+      window.setTimeout(() => done?.close().catch(() => {}), 2500);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      signals.forEach((s) => window.removeEventListener(s, warm));
-      show?.dispose();
+      gestures.forEach((g) => window.removeEventListener(g, unlock));
+      audio?.close().catch(() => {});
     };
   }, []);
 
   return (
     <div ref={stageRef} hidden aria-hidden="true" className="pointer-events-none fixed inset-0 z-30 overflow-hidden" style={{ perspective: "800px" }}>
-      <div data-night className="absolute inset-0 bg-[color-mix(in_srgb,var(--color-ink-deep)_72%,black)]" />
+      <div data-night className="absolute inset-0 bg-[color-mix(in_srgb,var(--color-ink-deep)_72%,black)] opacity-0" />
       <svg className="absolute inset-0 z-[1] h-full w-full overflow-visible" aria-hidden="true">
         <path data-route pathLength={1} strokeDasharray="1 1" strokeDashoffset={1} className="fill-none stroke-accent" strokeWidth="9" strokeLinecap="round" />
         <g data-rider className="opacity-0" style={{ offsetRotate: "auto" }}>
@@ -433,27 +454,36 @@ export function HeroLaunch() {
         <span className={`${badge} rounded-full bg-accent text-on-accent`}>HR</span>
       </Flying>
 
-      <div data-driver className="absolute top-0 left-0 z-[4] opacity-0">
-        <CarSticker tone={bright} />
+      {/* The little car and its headlights, over the phone: one small layer placed at the car's road point. */}
+      <div data-car className="absolute top-0 left-0 z-[4] h-0 w-0 origin-top-left will-change-transform">
+        <svg viewBox="-16 -21 102 29" className="absolute overflow-visible" aria-hidden="true">
+          <defs>
+            {/* Brightest at the lamp, fading ahead and towards the beam's edges. */}
+            <radialGradient id="launch-beam" cx="15" cy="-6.4" r="70" gradientUnits="userSpaceOnUse" gradientTransform="translate(15 -6.4) scale(1 0.32) translate(-15 6.4)">
+              <stop offset="0" style={{ stopColor: "var(--color-screen)", stopOpacity: 0.9 }} />
+              <stop offset="0.45" style={{ stopColor: "var(--color-brand)", stopOpacity: 0.32 }} />
+              <stop offset="1" style={{ stopColor: "var(--color-brand)", stopOpacity: 0 }} />
+            </radialGradient>
+            <radialGradient id="launch-lamp">
+              <stop offset="0" style={{ stopColor: "var(--color-screen)", stopOpacity: 1 }} />
+              <stop offset="1" style={{ stopColor: "var(--color-screen)", stopOpacity: 0 }} />
+            </radialGradient>
+          </defs>
+          <polygon data-beam points="15,-7.4 15,-5.4 84,7 84,-19.8" fill="url(#launch-beam)" style={{ opacity: 0 }} />
+          <g data-day>
+            <Car tone={toneOn.brand} />
+          </g>
+          <g data-dusk style={{ opacity: 0 }}>
+            <Car tone={toneOn.ink} />
+          </g>
+          <circle data-lamp cx="15.4" cy="-6.4" r="2.6" fill="url(#launch-lamp)" style={{ opacity: 0 }} />
+        </svg>
       </div>
-      <div data-car3d className="absolute top-0 left-0 z-[4] origin-center opacity-0" />
-      {/* The hit: headlight light, warm white at the middle, and a ring. */}
-      {/* Light adds to what's under it (plus-lighter), so the phone and the night brighten rather than go grey. */}
       <div
-        data-flash
-        className="absolute z-[5] h-[80vmax] w-[80vmax] rounded-full opacity-0 mix-blend-plus-lighter"
-        style={{ background: "radial-gradient(closest-side, var(--color-screen) 0%, var(--color-surface) 22%, var(--color-brand) 45%, transparent 100%)" }}
+        data-glow
+        className="absolute z-[5] rounded-full opacity-0 mix-blend-plus-lighter"
+        style={{ background: "radial-gradient(closest-side, var(--color-screen), var(--color-brand) 45%, transparent)" }}
       />
-      <div
-        data-rays
-        className="absolute z-[5] h-[120vmax] w-[120vmax] rounded-full opacity-0 mix-blend-plus-lighter"
-        style={{
-          background: "repeating-conic-gradient(from 0deg, var(--color-surface) 0deg 1.6deg, transparent 1.6deg 12deg)",
-          maskImage: "radial-gradient(closest-side, black 8%, transparent 70%)",
-        }}
-      />
-      <div data-ring className="absolute z-[5] h-[46vmin] w-[46vmin] rounded-full border-[6px] border-brand opacity-0" />
-      <div data-bulb className="absolute inset-0 z-[6] bg-screen opacity-0 mix-blend-plus-lighter" />
     </div>
   );
 }

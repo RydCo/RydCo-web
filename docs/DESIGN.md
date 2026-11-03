@@ -217,20 +217,21 @@ One loud moment, everything else quiet.
   tilting with the curve. Without scroll-driven animations it stays parked in the middle.
 - Sent: after any form is sent, a short route draws from a dot, the car parks at its end, and the thank-you rises in
   (about 1s).
-- Hero launch (home): on the first scroll down, on every page load, about 3.2s. The parked car comes to life in 3D: it
-  fades into its 3D twin (the same outline side-on), and night (`ink-deep` mixed with black, the one ground outside the
-  palette) falls out from it as it swings up towards you to show its depth, turning round first if the phone is to its
-  left. Its headlights blink twice ("cha-ching") with a lens-flare streak and stay on, their beams adding light to
-  whatever they cross. It drives into the phone, which has come to the front, wheels spinning, and stays solid right up to
-  the hit. Light bursts out of the phone: a warm flash, a starburst of rays, a ring, one gentle flashbulb across the
-  screen, and a jolt of the phone. Then road lines and the things a ride is made of burst out of it, it drops away pulling
-  the route line down the screen with the car riding it, and the next section rises to meet the car. The 3D car is
-  three.js (`views/home/components/car3d.ts`), fetched only after the first touch, scroll, mouse move or key press, and
-  only where WebGL 2 runs on a real graphics chip with enough memory and data saving off; the launch waits up to 400ms
-  for it. Otherwise the flat car drives the same route. Live, not a video, so it starts at once from wherever the phone is. On phones it waits until the mockup reaches the middle of the screen, so the route check stays usable.
-  Nothing locks: it sits over the page, and the page moves to the next section while it's dark. This is the site's one
-  scripted scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and
-  while a dropdown is open.
+- Hero launch (home): on the first scroll down, on every page load, about 3.4s. The page darkens around the phone, which
+  stays lit. The little car parked under the pilot label turns cream for the dark, flicks its headlights on and drives,
+  at its own size, in a smooth curve into the bottom of the phone's screen, its beam lighting the way; it stays nearly
+  level and shrinks a little as it goes in, with a soft light where it enters. Then the phone comes to the front as
+  night (`ink-deep` mixed with black, the one ground outside the palette) falls fully, road lines and the things a ride
+  is made of burst out of it, it drops away pulling the route line down the screen with the car riding it, and the next
+  section rises to meet the car. Live, not a video, so it starts at once from wherever the phone is. On phones it waits
+  until the mockup reaches the middle of the screen, so the route check stays usable. It has sound where the browser
+  allows it, which is only after the visitor has clicked, tapped or pressed a key, so a visit that has only scrolled
+  stays silent: the starter cranks, the engine catches as the headlights come on and pulls away, following the car
+  across the page, then it's muffled as the car goes into the screen (about 1.2s, quiet, made in the browser by
+  `car-sound.ts`, so there's no file to load). The page holds still while it plays, so the car stays on its way to the
+  phone, moves to the next section once it's dark, and scrolls again as the night lifts. This is the site's one scripted
+  scroll, at the owner's request. Skipped with reduced motion, by a jump past the hero, by the hero's button and while a
+  dropdown is open.
 - No parallax, other cursor effects (the Hamza card's tilt above is the one, at the owner's request), other scroll-jacking
   or looping background motion. The only auto-playing video is the hero
   phone's silent motion graphic.
